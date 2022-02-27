@@ -1,37 +1,21 @@
-## Welcome to GitHub Pages
+## LibBerry
+CS 353 Term Project
 
-You can use the [editor on GitHub](https://github.com/yagizyasar/LibBerry/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+### Introduction
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+In today’s world, digitalization is the key to looking into the future. Using computers and digital systems allows people to execute complicated, crowded, confusing, and hard-to-follow processes due to their capabilities that come with the processors, memories, and other architectural elements. One thing that shines on that issue is the memorial processes that need to be implemented by database systems. One thing that comes to mind which allows database systems to be used is bookshelves obviously. Schools are the places that contain eager minds that require and demand information and the best place to explore the information cluster is school libraries. School libraries contain lots of books from different branches of science and art. Furthermore, since these books can be held for some time and then must be returned, there happens to be a need for a tracking system for held and returned books in order to properly circulate the information exchange. Moreover, students may use the library's resources to do their homework and it may be a difficult process for both the students and the instructors. Another issue is the feedback of the users to the library. Library executives might need to accumulate these problems/feedback to review and assess their performance and future changes. Hence, it is important to use database systems to create, store and retrieve colossal data that is the result of the mentioned operations. Besides these concerns, since Covid-19 has impacted daily lives all around the world, it is important to develop an online platform that manipulates the data of the library operations such as holding or returning a book, obtaining the homework information, tracking their loans, etc. The solution to these concerns is the development of an online system that helps both users and executives of the library which allows operations of librarians and users of the library easily.##
 
-### Markdown
+### Description
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+> This section will be completed.
 
 ### Jekyll Themes
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yagizyasar/LibBerry/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+#### Credits To
+Saitcan Başkol,
+Kutay Demiray,
+Berke Uçar, and
+Yağız Yaşar
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
