@@ -1,5 +1,3 @@
-## LibBerry
-
 ### Project Description
 
 > This section will be completed.
