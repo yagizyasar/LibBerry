@@ -1,6 +1,10 @@
 ## LibBerry
 ### Introduction
-This is a website for CS 353 Term Project Spring 2022, Bilkent University. This is made for you track our project's progress through the semester.
+This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent University. This is made for you track our project's progress through the semester.
+****
+### Project Folders
+[Project Proposal Report](https://github.com/yagizyasar/LibBerry/blob/main/Project%20Proposal/Project%20Proposal%20Report.pdf)
+****
 ### Project Description
 In this project, we are going to be implementing an online library database. The name of the project is “LibBerry”.  There are 4 different user types in LibBerry: Student, Instructor, Librarian, and Outside Library Members. LibBerry has different functionalities for different users. 
 LibBerry allows all users to borrow and return materials, see their loans and pay back these loans. Furthermore, instructors can assign homework to a specific section of a specific course, and students that are assigned this homework can see the materials that are going to be used for doing the homework. Librarians are the ones who can change the status of the materials, close the debts of users and send warnings to other users. Users can ask questions, request materials, and reserve private rooms to study with their friends.
@@ -9,12 +13,7 @@ There are three main types of materials in the library: printed works, periodica
 Instructors can assign homework to specific sections of students. They will be asked to include material to be reviewed or used to do the homework as well. Students may see their homework through their account page.
 LibBerry is designed to bring main functionalities of a library together with the neoteric library and some of the classroom functionalities. 
 
+****
 
-
-### Project Folders
-
-[Project Proposal Report](https://github.com/yagizyasar/LibBerry/blob/main/Project%20Proposal/Project%20Proposal%20Report.pdf)
-
-
-> credits to Saitcan Baskol, Kutay Demiray, Berke Ucar, and Yagiz Yasar
+> Credits to Saitcan Baskol, Kutay Demiray, Berke Ucar, and Yagiz Yasar
 
