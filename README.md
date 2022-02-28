@@ -5,7 +5,7 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 ****
 
 ### Project Folder
-[Project Proposal Report](https://drive.google.com/drive/u/0/folders/18vERbA0y4Zz8kSzX_nWtxpJcQa6Q5cZ-)
+[Project Proposal Report](https://drive.google.com/file/d/1mABg5RuekYhEWTyY5PM72-ovcYbgtJt8/view?usp=sharing)
 
 ****
 
