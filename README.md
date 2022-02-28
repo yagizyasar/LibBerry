@@ -4,7 +4,7 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 
 ****
 
-### Project Folders
+### Project Folder
 [Project Proposal Report](https://github.com/yagizyasar/LibBerry/blob/main/Project%20Proposal/Project%20Proposal%20Report.pdf)
 
 ****
