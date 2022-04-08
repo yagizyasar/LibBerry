@@ -7,7 +7,7 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 ### Project Folder
 [Proposal Report](https://drive.google.com/file/d/1mABg5RuekYhEWTyY5PM72-ovcYbgtJt8/view?usp=sharing)
  <br /> 
-[Design Report]()
+[Design Report](https://drive.google.com/file/d/1M7BmLC2wvr98ADkEviNZlKgK1nms45F2/view?usp=sharing)
 
 ****
 
@@ -28,5 +28,5 @@ Instructors can assign homework to specific sections of students. They will be a
 
 > Credits to Saitcan Baskol, Kutay Demiray, Berke Ucar, and Yagiz Yasar 
 > <br />
-> [Here is a song for the good vibes!](https://www.youtube.com/watch?v=LR3GQfryp9M)
+> [Here is a song for the good vibes!](https://www.youtube.com/watch?v=mQ055hHdxbE)
 
