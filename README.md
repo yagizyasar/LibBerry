@@ -6,6 +6,7 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 
 ### Project Folder
 [Project Proposal Report](https://drive.google.com/file/d/1mABg5RuekYhEWTyY5PM72-ovcYbgtJt8/view?usp=sharing)
+ <br /> 
 [Project Design Report]()
 
 ****
@@ -20,7 +21,7 @@ There are 4 different user types in LibBerry: Student, Instructor, Librarian, an
 LibBerry allows all users to borrow and return materials, see their loans and pay back these loans. Furthermore, instructors can assign homework to a specific section of a specific course, and students that are assigned this homework can see the materials that are going to be used for doing the homework. Librarians send warnings to other users about the status of the books or specifically about other things. <br />  <br /> 
 Users first send requests to borrow materials and their requests are going to be queued if the requested material(s) is(are) borrowed to someone else. The returning of the materials is going to be executed manually. Users can request and reserve private rooms. If there is an available room, the system will assign the room to the user. Users can access the material sets which are defined already and get more information about their topic more properly. Users can also create reviews for the material that they borrowed, which include a rating (out of ten) and a comment. <br />  <br /> 
 There are three main types of materials in the library: printed works, periodicals, and audiovisuals. Instructors can also submit custom materials (e.g. course notes) that belong to one of these three types to the library. Custom materials are not available for students to reserve regularly; they can only be reserved with the use of material sets. <br />  <br /> 
-Instructors can assign homework to specific sections of students. They will be asked to include material to be reviewed or used to do the homework as well. Students may see their homework through their account page. <br />
+Instructors can assign homework to specific sections of students. They will be asked to include material to be reviewed or used to do the homework as well. Students may see their homework through their assignments page. <br />
 
 
 ****
