@@ -1,5 +1,5 @@
 ## LibBerry
-![Libberry Logo](https://github.com/yagizyasar/LibBerry/blob/main/Libbery%5B1674%5D.png)
+![](https://github.com/yagizyasar/LibBerry/blob/main/Libbery%5B1674%5D.png)
 ### Introduction
 This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent University. This is made for you track our project's progress through the semester.
 
