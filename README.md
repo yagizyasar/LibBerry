@@ -21,4 +21,5 @@ Instructors can assign homework to specific sections of students. They will be a
 ****
 
 > Credits to Saitcan Baskol, Kutay Demiray, Berke Ucar, and Yagiz Yasar
+> [Here is a song for the good vibes!](https://www.youtube.com/watch?v=LR3GQfryp9M)
 
