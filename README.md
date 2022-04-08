@@ -9,6 +9,10 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 
 ****
 
+### Entity-Relationship Diagram
+
+![ER Diagram](/img/ERDiagram.png)
+
 ### Project Description
 In this project, we are going to be implementing an online library database. The name of the project is “LibBerry”. LibBerry is designed to bring main functionalities of a library together with the neoteric library and some of the classroom functionalities. <br /> 
 There are 4 different user types in LibBerry: Student, Instructor, Librarian, and Outside Library Members. LibBerry has different functionalities for different users. <br />
