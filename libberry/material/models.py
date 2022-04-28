@@ -10,6 +10,10 @@ class Material(models.Model):
     amount = models.IntegerField(null=False)
     location = models.CharField(max_length=10)
 
+class Custom_Material(models.Model):
+    mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
+    type = models.CharField(max_length=10, null=False)
+
 class Printed(models.Model):
     mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     pages = models.IntegerField()
@@ -32,4 +36,6 @@ class Periodical_Material(models.Model):
 
 class Material_Set(models.Model):
     set_id = models.AutoField(primary_key=True, null=False, unique=True)
-    publicity = 
+    publicity = models.CharField(max_length=7, null=False)
+    set_name = models.CharField(max_length=30, null=False)
+
