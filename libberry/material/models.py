@@ -32,10 +32,17 @@ class Audiovisual(models.Model):
 class Periodical_Material(models.Model):
     mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     pages = models.IntegerField()
-    period = models.CharField(max_length=12)
-
+    class Period(models.TextChoices):
+        DAILY = "Daily"
+        WEEKLY = "Weekly"
+        MONTHLY = "Monthly"  
+    period = models.CharField(max_length=12, choices=Period.choices, default=Period.MONTHLY)
+    
 class Material_Set(models.Model):
     set_id = models.AutoField(primary_key=True, null=False, unique=True)
-    publicity = models.CharField(max_length=7, null=False)
+    class Publicity(models.TextChoices):
+        PUBLIC = "Public"
+        PRIVATE = "Private"  
+    publicity = models.CharField(max_length=7, null=False, choices=Publicity.choices, default=Publicity.Private)
     set_name = models.CharField(max_length=30, null=False)
 
