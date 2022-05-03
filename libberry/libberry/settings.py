@@ -81,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'libberrydb',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'USER': 'admin',
+        'PASSWORD': 'libberry31',
+        'HOST': 'libberrydb.c7d6yzzuiqbi.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
