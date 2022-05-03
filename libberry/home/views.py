@@ -1,15 +1,14 @@
 from django.shortcuts import render
 from user.models import *
+from django.views.decorators.csrf import csrf_exempt
+from .dataaccess import *
 
 
 def login():
     return
 
+@csrf_exempt # TODO frontend bitince düzelt ================================================================================================
 def register(request):
-    if not request.user.is_authenticated:
-        print("Invalid register request: Librarian not authenticated")
-        return
-
     if request.method != "POST":
         print("Invalid register request: Request must be POST")
         return
@@ -36,7 +35,7 @@ def register(request):
     user.save()
 
     # type specific updates
-   #db_register_user(user=user, balance=0, registrar_id=request.user.username)
+    db_register_user(user=user, balance=0, registrar_id=1)
     match type:
         case "student":
             gpa = request.POST["gpa"]
@@ -62,7 +61,7 @@ def register(request):
             if spec == None:
                 print("Invalid register request: Missing field in Librarian")
                 return
-            #db_register_librarian(user=user, specialization=spec)
+            db_register_librarian(user=user, specialization=spec)
             return
         case "outside_member":
             reg_date = request.POST["registration_date"]
