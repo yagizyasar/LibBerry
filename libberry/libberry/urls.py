@@ -25,4 +25,5 @@ from warning import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',include('user.urls')),
+    path('login'), #buraya view eklenecek
 ]
