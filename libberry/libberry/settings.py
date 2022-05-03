@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'material.apps.MaterialConfig',
+    'requests.apps.RequestsConfig',
+    'room.apps.RoomConfig',
+    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,9 +82,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'libberrydb',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'USER': 'admin',
+        'PASSWORD': 'libberry31',
+        'HOST': 'libberrydb.c7d6yzzuiqbi.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
