@@ -43,6 +43,6 @@ class Material_Set(models.Model):
     class Publicity(models.TextChoices):
         PUBLIC = "Public"
         PRIVATE = "Private"  
-    publicity = models.CharField(max_length=7, null=False, choices=Publicity.choices, default=Publicity.Private)
+    publicity = models.CharField(max_length=7, null=False, choices=Publicity.choices, default=Publicity.PRIVATE)
     set_name = models.CharField(max_length=30, null=False)
 

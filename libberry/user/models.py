@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -24,6 +25,7 @@ class OutsideMember(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,null=False,primary_key=True)
     registration_date = models.DateField(auto_now_add=True,null=False)
     card_no = models.IntegerField(unique=True,null=False)
+    expire_date = models.DateField(null=False,default=datetime.now()) # default değer yanlış
 
 class Instructor(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,null=False,primary_key=True)
