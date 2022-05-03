@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'material.apps.MaterialConfig',
     'requests.apps.RequestsConfig',
     'room.apps.RoomConfig',
+    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [

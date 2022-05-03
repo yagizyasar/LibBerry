@@ -16,14 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-# to obtain the views and use them in the paths - can delete if no need 
-from material import views
-from user import views
-from room import views
-from warning import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/',include('user.urls')),
-    path('login'), #buraya view eklenecek
+    path('/',include('home.urls')),
 ]
