@@ -1,15 +1,43 @@
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login,logout
 from django.shortcuts import render
 from user.models import *
+from django.views.decorators.csrf import csrf_exempt
+from .dataaccess import *
 
+@csrf_exempt
+def user_login(request):
+    if request.user.is_authenticated:
+        print("Invalid login request: User already authenticated")
 
-def login():
-    return
-
-def register(request):
-    if not request.user.is_authenticated:
-        print("Invalid register request: Librarian not authenticated")
+    if request.method != "POST":
+        print("Invalid login request: Request must be GET")
         return
 
+    username = request.POST['id']
+    password = request.POST['password']
+
+    if username == None or password == None:
+        print("Invalid login request: Missing username or password field")
+        return
+
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request,user)
+        print("User logged in")
+        logout(request)
+        return HttpResponse('<h1>Successfully logged in</h1>')
+        # TODO redirect page i gelince yolla
+    else:
+        print("Invalid login request: Wrong username or password")
+        # TODO adama error ver
+
+@csrf_exempt # TODO frontend bitince düzelt ================================================================================================
+def user_register(request):
+    #if not request.user.is_authenticated:
+        #print("Invalid register request: Librarian not authenticated")
+        #return HttpResponse('<h1>Invalid Access</h1>')
+        
     if request.method != "POST":
         print("Invalid register request: Request must be POST")
         return
@@ -36,7 +64,7 @@ def register(request):
     user.save()
 
     # type specific updates
-   #db_register_user(user=user, balance=0, registrar_id=request.user.username)
+    db_register_mainuser(user=user, balance=0, registrar_id=user.username)
     match type:
         case "student":
             gpa = request.POST["gpa"]
@@ -45,16 +73,18 @@ def register(request):
             if gpa == None or department == None:
                 print("Invalid register request: Missing field in Student")
                 return
-            #db_register_student(user=user, department=department, gpa=gpa)
+            db_register_student(user=user, department=department, gpa=gpa)
+            print("Registered student")
             return
         case "instructor":
             office = request.POST["office"]
             department = request.POST["department"]
-
-            if office == None or department == None:
+            tenure = request.POST["tenure"]
+            if office == None or department == None or tenure == None:
                 print("Invalid register request: Missing field in Instructor")
                 return
-            #db_register_instructor(user=user, department=department, gpa=gpa)
+            db_register_instructor(user=user, office=office, department=department,tenure=tenure)
+            print("Registered instructor")
             return
         case "librarian":
             spec = request.POST["specialization"]
@@ -62,16 +92,18 @@ def register(request):
             if spec == None:
                 print("Invalid register request: Missing field in Librarian")
                 return
-            #db_register_librarian(user=user, specialization=spec)
-            return
+            db_register_librarian(user=user, specialization=spec)
+            print("Registered librarian")
+            return HttpResponse('<h1>Successfull</h1>')
         case "outside_member":
-            reg_date = request.POST["registration_date"]
+            #reg_date = request.POST["registration_date"]
             card_no = request.POST["card_no"]
             expire_date = request.POST["expire_date"]
 
-            if reg_date == None or card_no == None or expire_date == None:
+            if card_no == None or expire_date == None:
                 print("Invalid register request: Missing field in OutsideMember")
                 return
-            #db_register_outside_member(user=user, registration_date=reg_date, card_no=card_no, expire_date=expire_date)
-            return
+            db_register_outside_member(user=user, card_no=card_no, expire_date=expire_date)
+            print("Registered outside member")
+            
 
