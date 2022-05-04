@@ -20,7 +20,7 @@ class Student(models.Model):
 
 class OutsideMember(models.Model):
     user = models.OneToOneField(MainUser,primary_key=True,on_delete=models.CASCADE)
-    registration_date = models.DateField(auto_now_add=True,null=False)
+    registration_date = models.DateField(auto_now_add=True,null=False,blank=True)
     card_no = models.IntegerField(unique=True,null=False)
     expire_date = models.DateField(null=False,default=datetime.now()) # default değer yanlış
 
