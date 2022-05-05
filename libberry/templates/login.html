@@ -2,18 +2,18 @@
 {%load static%}
 
 
-{% block generic content %}
+{% block login-form %}
 <!--configure the action for the following form!!!!!!!!!!-->
-<form action = "" method = "post" class="login-form">
+<form action = "{% url 'user_login' %}" method = "post" class="login-form">
     {% csrf_token %}
     <div id = "id-area">
         <label for="user-id">ID</label>
         <input type="text" id="user-id" name="user-id" required>
     </div>
     <div id = "password-area">
-        <label for="user-password">ID</label>
+        <label for="user-password">Password</label>
         <input type="password" id="user-password" name="user-password" required>
     </div>
     <input type="submit" value="Login">
 </form>
-{% endblock generic content %}
+{% endblock %}

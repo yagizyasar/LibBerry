@@ -1,11 +1,14 @@
+from cgitb import html
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from user.models import *
 from django.views.decorators.csrf import csrf_exempt
 from .dataaccess import *
 
-@csrf_exempt
+def init_view(request):
+    return render(request,'login.html')
+
 def user_login(request):
     if request.user.is_authenticated:
         print("Invalid login request: User already authenticated")
@@ -14,8 +17,8 @@ def user_login(request):
         print("Invalid login request: Request must be GET")
         return
 
-    username = request.POST['id']
-    password = request.POST['password']
+    username = request.POST['user-id']
+    password = request.POST['user-password']
 
     if username == None or password == None:
         print("Invalid login request: Missing username or password field")
@@ -25,8 +28,7 @@ def user_login(request):
     if user is not None:
         login(request,user)
         print("User logged in")
-        logout(request)
-        return HttpResponse('<h1>Successfully logged in</h1>')
+        return redirect('home')
         # TODO redirect page i gelince yolla
     else:
         print("Invalid login request: Wrong username or password")

@@ -1,10 +1,10 @@
 {% extends 'generic.html' %}
-{%load static%}
+{% load static %}
 
 
 {% block generic content %}
 <!--configure the action for the following form!!!!!!!!!!-->
-<form action = "" method = "post" class="login-form">
+<form action = "{ % url 'user_login' % }" method = "post" class="login-form">
     {% csrf_token %}
     <div id = "id-area">
         <label for="user-id">ID</label>
