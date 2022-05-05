@@ -2,12 +2,24 @@ from datetime import datetime
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class MainUser(models.Model):
-    user = models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE,related_name="user")
+    user = models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE,related_name="user",to_field="username")
     balance = models.DecimalField(max_digits=7,decimal_places=2,null=False)
     registrar_id = models.ForeignKey(User,db_column="registrar_id",on_delete=models.SET_NULL,null=True,blank=True,related_name="registrar_id")
+    class types(models.TextChoices):
+        STUDENT = 'student', _('Student')
+        INSTRUCTOR = 'instructor', _('Instructor')
+        LIBRARIAN = 'librarian', _('Librarian')
+        OUTSIDEMEMBER = 'outsidemember', _('Outsidemember')
+        UNDEFINED = 'undefined',_('Undefined')
+    type = models.CharField(
+        max_length=20,
+        choices=types.choices,
+        null = False,
+        default= types.UNDEFINED
+    )
 
 class Librarian(models.Model):
     user = models.OneToOneField(MainUser,primary_key=True,on_delete=models.CASCADE)
@@ -22,8 +34,7 @@ class OutsideMember(models.Model):
     user = models.OneToOneField(MainUser,primary_key=True,on_delete=models.CASCADE)
     registration_date = models.DateField(auto_now_add=True,null=False,blank=True)
     card_no = models.IntegerField(unique=True,null=False)
-    expire_date = models.DateField(null=False,default=datetime.now()) # default değer yanlış
-
+    expire_date = models.DateField(null=False,default=timezone.now) # default değer yanlış
 class Instructor(models.Model):
     user = models.OneToOneField(MainUser,primary_key=True,on_delete=models.CASCADE)
     office = models.CharField(max_length=8,null=False)

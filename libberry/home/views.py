@@ -9,6 +9,15 @@ from .dataaccess import *
 def init_view(request):
     return render(request,'login.html')
 
+def fetch_all_users_view(request):
+    if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
+        users = get_all_users()
+        return render(request,'registration.html',{'users':users})
+    
+    return redirect('home')
+
+
+
 def user_login(request):
     if request.user.is_authenticated:
         print("Invalid login request: User already authenticated")
@@ -28,13 +37,14 @@ def user_login(request):
     if user is not None:
         login(request,user)
         print("User logged in")
+        request.session["user_type"] = get_user_type(user.username)
+        # TODO save more variables if needed
         return redirect('home')
         # TODO redirect page i gelince yolla
     else:
         print("Invalid login request: Wrong username or password")
         # TODO adama error ver
 
-@csrf_exempt # TODO frontend bitince düzelt ================================================================================================
 def user_register(request):
     #if not request.user.is_authenticated:
         #print("Invalid register request: Librarian not authenticated")
@@ -66,7 +76,7 @@ def user_register(request):
     user.save()
 
     # type specific updates
-    db_register_mainuser(user=user, balance=0, registrar_id=user.username)
+    db_register_mainuser(username=user.username, balance=0, registrar_id=request.user.username,type=type)
     match type:
         case "student":
             gpa = request.POST["gpa"]
@@ -77,7 +87,7 @@ def user_register(request):
                 return
             db_register_student(user=user, department=department, gpa=gpa)
             print("Registered student")
-            return
+            return redirect("register_panel")
         case "instructor":
             office = request.POST["office"]
             department = request.POST["department"]
@@ -87,7 +97,7 @@ def user_register(request):
                 return
             db_register_instructor(user=user, office=office, department=department,tenure=tenure)
             print("Registered instructor")
-            return
+            return redirect("register_panel")
         case "librarian":
             spec = request.POST["specialization"]
             
@@ -96,7 +106,7 @@ def user_register(request):
                 return
             db_register_librarian(user=user, specialization=spec)
             print("Registered librarian")
-            return HttpResponse('<h1>Successfull</h1>')
+            return redirect("register_panel")
         case "outside_member":
             #reg_date = request.POST["registration_date"]
             card_no = request.POST["card_no"]
@@ -107,5 +117,6 @@ def user_register(request):
                 return
             db_register_outside_member(user=user, card_no=card_no, expire_date=expire_date)
             print("Registered outside member")
+            return redirect("register_panel")
             
 

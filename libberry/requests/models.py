@@ -7,8 +7,8 @@ class NewMaterialRequest(models.Model):
     request_id = models.AutoField(primary_key=True,null=False,unique=True)
     new_mat_title = models.CharField(max_length=50,null=False)
     new_mat_author = models.CharField(max_length=50,null=False)
-    user_id = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-    librarian_id = models.ForeignKey(Librarian,on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    librarian = models.ForeignKey(Librarian,on_delete=models.SET_NULL,null=True)
     is_custom = models.BooleanField(default=False,null=False)
     description = models.TextField(max_length=300)
     class statuses(models.TextChoices):
@@ -26,9 +26,9 @@ class NewMaterialRequest(models.Model):
 
 class AskRequest(models.Model):
     ask_id = models.AutoField(primary_key=True,null=False,unique=True)
-    student_id = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    student = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     question = models.TextField(max_length=250,null=False)
-    librarian_id = models.ForeignKey(Librarian,on_delete=models.SET_NULL,null=True)
+    librarian = models.ForeignKey(Librarian,on_delete=models.SET_NULL,null=True)
     reply = models.TextField(max_length=250)
     class statuses(models.TextChoices):
         UNANSWERED = 'unanswered', _('unanswered')
