@@ -1,0 +1,238 @@
+<!--The template for the librarians' registration screen-->
+{% extends 'generic.html' %}
+{%block content%}
+
+<!--splitting screen first to show the users and the registration form-->
+<div class='left-side'>
+    <div class='centered'>
+        <select name="register-list-select" id="register-list-select"onchange="changeList(value)" >
+            <option value="none"> ----- </option>
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+            <option value="librarian">Librarian</option>
+            <option value="outside-member">Outside Member</option>
+        </select>
+        <div class="student-list"id="student-list"name="student-list" >
+            {%for tempuser in users %} 
+                <!--student hepsi icin farkli if atmamiza gerek yok 
+                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                {% if tempuser.type == 1 %}
+                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                    <text>{{ tempuser.name }}</text>
+                    <input type="button" value="Update" style="float: right;">
+                    <input type="button" value="Delete" style="float: right;">
+                </div>
+                {%endif%}
+            
+            {%endfor%}
+        </div>
+        <div class="instructor-list"id="instructor-list"name="instructor-list" >
+            {%for tempuser in users %} 
+                <!--student hepsi icin farkli if atmamiza gerek yok 
+                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                {% if tempuser.type == 2 %}
+                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                    <text>{{ tempuser.name }}</text>
+                    <input type="button" value="Update" style="float: right;">
+                    <input type="button" value="Delete" style="float: right;">
+                </div>
+                {%endif%}
+            
+            {%endfor%}
+        </div>
+        <div class="librarian-list"id="librarian-list"name="librarian-list" >
+            {%for tempuser in users %} 
+                <!--student hepsi icin farkli if atmamiza gerek yok 
+                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                {% if tempuser.type == 3 %}
+                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                    <text>{{ tempuser.name }}</text>
+                    <input type="button" value="Update" style="float: right;">
+                    <input type="button" value="Delete" style="float: right;">
+                </div>
+                {%endif%}
+            
+            {%endfor%}
+        </div>
+        <div class="outside-member-list"id="outside-member-list"name="outside-member-list" >
+            {%for tempuser in users %} 
+                <!--student hepsi icin farkli if atmamiza gerek yok 
+                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                {% if tempuser.type ==4 %}
+                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                    <text>{{ tempuser.name }}</text>
+                    <input type="button" value="Update" style="float: right;">
+                    <input type="button" value="Delete" style="float: right;">
+                </div>
+                {%endif%}
+            
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+<div class='right-side'>
+    <div class='centered'>
+        <select name="register-select" id="register-select"onchange="changeForm(value)" >
+            <option value="none"> ----- </option>
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+            <option value="librarian">Librarian</option>
+            <option value="outside-member">Outside Member</option>
+        </select>
+        <form name = "registration-form" id="registration-form" action="{%url 'user_register'%}" method="post" class="registration-form">
+            {% csrf_token %}
+            <div id = "id-area">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+            <div id = "first-name-area">
+                <label for="name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div id = "last-name-area">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div id = "email-area">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div id = "dept-area">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required>
+            </div>
+            <div id = "gpa-area">
+                <label for="gpa">GPA:</label>
+                <input type="text" id="gpa" name="gpa" required>
+            </div>
+            <div id = "spec-area">
+                <label for="specialization">Specialization:</label>
+                <input type="text" id="specialization" name="specialization" required>
+            </div>
+            <div id = "tenure-area">
+                <label for="tenure">Tenure:</label>
+                <input type="text" id="tenure" name="tenure" required>
+            </div>
+            <div id = "office-area">
+                <label for="office">Office:</label>
+                <input type="text" id="office" name="office" required>
+            </div>
+            <div id = "card-no-area">
+                <label for="card_no">Card No:</label>
+                <input type="text" id="card_no" name="card_no" required>
+            </div>
+            <div id = "expire-date-area">
+                <label for="expire_date">Expire Date:</label>
+                <input type="text" id="expire_date" name="expire_date" required>
+            </div>
+            <div id = "password-area">
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password" required>
+            </div>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</div>
+{%endblock content%}
+<script type="text/javascript">
+    function changeForm(value){
+        if (value == "student"){
+            getElementById('first-name-area').style.visibility = 'visible';
+            getElementById('last-name-area').style.visibility = 'visible';
+            getElementById('email-area').style.visibility = 'visible';
+            getElementById('dept-area').style.visibility = 'visible';
+            getElementById('gpa-area').style.visibility = 'visible';
+            getElementById('spec-area').style.visibility = 'hidden';
+            getElementById('tenure-area').style.visibility = 'hidden';
+            getElementById('office-area').style.visibility = 'hidden';
+            getElementById('card-no-area').style.visibility = 'hidden';
+            getElementById('expire-date-area').style.visibility = 'hidden';
+            getElementById('password-area').style.visibility = 'visible';
+        }
+        else if (value == "instructor"){
+            getElementById('first-name-area').style.visibility = 'visible';
+            getElementById('last-name-area').style.visibility = 'visible';
+            getElementById('email-area').style.visibility = 'visible';
+            getElementById('dept-area').style.visibility = 'visible';
+            getElementById('gpa-area').style.visibility = 'hidden';
+            getElementById('spec-area').style.visibility = 'hidden';
+            getElementById('tenure-area').style.visibility = 'visible';
+            getElementById('office-area').style.visibility = 'visible';
+            getElementById('card-no-area').style.visibility = 'hidden';
+            getElementById('expire-date-area').style.visibility = 'hidden';
+            getElementById('password-area').style.visibility = 'visible';
+        }
+        else if (value == "librarian"){
+            getElementById('first-name-area').style.visibility = 'visible';
+            getElementById('last-name-area').style.visibility = 'visible';
+            getElementById('email-area').style.visibility = 'visible';
+            getElementById('dept-area').style.visibility = 'hidden';
+            getElementById('gpa-area').style.visibility = 'hidden';
+            getElementById('spec-area').style.visibility = 'visible';
+            getElementById('tenure-area').style.visibility = 'hidden';
+            getElementById('office-area').style.visibility = 'hidden';
+            getElementById('card-no-area').style.visibility = 'hidden';
+            getElementById('expire-date-area').style.visibility = 'hidden';
+            getElementById('password-area').style.visibility = 'visible';
+        }
+        else if (value == "outside-member"){
+            getElementById('first-name-area').style.visibility = 'visible';
+            getElementById('last-name-area').style.visibility = 'visible';
+            getElementById('email-area').style.visibility = 'visible';
+            getElementById('dept-area').style.visibility = 'hidden';
+            getElementById('gpa-area').style.visibility = 'hidden';
+            getElementById('spec-area').style.visibility = 'hidden';
+            getElementById('tenure-area').style.visibility = 'hidden';
+            getElementById('office-area').style.visibility = 'hidden';
+            getElementById('card-no-area').style.visibility = 'visible';
+            getElementById('expire-date-area').style.visibility = 'visible';
+            getElementById('password-area').style.visibility = 'visible';
+        }
+        else {
+            getElementById('first-name-area').style.visibility = 'hidden';
+            getElementById('last-name-area').style.visibility = 'hidden';
+            getElementById('email-area').style.visibility = 'hidden';
+            getElementById('dept-area').style.visibility = 'hidden';
+            getElementById('gpa-area').style.visibility = 'hidden';
+            getElementById('spec-area').style.visibility = 'hidden';
+            getElementById('tenure-area').style.visibility = 'hidden';
+            getElementById('office-area').style.visibility = 'hidden';
+            getElementById('card-no-area').style.visibility = 'hidden';
+            getElementById('expire-date-area').style.visibility = 'hidden';
+            getElementById('password-area').style.visibility = 'hidden';
+        }
+    }
+    function changeList(value){
+        if (value == "student"){
+            getElementById('student-list').style.visibility = 'visible'
+            getElementById('instructor-list').style.visibility = 'hidden'
+            getElementById('librarian-list').style.visibility = 'hidden'
+            getElementById('outside-member-list').style.visibility = 'hidden'
+        }
+        else if (value == "instructor"){
+            getElementById('student-list').style.visibility = 'hidden'
+            getElementById('instructor-list').style.visibility = 'visible'
+            getElementById('librarian-list').style.visibility = 'hidden'
+            getElementById('outside-member-list').style.visibility = 'hidden'
+        }
+        else if (value == "librarian"){
+            getElementById('student-list').style.visibility = 'hidden'
+            getElementById('instructor-list').style.visibility = 'hidden'
+            getElementById('librarian-list').style.visibility = 'visible'
+            getElementById('outside-member-list').style.visibility = 'hidden'
+        }
+        else if (value == "outside-member"){
+            getElementById('student-list').style.visibility = 'hidden'
+            getElementById('instructor-list').style.visibility = 'hidden'
+            getElementById('librarian-list').style.visibility = 'hidden'
+            getElementById('outside-member-list').style.visibility = 'visible'
+        }
+        else {
+            getElementById('student-list').style.visibility = 'hidden'
+            getElementById('instructor-list').style.visibility = 'hidden'
+            getElementById('librarian-list').style.visibility = 'hidden'
+            getElementById('outside-member-list').style.visibility = 'hidden'
+        }
+    }
+</script>
