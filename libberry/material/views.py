@@ -38,11 +38,11 @@ def add_material(request):
             if pages == None:
                 print("Invalid add material request: Missing field in printed material")
                 return
-            db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages)
+            #db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages)
             print("Added printed material \"%s\"", [title])
             return redirect('add_material')
-        case "audiovisual":
+        #case "audiovisual":
             
-def remove_material(request):
+#def remove_material(request):
 
         
