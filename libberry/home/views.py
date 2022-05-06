@@ -1,10 +1,12 @@
 from cgitb import html
+from os import remove
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.shortcuts import redirect, render
 from user.models import *
 from django.views.decorators.csrf import csrf_exempt
 from .dataaccess import *
+from django.http import HttpResponseRedirect
 
 def init_view(request):
     return render(request,'login.html')
@@ -46,17 +48,22 @@ def user_login(request):
         print("Invalid login request: Wrong username or password")
         # TODO adama error ver
 
+@csrf_exempt
 def user_register(request):
-    #if not request.user.is_authenticated:
-        #print("Invalid register request: Librarian not authenticated")
-        #return HttpResponse('<h1>Invalid Access</h1>')
+    if not request.user.is_authenticated:
+        print("Invalid register request: Librarian not authenticated")
+        return redirect('user_login')
+
+    if request.session["user_type"] != "librarian":
+        print("Invalid Permissions for registration")
+        return redirect('home')
         
     if request.method != "POST":
         print("Invalid register request: Request must be POST")
         return
 
     type = request.POST["type"]
-    if type not in ["student", "instructor", "librarian", "outside_member"]:
+    if type not in ["student", "instructor", "librarian", "outsidemember"]:
         print("Invalid register request: Invalid user type in request")
         return
 
@@ -108,7 +115,7 @@ def user_register(request):
             db_register_librarian(user=user, specialization=spec)
             print("Registered librarian")
             return redirect("register_panel")
-        case "outside_member":
+        case "outsidemember":
             #reg_date = request.POST["registration_date"]
             card_no = request.POST["card_no"]
             expire_date = request.POST["expire_date"]
@@ -119,5 +126,31 @@ def user_register(request):
             db_register_outside_member(user=user, card_no=card_no, expire_date=expire_date)
             print("Registered outside member")
             return redirect("register_panel")
+
+def user_remove(request):
+    if not request.user.is_authenticated:
+        print("Invalid register request: Librarian not authenticated")
+        return redirect('user_login')
+    
+    if request.session["user_type"] != "librarian":
+        print("Invalid Permissions for deletion")
+        return redirect('home')
+    
+    if request.method != "POST":
+        print("Invalid deletion request: Request must be POST")
+        return HttpResponseRedirect(request.path_info)
+    
+    deleted_user = request.post["username"]
+    if deleted_user:
+        remove_user(deleted_user)
+        print("Registered outside member")
+    else:
+        print("Username to delete is NULL")
+    return redirect("register_panel")
+
+    
+        
+    
+
             
 
