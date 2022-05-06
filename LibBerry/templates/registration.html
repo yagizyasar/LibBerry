@@ -12,7 +12,8 @@
             <option value="outside-member">Outside Member</option>
         </select>
         <div class="student-list"id="student-list"name="student-list" >
-            {%for tempuser in users %} 
+            {%for tempuser in users %}
+            <text>{{ tempuser.type }}</text> 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
                 {% if tempuser.type == "student" %}
@@ -29,7 +30,7 @@
             {%for tempuser in users %} 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == 2 %}
+                {% if tempuser.type == "instructor" %}
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.name }}</text>
                     <input type="button" value="Update" style="float: right;">
@@ -43,7 +44,7 @@
             {%for tempuser in users %} 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == 3 %}
+                {% if tempuser.type == "librarian" %}
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.name }}</text>
                     <input type="button" value="Update" style="float: right;">
@@ -57,7 +58,7 @@
             {%for tempuser in users %} 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type ==4 %}
+                {% if tempuser.type == "outsidemember" %}
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.name }}</text>
                     <input type="button" value="Update" style="float: right;">

@@ -30,10 +30,10 @@ def get_user_type(user_id):
     #print("get_user_type(): " , res[0])
     return res[0]
 
-def get_all_users(type):
+def get_all_users():
     #return User.objects.raw("SELECT * FROM auth_user ORDER BY first_name,last_name")
     cursor = connection.cursor()
-    cursor.execute("SELECT A.username, A.first_name, A.last_name FROM auth_user A, user_mainuser U WHERE A.username=U.user_id AND U.type=%s ORDER BY A.first_name,A.last_name;", [type])
+    cursor.execute("SELECT * FROM auth_user A, user_mainuser U WHERE A.username=U.user_id ORDER BY A.first_name,A.last_name;")
     desc = cursor.description
     column_names = [col[0] for col in desc]
     data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
