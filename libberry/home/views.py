@@ -12,7 +12,6 @@ def init_view(request):
 def fetch_all_users_view(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
         users = get_all_users()
-        print(users)
         return render(request,'registration.html',{'users':users})
     
     return redirect('home')
@@ -56,7 +55,7 @@ def user_register(request):
         return
 
     type = request.POST["type"]
-    if type not in ["student", "instructor", "librarian", "outside_member"]:
+    if type not in ["student", "instructor", "librarian", "outsidemember"]:
         print("Invalid register request: Invalid user type in request")
         return
 
@@ -108,7 +107,7 @@ def user_register(request):
             db_register_librarian(user=user, specialization=spec)
             print("Registered librarian")
             return redirect("register_panel")
-        case "outside_member":
+        case "outsidemember":
             #reg_date = request.POST["registration_date"]
             card_no = request.POST["card_no"]
             expire_date = request.POST["expire_date"]
