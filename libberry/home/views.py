@@ -139,10 +139,10 @@ def user_remove(request):
         print("Invalid deletion request: Request must be POST")
         return HttpResponseRedirect(request.path_info)
     
-    deleted_user = request.post["username"]
+    deleted_user = request.POST["username"]
     if deleted_user:
         remove_user(deleted_user)
-        print("Registered outside member")
+        print("Removed user.")
     else:
         print("Username to delete is NULL")
     return redirect("register_panel")
