@@ -14,7 +14,6 @@ def init_view(request):
 def fetch_all_users_view(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
         users = get_all_users()
-        print(users)
         return render(request,'registration.html',{'users':users})
     
     return redirect('home')
