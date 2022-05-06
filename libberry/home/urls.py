@@ -6,5 +6,5 @@ urlpatterns = [
     path('login/', views.user_login, name='user_login'),
     path('',views.init_view,name='home'),
     path('registerpanel/',views.fetch_all_users_view,name='register_panel'),
-    path('removeuser/',views.remove_user,name='user_remove')
+    path('removeuser/',views.user_remove,name='user_remove')
 ]

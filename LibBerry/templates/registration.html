@@ -18,8 +18,12 @@
                 {% if tempuser.type == "student" %}
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.username }}</text>
-                    <input type="button" value="Update" style="float: right;">
-                    <input type="button" value="Delete" style="float: right;">
+                    <input type="button" value="Update" style="float: right;" >
+                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" value = {{ tempuser.username }} name="username">
+                        <input type="submit" value = "Delete">
+                    </form>
                 </div>
                 {%endif%}
             
@@ -33,7 +37,11 @@
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.username }}</text>
                     <input type="button" value="Update" style="float: right;">
-                    <input type="button" value="Delete" style="float: right;">
+                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" value = {{ tempuser.username }} name="username">
+                        <input type="submit" value = "Delete">
+                    </form>
                 </div>
                 {%endif%}
             
@@ -47,13 +55,17 @@
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.username }}</text>
                     <input type="button" value="Update" style="float: right;">
-                    <input type="button" value="Delete" style="float: right;">
+                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" value = {{ tempuser.username }} name="username">
+                        <input type="submit" value = "Delete">
+                    </form>
                 </div>
                 {%endif%}
             
             {%endfor%}
         </div>
-        <div class="outside-member-list"id="outside-member-list"name="outside-member-list"style="display:none;">
+        <div class="outside-member-list" id="outside-member-list" name="outside-member-list" style="display:none;">
             {%for tempuser in users %} 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
@@ -61,7 +73,11 @@
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.username }}</text>
                     <input type="button" value="Update" style="float: right;">
-                    <input type="button" value="Delete" style="float: right;">
+                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" value = {{ tempuser.username }} name="username">
+                        <input type="submit" value = "Delete">
+                    </form>
                 </div>
                 {%endif%}
             

@@ -59,9 +59,9 @@ def remove_user(username):
     try:
         table_type = get_user_type(username)
         if table_type:
+            connection.cursor().execute("DELETE FROM user_%s WHERE user_id=%s;",[table_type,username])
+            connection.cursor().execute("DELETE FROM user_mainuser WHERE user_id=%s;",[username])
             connection.cursor().execute("DELETE FROM auth_user WHERE username=%s;",[username])
-            connection.cursor().execute(("DELETE FROM user_mainuser WHERE user_id=%s",[username]))
-            connection.cursor().execute(("DELETE FROM user_%s WHERE user_id=%s",[table_type,username]))
         else:
             print("table type for removal is null")
     except:
