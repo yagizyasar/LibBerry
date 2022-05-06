@@ -38,11 +38,52 @@ def add_material(request):
             if pages == None:
                 print("Invalid add material request: Missing field in printed material")
                 return
-            #db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages)
-            print("Added printed material \"%s\"", [title])
+            db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages)
+            print("Added printed material \"{1}\"".format(title))
             return redirect('add_material')
-        #case "audiovisual":
+        case "audiovisual":
+            external_rating = request.POST["external_rating"]
+            length = request.POST["length"]
+            if external_rating == None or length == None:
+                print("Invalid add material request: Missing field in audiovisual")
+                return
+            db_add_material_audiovisual(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, external_rating=external_rating, length=length)
+            print("Added audiovisual material \"{1}\"".format(title))
+            return redirect('add_material')
+        case "periodical":
+            pages = request.POST["pages"]
+            period = request.POST["period"]
+            if pages == None or period == None:
+                print("Invalid add material request: Missing field in periodical")
+                return
+            db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period)
+            print("Added periodical material \"{1}\"".format(title))
+            return redirect('add_material')
             
-#def remove_material(request):
+def remove_material(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    
+    if request.session["user_type"] != "librarian":
+        print("Invalid remove material request: Authenticated user is not librarian")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    if request.method != "POST":
+        print("Invalid remove material request: Request type is not POST")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    mat_id = request.POST["mat_id"]
+    amount = request.POST["amount"]
+
+    if mat_id == None or amount == None:
+        print("Invalid remove material request: Missing field")
+        return
+
+    db_remove_material(mat_id, amount)
+    return redirect('remove_material')
+
+
+    
 
         

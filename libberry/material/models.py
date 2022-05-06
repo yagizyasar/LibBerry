@@ -11,11 +11,11 @@ class Material(models.Model):
     location = models.CharField(max_length=10)
 
 class Custom_Material(models.Model):
-    mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
+    mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     type = models.CharField(max_length=10, null=False)
 
 class Printed(models.Model):
-    mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
+    mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     pages = models.IntegerField()
 
 class Audiovisual(models.Model):
@@ -25,19 +25,21 @@ class Audiovisual(models.Model):
     #    if value < 0.0 or value > 10.0:
     #       raise ValidationError(_('%(value)s must be in the range [0.0, 10.0]'), params={'value': value},)
 
-    mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
+    mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     external_rating = models.DecimalField(max_digits=3,decimal_places=2)
     length = models.TimeField()
 
 class Periodical_Material(models.Model):
-    mat_id = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
+    mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     pages = models.IntegerField()
     class Period(models.TextChoices):
         DAILY = "Daily"
         WEEKLY = "Weekly"
         MONTHLY = "Monthly"  
     period = models.CharField(max_length=12, choices=Period.choices, default=Period.MONTHLY)
-    
+
+# TODO author
+
 class Material_Set(models.Model):
     set_id = models.AutoField(primary_key=True, null=False, unique=True)
     class Publicity(models.TextChoices):
