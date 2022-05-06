@@ -142,7 +142,6 @@ def user_remove(request):
     deleted_user = request.post["username"]
     if deleted_user:
         remove_user(deleted_user)
-        print("Registered outside member")
     else:
         print("Username to delete is NULL")
     return redirect("register_panel")
