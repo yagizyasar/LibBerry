@@ -92,7 +92,7 @@ def user_register(request):
             if gpa == None or department == None:
                 print("Invalid register request: Missing field in Student")
                 return
-            db_register_student(user=user, department=department, gpa=gpa)
+            db_register_student(user=user.username, department=department, gpa=gpa)
             print("Registered student")
             return redirect("register_panel")
         case "instructor":
@@ -102,7 +102,7 @@ def user_register(request):
             if office == None or department == None or tenure == None:
                 print("Invalid register request: Missing field in Instructor")
                 return
-            db_register_instructor(user=user, office=office, department=department,tenure=tenure)
+            db_register_instructor(user=user.username, office=office, department=department,tenure=tenure)
             print("Registered instructor")
             return redirect("register_panel")
         case "librarian":
@@ -111,7 +111,7 @@ def user_register(request):
             if spec == None:
                 print("Invalid register request: Missing field in Librarian")
                 return
-            db_register_librarian(user=user, specialization=spec)
+            db_register_librarian(user=user.username, specialization=spec)
             print("Registered librarian")
             return redirect("register_panel")
         case "outsidemember":
@@ -122,7 +122,7 @@ def user_register(request):
             if card_no == None or expire_date == None:
                 print("Invalid register request: Missing field in OutsideMember")
                 return
-            db_register_outside_member(user=user, card_no=card_no, expire_date=expire_date)
+            db_register_outside_member(user=user.username, card_no=card_no, expire_date=expire_date)
             print("Registered outside member")
             return redirect("register_panel")
 
