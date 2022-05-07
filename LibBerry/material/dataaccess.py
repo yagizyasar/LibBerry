@@ -19,10 +19,29 @@ def db_add_material_periodical(mat_id,title,genre,publish_date,amount,location,p
 def db_add_material_printed(mat_id,title,genre,publish_date,amount,location,pages,period):
     db_add_material(mat_id,title,genre,publish_date,amount,location)
     connection.cursor().execute("INSERT INTO material_printed VALUES (%s, %s);", [mat_id,pages])
-"""
-def db_find_mats(params):
+
+def db_generate_find_mat_query(params):
     query = "SELECT * FROM material_material WHERE "
-    match params.get("search_param_type")
+
+    # TODO search by multiple fields?
+    # search fields
+    match params.get("search_param_type"):
         case "title":
-            query += 
-"""
+            query += "title=\"{}\" AND ".format(params.get("title"))
+        case "author":
+            return # TODO
+        case "date":
+            query += "publish_date=\"{}\" AND ".format(params.get("publish_date"))
+        case "genre":
+            query += "genre=\"{}\" AND ".format(params.get("genre"))
+        case "set":
+            return # TODO
+
+    # rating threshold
+    query += "rating>={} AND ".format(params.get("rating_threshold"))
+    
+    # published after threshold
+    query += "publish_date>=\"{}\"".format(params.get("published_after"))
+
+    
+
