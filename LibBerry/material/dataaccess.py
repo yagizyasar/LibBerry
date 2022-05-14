@@ -87,23 +87,70 @@ def db_add_author(author_id, name, birth, bio):
     
     cursor.execute("INSERT INTO material_author VALUES(%s, %s, %s, %s);", [author_id, name, birth, bio])
 
+def db_add_material_set(set_id, creator_id, publicity, set_name):
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM material_material_set WHERE set_id=%s;", [set_id])
+    res = cursor.fetchone()
+    if res != None:
+        print("Invalid add material set request: Set id already exists")
+        return
+    
+    cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [set_id, publicity, set_name])
+    cursor.execute("INSERT INTO instructor_has_set VALUES(%s, %s)", [creator_id, set_id])
+
+def db_add_material_to_material_set(mat_id, set_id):
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+    res = cursor.fetchone()
+
+    if res != None:
+        print("Invalid add material to set request: Material already in the set")
+        return
+    
+    cursor.execute("INSERT INTO set_contains_mat VALUES (%s, %s);", [set_id, mat_id])
+
+def db_remove_material_from_material_set(mat_id, set_id):
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+    res = cursor.fetchone()
+
+    if res == None:
+        print("Invalid remove material from set request: Material not in the set")
+        return
+    
+    cursor.execute("DELETE FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+
 def db_generate_find_mat_query(params):
-    query = "SELECT * FROM material_material WHERE "
+    query = "SELECT * FROM material_material M WHERE "
 
     # TODO search by multiple fields?
     # search fields
-    match params.get("search_param_type"):
-        case "title":
-            query += "title=\"{}\" AND ".format(params.get("title"))
-        case "author":
-            return # TODO
-        case "date":
-            query += "publish_date=\"{}\" AND ".format(params.get("publish_date"))
-        case "genre":
-            query += "genre=\"{}\" AND ".format(params.get("genre"))
-        case "set":
-            return # TODO
+    title = params.get("title")
+    authors = params.get("author")
+    date = params.get("date")
+    genre = params.get("genre")
+    set = params.get("set")
 
+    if title != None:
+        query += "M.title=\"{}\" AND ".format(title)
+
+    if authors != None:
+        for author in authors:
+            query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
+
+    if date != None:
+        query += "publish_date=\"{}\" AND ".format(date)
+
+    if genre != None:
+        query += "genre=\"{}\" AND ".format(genre)
+
+    if set != None:
+        for set in sets:
+            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id;) AND ".format(set)
+    
     # rating threshold
     query += "rating>={} AND ".format(params.get("rating_threshold"))
     
@@ -115,5 +162,7 @@ def db_generate_find_mat_query(params):
     print(query)
     cursor = connection.cursor()
     cursor.execute(query)
-
+    res = to_dict(cursor)
+    print(res)
+    
     # TODO process query result

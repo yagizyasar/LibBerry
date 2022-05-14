@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'requests.apps.RequestsConfig',
     'room.apps.RoomConfig',
     'home.apps.HomeConfig',
+    'homework.apps.HomeworkConfig',
 ]
 
 MIDDLEWARE = [

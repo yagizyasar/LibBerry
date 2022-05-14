@@ -85,6 +85,15 @@ def remove_material(request):
     db_remove_material(mat_id, amount)
     return redirect('remove_material')
 
+def search_material(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    if request.method != "POST":
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+
 
     
 
