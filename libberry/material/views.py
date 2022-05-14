@@ -32,6 +32,8 @@ def add_material(request):
     type = request.POST["mat_type"]
     author_ids = request.POST["author_ids"]
 
+    print(type)
+
     if None in [mat_id, title, genre, publish_date, amount, location, type, author_ids]:
         print("Invalid add material request: Missing field in material")
         return HttpResponse("<h1> Invalid or Empty Type </h1>")

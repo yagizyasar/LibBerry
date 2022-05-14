@@ -24,3 +24,22 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+$(document).ready(function() {
+    $("button.add_form_field").click(function(e) {
+        e.preventDefault();
+        var name = $(this).closest(".container").find("input:first").attr("class")
+        var numInputs = $(this).closest(".container").find("input").size()
+        if (numInputs < 10) {
+            numInputs++;
+            if (name=="author_ids"){
+                $(this).closest(".container").append('<div><input type="text" name="mytext[' + numInputs + ']"/><a href="#" class="delete">Delete</a></div>');
+            }
+        } else alert('You Reached the limits')
+    });
+
+    $(document).on("click", ".delete", function(e) {
+        e.preventDefault();
+        $(this).parent('div').remove();
+    })
+});
