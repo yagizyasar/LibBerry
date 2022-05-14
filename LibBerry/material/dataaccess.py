@@ -115,5 +115,5 @@ def db_generate_find_mat_query(params):
     print(query)
     cursor = connection.cursor()
     cursor.execute(query)
-    
+
     # TODO process query result

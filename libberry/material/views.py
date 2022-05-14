@@ -34,7 +34,7 @@ def add_material(request):
 
     if None in [mat_id, title, genre, publish_date, amount, location, type, author_ids]:
         print("Invalid add material request: Missing field in material")
-        return
+        return HttpResponse("<h1> Invalid or Empty Type </h1>")
     
     match type:
         case "printed":
@@ -44,7 +44,6 @@ def add_material(request):
                 return
             db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, author_ids=author_ids)
             print("Added printed material \"{1}\"".format(title))
-            return redirect('add_material')
         case "audiovisual":
             external_rating = request.POST["external_rating"]
             length = request.POST["length"]
@@ -53,7 +52,6 @@ def add_material(request):
                 return
             db_add_material_audiovisual(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, external_rating=external_rating, length=length, author_ids=author_ids)
             print("Added audiovisual material \"{1}\"".format(title))
-            return redirect('add_material')
         case "periodical":
             pages = request.POST["pages"]
             period = request.POST["period"]
@@ -62,7 +60,7 @@ def add_material(request):
                 return
             db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period, author_ids=author_ids)
             print("Added periodical material \"{1}\"".format(title))
-            return redirect('root_material_view')
+    return redirect('root_material_view')
             
 def remove_material(request):
     if not request.user.is_authenticated:
