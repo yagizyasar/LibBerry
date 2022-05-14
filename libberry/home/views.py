@@ -145,8 +145,12 @@ def user_remove(request):
         print("Username to delete is NULL")
     return redirect("register_panel")
 
-    
         
+def user_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('home')
+
     
 
             
