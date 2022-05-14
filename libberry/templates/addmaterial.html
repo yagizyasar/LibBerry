@@ -1,0 +1,11 @@
+{% extends 'generic.html' %}
+{%block content%}
+<select name="add-material-select" id="add-material-select" onchange="changeForm(value)" >
+    <option value="none"> ----- </option>
+    <option value="student">Student</option>
+    <option value="instructor">Instructor</option>
+    <option value="librarian">Librarian</option>
+    <option value="outside-member">Outside Member</option>
+</select>
+<form action = "{% url 'add_material' %}"  method = "post" name = "add-material-form" id = "add-material-form" class = "add-material-form" style="display:none;">
+    
