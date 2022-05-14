@@ -35,6 +35,7 @@ class OutsideMember(models.Model):
     registration_date = models.DateField(auto_now_add=True,null=False,blank=True)
     card_no = models.IntegerField(unique=True,null=False)
     expire_date = models.DateField(null=False,default=timezone.now) # default değer yanlış
+    
 class Instructor(models.Model):
     user = models.OneToOneField(MainUser,primary_key=True,on_delete=models.CASCADE)
     office = models.CharField(max_length=8,null=False)

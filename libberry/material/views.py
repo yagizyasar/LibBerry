@@ -29,7 +29,7 @@ def add_material(request):
     type = request.POST["mat_type"]
     author_ids = request.POST["author_ids"]
 
-    if None in [mat_id, title, genre, publish_date, amount, location, mat_type, author_ids]:
+    if None in [mat_id, title, genre, publish_date, amount, location, type, author_ids]:
         print("Invalid add material request: Missing field in material")
         return
     

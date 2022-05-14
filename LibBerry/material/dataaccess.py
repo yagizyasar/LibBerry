@@ -1,6 +1,7 @@
 from django.db import connection
 from django.shortcuts import redirect
 from user.models import *
+from home.dataaccess import to_dict
 
 def db_add_material(mat_id,title,genre,publish_date,amount,location,author_ids):
     cursor = connection.cursor()
@@ -27,7 +28,7 @@ def db_add_material_printed(mat_id,title,genre,publish_date,amount,location,page
 
 def db_add_material_audiovisual(mat_id,title,genre,publish_date,amount,location,external_rating,length,author_ids):
     if(not db_add_material(mat_id,title,genre,publish_date,amount,location,author_ids)):
-        connection.cursor().execute("INSERT INTO material_audiovisual VALUES (%s,%s);",[external_rating,length])
+        connection.cursor().execute("INSERT INTO material_audiovisual VALUES (%s, %s,%s);",[mat_id, external_rating,length])
 
 def db_remove_material(mat_id, amount):
     cursor = connection.cursor()
@@ -55,18 +56,24 @@ def db_remove_material(mat_id, amount):
     result = cursor.fetchone() # should be a single row if mat_id exists in table, or None if it doesn't
     if result != None: # remove request is for a printed material
         cursor.execute("DELETE FROM material_printed WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
     cursor.execute("SELECT * FROM material_periodical WHERE mat_id=%s;", [mat_id])
     result = cursor.fetchone()
     if result != None: # remove request is for a periodical material
         cursor.execute("DELETE FROM material_periodical WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
     cursor.execute("SELECT * FROM material_audiovisual WHERE mat_id=%s;", [mat_id])
     result = cursor.fetchone()
     if result != None: # remove request is for a audiovisual material
         cursor.execute("DELETE FROM material_audiovisual WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
 def db_add_author(author_id, name, birth, bio):
@@ -106,6 +113,7 @@ def db_generate_find_mat_query(params):
     query = query[:-3]
     query += ";"
     print(query)
-    #cursor = connection.cursor()
-    #cursor.execute(query)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    
     # TODO process query result

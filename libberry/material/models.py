@@ -32,7 +32,7 @@ class Audiovisual(models.Model):
 
     mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     external_rating = models.DecimalField(max_digits=3,decimal_places=2)
-    length = models.TimeField()
+    length = models.IntegerField()
 
 class Periodical(models.Model):
     mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
