@@ -43,5 +43,10 @@ def db_generate_find_mat_query(params):
     # published after threshold
     query += "publish_date>=\"{}\"".format(params.get("published_after"))
 
-    
+    query = query[:-3]
+    query += ";"
+    print(query)
+    #cursor = connection.cursor()
+    #cursor.execute(query)
+    # TODO process query result
 
