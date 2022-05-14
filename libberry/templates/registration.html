@@ -16,14 +16,11 @@
             {%for tempuser in users %} 
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == 1 %}
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                     <text>{{ tempuser.name }}</text>
                     <input type="button" value="Update" style="float: right;">
                     <input type="button" value="Delete" style="float: right;">
-                </div>
-                {%endif%}
-            
+                </div>            
             {%endfor%}
         </div>
         <div class="instructor-list"id="instructor-list"name="instructor-list" >
