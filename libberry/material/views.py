@@ -27,8 +27,9 @@ def add_material(request):
     amount = request.POST["amount"]
     location = request.POST["location"]
     type = request.POST["mat_type"]
+    author_ids = request.POST["author_ids"]
 
-    if None in [mat_id, title, genre, publish_date, amount, location, mat_type]:
+    if None in [mat_id, title, genre, publish_date, amount, location, mat_type, author_ids]:
         print("Invalid add material request: Missing field in material")
         return
     
@@ -38,7 +39,7 @@ def add_material(request):
             if pages == None:
                 print("Invalid add material request: Missing field in printed material")
                 return
-            db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages)
+            db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, author_ids=author_ids)
             print("Added printed material \"{1}\"".format(title))
             return redirect('add_material')
         case "audiovisual":
@@ -47,7 +48,7 @@ def add_material(request):
             if external_rating == None or length == None:
                 print("Invalid add material request: Missing field in audiovisual")
                 return
-            db_add_material_audiovisual(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, external_rating=external_rating, length=length)
+            db_add_material_audiovisual(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, external_rating=external_rating, length=length, author_ids=author_ids)
             print("Added audiovisual material \"{1}\"".format(title))
             return redirect('add_material')
         case "periodical":
@@ -56,7 +57,7 @@ def add_material(request):
             if pages == None or period == None:
                 print("Invalid add material request: Missing field in periodical")
                 return
-            db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period)
+            db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period, author_ids=author_ids)
             print("Added periodical material \"{1}\"".format(title))
             return redirect('add_material')
             

@@ -2,14 +2,19 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _  
 
+class Author(models.Model):
+    author_id = models.AutoField(primary_key=True, null=False, unique=True)
+    name = models.CharField(max_length=50,null=False)
+    birthdate = models.DateField(null=False)
+    bio = models.TextField(max_length=500)
+
 class Material(models.Model):
-    mat_id = models.AutoField(primary_key=True, null=False, unique=True)
+    mat_id = models.CharField(primary_key=True, null=False, unique=True,max_length=30)
     title = models.CharField(max_length=50, null=False)
     genre = models.CharField(max_length=50, null=False)
     publish_date = models.DateField(null=False)
     amount = models.IntegerField(null=False)
     location = models.CharField(max_length=10)
-
 class Custom_Material(models.Model):
     mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     type = models.CharField(max_length=10, null=False)
@@ -29,7 +34,7 @@ class Audiovisual(models.Model):
     external_rating = models.DecimalField(max_digits=3,decimal_places=2)
     length = models.TimeField()
 
-class Periodical_Material(models.Model):
+class Periodical(models.Model):
     mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     pages = models.IntegerField()
     class Period(models.TextChoices):
@@ -38,8 +43,6 @@ class Periodical_Material(models.Model):
         MONTHLY = "Monthly"  
     period = models.CharField(max_length=12, choices=Period.choices, default=Period.MONTHLY)
 
-# TODO author
-
 class Material_Set(models.Model):
     set_id = models.AutoField(primary_key=True, null=False, unique=True)
     class Publicity(models.TextChoices):
@@ -47,4 +50,7 @@ class Material_Set(models.Model):
         PRIVATE = "Private"  
     publicity = models.CharField(max_length=7, null=False, choices=Publicity.choices, default=Publicity.PRIVATE)
     set_name = models.CharField(max_length=30, null=False)
+
+
+
 
