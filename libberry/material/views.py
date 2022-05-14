@@ -7,6 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from .dataaccess import *
 
 # Create your views here.
+def init_view(request):
+    return render(request,'addmaterial.html')
+
 def add_material(request):
     if not request.user.is_authenticated:
         print("Invalid add material request: User not authenticated")
@@ -59,7 +62,7 @@ def add_material(request):
                 return
             db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period, author_ids=author_ids)
             print("Added periodical material \"{1}\"".format(title))
-            return redirect('add_material')
+            return redirect('root_material_view')
             
 def remove_material(request):
     if not request.user.is_authenticated:
