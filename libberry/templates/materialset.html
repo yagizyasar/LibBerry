@@ -1,0 +1,44 @@
+{% extends 'generic.html' %}
+{%block content%}
+<!--some of backend op is missing, so some of the urls and ids are not certains-->
+<!--splitting screen first to show the users and the registration form-->
+<div class='left-side'>
+    <div class='centered'>
+        <div class="material-set-list" id="material-set-list" name="material-set-list" style="display:none;">
+            {%for tempset in material_sets %}
+                <!--student hepsi icin farkli if atmamiza gerek yok 
+                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                    <text>{{ tempset.set_name }}</text>
+                    <input type="button" value="Update" style="float: right;" >
+                    <form action = "{% url 'material_set_remove' %}" method="post" id="set-delete-form" name="set-delete-form">
+                        {% csrf_token %}
+                        <input type="hidden" value = {{ tempset.set_id }} name="set-id">
+                        <input type="submit" value = "Delete">
+                    </form>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+<div class='right-side'>
+    <div class='centered'>
+        <form action = "{% url 'material_set_add' %}"  method = "post" name = "registration-form" id = "registration-form" class = "registration-form" style="display:none;">
+            {% csrf_token %}
+            <div id = "set-name-area">
+                <label for="set-name">Name:</label>
+                <input type="text" id="set-name" name="set-name">
+            </div>
+            <div id = "publicity-area">
+                <p>Publicity:</p>
+                <label for="set-name-public">Public</label>
+                <input type="radio" value="public" id="set-name-public" name="set-publicity">
+                <label for="set-name-private">Private</label>
+                <input type="radio" value="private" id="set-name-private" name="set-publicity">
+            </div>
+            <input type="hidden" id="type" name="type">
+            <input type="submit" value="add-material"> 
+        </form>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+</head>
+<body class="padding" ng-controller="PopupCtrl">
+  <button class="button button-primary" ng-click="showConfirm()">
+    Borrow
+  </button>
+
+</body>
+</html>
+<script>
+    $scope.showConfirm = function() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Borrow the Material',
+            template: 'Are you sure you want to borrow this item?'
+            });
+            confirmPopup.then(function(res) {
+            if(res) {
+                // material borrow URL
+            } else {
+                // none
+            }
+        });
+    };
+  </script>

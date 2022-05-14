@@ -1,76 +1,110 @@
 {% extends 'generic.html' %}
 {% load static %}
 {% block generic content %}
-<html>
-    <!--table for materials-->
-    <div class='left-side'>
-        <div class='centered'>
-            <!--categories of material-->
-            <fieldset>
-                <legend>Categories:</legend>
-                <div>
-                <input type="checkbox" id="printed" name="printed" checked>
-                <label for="printed">Printed</label>
-                </div>
-                <div>
-                <input type="checkbox" id="audiovisual" name="audiovisual">
-                <label for="audiovisual">Audiovisual</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="periodical" name="periodical">
-                    <label for="periodical">Periodical</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="custom" name="custom">
-                    <label for="custom">Custom</label>
-                </div>
-            </fieldset>
-            <!--rating-->
-            <fieldset>
-            </fieldset>
-            <!--date intervals-->
-            <fieldset>
-                <legend>Publish Date</legend>
+{% with amount=10 %}
+    <html>
+        <!--table for materials-->
+        <div class='left-side'>
+            <div class='centered'>
+                <!--categories of material-->
+                <fieldset>
+                    <legend>Categories:</legend>
                     <div>
-                        <input type="date" name="start-date" min="0000-01-01">
-                        <label for="start-date">Start Date:</label>
-                        <input type="date" name="end-date" max="2022-15-05">
-                        <label for="end-date">End Date:</label>
+                        <input type="checkbox" id="printed" name="printed" checked>
+                        <label for="printed">Printed</label>
                     </div>
-            </fieldset>
-            <!--inclusion-->
-            <fieldset>
-                <legend>Set Inclusion</legend>
                     <div>
+                        <input type="checkbox" id="audiovisual" name="audiovisual">
+                        <label for="audiovisual">Audiovisual</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="periodical" name="periodical">
+                        <label for="periodical">Periodical</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="custom" name="custom">
+                        <label for="custom">Custom</label>
+                    </div>
+                </fieldset>
+                <!--rating-->
+                <fieldset>
+                </fieldset>
+                <!--date intervals-->
+                <fieldset>
+                    <legend>Publish Date</legend>
+                        <div>
+                            <input type="date" name="start-date" min="0000-01-01">
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" name="end-date" max="2022-15-05">
+                            <label for="end-date">End Date:</label>
+                        </div>
+                </fieldset>
+                <!--inclusion-->
+                <fieldset>
+                    <legend>Set Inclusion</legend>
+                        <div>
+                            
+                        </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="centered">
+                <form action = "{% url 'search' %}" method = "get" class="search-form">
+                    <div class="searchbar-container" style="display:flex; flex-direction:row">
+                        <input type="text" name="title" placeholder="Title">
+                        <input type="text" name="author-creator" placeholder="Author/Creator">
+                        <input type="text" name="date" placeholder="Date">
+                        <input type="text" name="genre" placeholder="Genre">
+                        <input type="text" name="set" placeholder="Set">
+                        <button type = "submit" name="search-button">Search</button>
                         
+                        <input type="hidden" value="10">
+                        <div class="amount-buttons">
+                            <button type="button" name = "10A" id="10A" value="10" onclick="changeDispAmount(value)">10 {{amount| add:"10"}} </button>
+                            <button type="button" name = "25A" id="25A" value="25" onclick="changeDispAmount(value)">25 {{amount| add:"25"}}</button>
+                            <button type="button" name = "50A" id="50A" value="50" onclick="changeDispAmount(value)">50 {{amount| add:"50"}}</button>
+                        </div>
+                        
+                        
+                        <div class = "page-buttons" id="page-buttons">
+                            {% with i=0 j=0 %}
+                                {% for mat in materials %}
+                                    {% if {{j|divisibleby:{{amount}}}} %}
+                                        <button type="button" name ="{{i}}B" id="{{i}}B" value="{{i}}" onclick="changePageNumber(value)">{{i}}</button>
+                                        {{ i|add:"1" }}
+                                    {% endif %}
+                                    {{ j|add:"1" }}
+                                {% endfor %}
+                                {% if i = 10 %}
+                                    {{amount| add:"-10"}}
+                                {% elif i = 25 %}
+                                    {{amount| add:"-25"}}
+                                {% else %}
+                                    {{amount| add:"-50"}}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
                     </div>
-            </fieldset>
+                <div class="material-list">
+                    <table>
+                        <tr>
+                            <th>Information</th>
+                            <th>Publish Date</th>
+                            <th>Rating</th>
+                            <th>Genre</th>
+                        </tr>
+                        {% for mat in materials %}
+                            
+                        {% endfor %}
+                    </table>
+                    
+                </div>
+                   
+            </div>
         </div>
-    </div>
-    <div class="right">
-        <div class="centered">
-            {% csrf_token %}
-            <table cellspacing="0" cellpadding="0" border="0" width="325">
-                <tr>
-                  <td>
-                     <table cellspacing="0" cellpadding="1" border="1" width="300" >
-                       <tr style="color:white;background-color:grey">
-                          <th>Information</th>
-                          <th>Publish Date</th>
-                          <th>Rating</th>
-                          <th>Genre</th>
-                       </tr>
-                     </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                     <div style="width:320px; height:80px; overflow:auto;">
-                       <table cellspacing="0" cellpadding="1" border="1" width="300" >
-            {% for tempmaterial in materials%}
-            {%endfor%}
-        </div>
-    </div>
-</body>
-</html>
+    </body>
+    </html>
+{% endwith %}
 {% endblock generic content %}
+
