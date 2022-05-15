@@ -174,3 +174,15 @@ def db_generate_find_mat_query(params):
     print(len(res))
     return res
     # TODO process query result
+
+def db_get_all_sets_of_instructor(instructor_id):
+     cursor = connection.cursor()
+     cursor.execute("SELECT set_id FROM instructor_has_set WHERE instructor_id=%s;", [instructor_id])
+     res = to_dict(cursor)
+     return res
+
+def db_get_all_courses_of_instructor(instructor_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s;",[instructor_id])
+    res = to_dict(cursor)
+    return res
