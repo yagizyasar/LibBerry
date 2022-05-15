@@ -48,13 +48,15 @@
     </div>
     <div class="right-side">
         <div class="centered">
-            <form action = "{% url 'search' %}" method = "get" class="search-form">
+            <form action = "{% url 'search' %}" method = "post" class="search-form">
+                {% csrf_token %}
                 <div class="searchbar-container" style="display:flex; flex-direction:row">
                     <input type="text" name="title" placeholder="Title">
-                    <input type="text" name="author-creator" placeholder="Author/Creator">
+                    <input type="text" name="author" placeholder="Author/Creator">
                     <input type="text" name="date" placeholder="Date">
                     <input type="text" name="genre" placeholder="Genre">
                     <input type="text" name="set" placeholder="Set">
+                    <input type="text" name="rating_threshold" placeholder="rating">
                     <button type = "submit" name="search-button">Search</button>
                 </div>
             </form>      

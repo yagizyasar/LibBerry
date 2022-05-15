@@ -8,7 +8,7 @@ from .dataaccess import *
 
 # Create your views here.
 def init_view(request):
-    return render(request,'addmaterial.html')
+    return render(request,'materials.html')
 
 def add_material(request):
     if not request.user.is_authenticated:
@@ -43,9 +43,9 @@ def add_material(request):
             pages = request.POST["pages"]
             if pages == None:
                 print("Invalid add material request: Missing field in printed material")
-                return
+                return HttpResponse("<h1> Invalid or Empty pages </h1>")
             db_add_material_printed(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, author_ids=author_ids)
-            print("Added printed material \"{1}\"".format(title))
+            print("Added printed material \"{}\"".format(title))
         case "audiovisual":
             external_rating = request.POST["external_rating"]
             length = request.POST["length"]
@@ -53,7 +53,7 @@ def add_material(request):
                 print("Invalid add material request: Missing field in audiovisual")
                 return
             db_add_material_audiovisual(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, external_rating=external_rating, length=length, author_ids=author_ids)
-            print("Added audiovisual material \"{1}\"".format(title))
+            print("Added audiovisual material \"{}\"".format(title))
         case "periodical":
             pages = request.POST["pages"]
             period = request.POST["period"]
@@ -61,7 +61,7 @@ def add_material(request):
                 print("Invalid add material request: Missing field in periodical")
                 return
             db_add_material_periodical(mat_id=mat_id, title=title, genre=genre, publish_date=publish_date, amount=amount, location=location, pages=pages, period=period, author_ids=author_ids)
-            print("Added periodical material \"{1}\"".format(title))
+            print("Added periodical material \"{}\"".format(title))
     return redirect('root_material_view')
             
 def remove_material(request):
@@ -94,6 +94,34 @@ def search_material(request):
     if request.method != "POST":
         print("Invalid request method for search parameters.")
         return redirect(request.META.get('HTTP_REFERER'))
+    
+    title = request.POST["title"]
+    author_list = request.POST["author"]
+    if author_list == "":
+        author_list = None
+    if author_list != None:
+        author_list = author_list.split()
+
+    published_date = request.POST["date"]
+    genre = request.POST["genre"]
+    set = request.POST["set"]
+    if set == "":
+        set = None
+    if set != None and set != "":
+        set = set.split()
+    rating = request.POST["rating_threshold"]
+    if(rating == None or rating == ""):
+        rating = 0
+
+    if(published_date == None or published_date == ""):
+        published_date = "1000-01-01"
+    print(author_list)
+    params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
+    #print(params)
+    return_dict = db_generate_find_mat_query(params)
+    return render(request,'materials.html',{"materials":return_dict})
+
+    
     
 
 
