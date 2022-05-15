@@ -8,7 +8,7 @@
             <option value="audiovisual">Audiovisual</option>
             <option value="periodical">Periodical</option>
         </select>
-    <form action = "{% url 'add_material' %}"  method = "post" name = "add-material-form" id = "add-material-form" class = "add-material-form" style="display:none;">
+    <form action = "{% url 'add_material_request' %}"  method = "post" name = "add-material-form" id = "add-material-form" class = "add-material-form" style="display:none;">
             {% csrf_token %}
             <div id = "mat-id-area">
                 <label for="mat-id">ID:</label>
