@@ -126,6 +126,9 @@ def db_remove_material_from_material_set(set_id, mat_ids):
     for mat_id in mat_ids:
         cursor.execute("DELETE FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
 
+def db_get_all_mats():
+    return db_generate_find_mat_query({"rating_threshold":0, "published_after":"1000-01-01"})
+
 def db_generate_find_mat_query(params):
     query = "SELECT * FROM material_material M WHERE "
 
@@ -160,6 +163,8 @@ def db_generate_find_mat_query(params):
     query += "M.publish_date>=\"{}\"".format(params.get("published_after"))
 
     #query = query[:-3]
+    if query[-6:] == "WHERE ":
+        query = query[:-7]
     query += ";"
     print(query)
     cursor = connection.cursor()

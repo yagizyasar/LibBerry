@@ -8,7 +8,9 @@ from .dataaccess import *
 
 # Create your views here.
 def init_view(request):
-    return render(request,'materials.html')
+    return_dict = db_get_all_mats()
+
+    return render(request,'materials.html',{"materials":return_dict})
 
 def add_material(request):
     if not request.user.is_authenticated:
@@ -97,9 +99,9 @@ def search_material(request):
     
     title = request.POST["title"]
     author_list = request.POST["author"]
-    if author_list == "":
-        author_list = None
-    if author_list != None:
+    if author_list == "" or author_list == None:
+        author_list = []
+    if len(author_list) != 0:
         author_list = author_list.split()
 
     published_date = request.POST["date"]
@@ -112,12 +114,12 @@ def search_material(request):
     rating = request.POST["rating_threshold"]
     if(rating == None or rating == ""):
         rating = 0
+    rating = float(rating) / 10.0
 
     if(published_date == None or published_date == ""):
         published_date = "1000-01-01"
     print(author_list)
     params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
-    #print(params)
     return_dict = db_generate_find_mat_query(params)
     return render(request,'materials.html',{"materials":return_dict})
 

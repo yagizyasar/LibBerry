@@ -52,12 +52,12 @@
                 {% csrf_token %}
                 <div class="searchbar-container" style="display:flex; flex-direction:row">
                     <input type="text" name="title" placeholder="Title">
-                    <input type="text" name="author-creator" placeholder="Author/Creator">
+                    <input type="text" name="author" placeholder="Author/Creator">
                     <input type="date" name="date" placeholder="Date">
                     <input type="text" name="genre" placeholder="Genre">
                     <input type="text" name="set" placeholder="Set">
                     <div id = "external-rating-area">
-                        <label for="external-rating">Rating (0 to 5):</label>
+                        <label for="external-rating">Rating (0 to 10):</label>
                         <input type="range" id="external-rating" name="rating_threshold">
                     </div>
                     <button type = "submit" name="search-button">Search</button>
