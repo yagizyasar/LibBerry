@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <html>
+    {% if request.session.user_type == "instructor" %}
     <div class="left-side"></div>
     <div class="right-side">
         <div class="centered">
