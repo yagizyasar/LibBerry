@@ -1,11 +1,11 @@
 {% extends 'generic.html' %}
-{%block content%}
+{% block content %}
 <!--some of backend op is missing, so some of the urls and ids are not certains-->
 <!--splitting screen first to show the users and the registration form-->
 <div class='left-side'>
     <div class='centered'>
         <div class="material-set-list" id="material-set-list" name="material-set-list" style="display:none;">
-            {%for tempset in material_sets %}
+            {% for tempset in material_sets %}
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
@@ -17,7 +17,7 @@
                         <input type="submit" value = "Delete">
                     </form>
                 </div>
-            {%endfor%}
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -37,8 +37,43 @@
                 <label for="set-name-private">Private</label>
                 <input type="radio" value="private" id="set-name-private" name="set-publicity">
             </div>
+            <select name="set-course-select" id="set-course-select">
+                {% for course in courses %}
+                    <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.name }}/{{ course.section }} </option>
+                {% endfor %}
+            </select>
+            <div class="container" id="added-material-area">
+                <button class="add_form_field">Add New Material &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+                <div>
+                    <input type="text" name="material_ids[1]" class="author_ids">
+                </div>
+            </div>
             <input type="hidden" id="type" name="type">
             <input type="submit" value="add-material"> 
         </form>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script> 
+    $(document).ready(function() {
+        $("button.add_form_field").click(function(e) {
+            e.preventDefault();
+            var name = $(this).closest(".container").find("input:first").attr("class")
+            var numInputs = 1
+            if (numInputs < 10) {
+                alert(numInputs)
+                numInputs++;
+                if (name=="author_ids") {
+                    $(this).closest(".container").append('<div><input type="text" name="material_ids"[' + numInputs + ']"/><a href="#" class="delete">Delete</a></div>');
+                }
+            } else alert('You reached the limits')
+        });
+
+        $(document).on("click", ".delete", function(e) {
+            numInputs--;
+            e.preventDefault();
+            $(this).parent('div').remove();
+        })
+    });
+</script>
+{% endblock content %}
