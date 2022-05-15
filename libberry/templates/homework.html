@@ -38,5 +38,18 @@
             </form>
         </div>
     </div> 
+    {%elif request.session.user_type == "student" %}
+    <div class="left-side"></div>
+    <div class="right-side">
+        <div class="centered">
+            <label for="student_courses">My Courses</label>
+            <div name="student_courses" id="student_courses">
+            {% for scourse in student_courses%}
+                <a class="student_course_item" href="#" id="{{ scourse.course_id }}/{{ scourse.section }}">{{ scourse.course_id }}/{{ scourse.section }}</a>
+            {% endfor %}
+            </div>
+        </div>
+    </div> 
+    {% endif %}
 </html>
 {% endblock content %}
