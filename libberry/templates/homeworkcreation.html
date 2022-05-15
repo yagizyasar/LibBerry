@@ -1,0 +1,41 @@
+{% extends 'generic.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <div class="left-side"></div>
+    <div class="right-side">
+        <div class="centered">
+            <form action = "{% url 'homework_add' %}"  method = "post" name = "homework-form" id = "homework-form" class = "homework-form" style="display:none;">
+                {% csrf_token %}
+                <div id="title-area">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div id = "course-area">
+                    <label for="course-select">For Course:</label>
+                    <select name="course-select" id="course-select"onchange="updateSections(value)" >
+                        {% for course in courses %}
+                            <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.name }}/{{ course.section }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id = "deadline-area">
+                    <label for="deadline">Deadline:</label>
+                    <input type="datetime-local" id="deadline" name="deadline" onload="constrainDate()" onchange="constrainDate()">
+                </div>
+                <div id = "material-set-area">
+                    <label for="material-set-select">Material Set for Homework:</label>
+                    <select name="material-select" id="course-select">
+                        {% for set in mat_sets %}
+                            <option value="{{ set.set_id}}">{{ set.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <input type="hidden" id="type" name="type">
+                <input type="submit" value="add-material"> 
+            </form>
+        </div>
+    </div> 
+</html>
+{% endblock content %}
