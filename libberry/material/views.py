@@ -156,6 +156,11 @@ def add_material_set(request):
     set_publicity = request.POST["set_publicity"]
     course  = request.POST["course"]
     material_list = request.POST["material_list"]
+    if material_list == None or material_list == "":
+        material_list = []
+    else
+        material_list = material_list.slice()
+    db_add_material_set(set_name,request.user.username,set_publicity,)
 
 def remove_material_set_view(request):
     if not request.user.is_authenticated:
