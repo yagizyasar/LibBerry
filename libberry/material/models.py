@@ -45,7 +45,7 @@ class Periodical(models.Model):
     period = models.CharField(max_length=12, choices=Period.choices, default=Period.MONTHLY)
 
 class Material_Set(models.Model):
-    set_id = models.AutoField(primary_key=True, null=False, unique=True)
+    set_id = models.CharField(max_length=30, primary_key=True, null=False, unique=True)
     class Publicity(models.TextChoices):
         PUBLIC = "Public"
         PRIVATE = "Private"  
