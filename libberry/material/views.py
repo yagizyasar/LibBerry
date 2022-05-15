@@ -12,6 +12,9 @@ def init_view(request):
 
     return render(request,'materials.html',{"materials":return_dict})
 
+def add_material_root_view(request):
+    return render(request,'addmaterial.html')
+
 def add_material(request):
     if not request.user.is_authenticated:
         print("Invalid add material request: User not authenticated")
@@ -122,6 +125,41 @@ def search_material(request):
     params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
     return_dict = db_generate_find_mat_query(params)
     return render(request,'materials.html',{"materials":return_dict})
+
+def material_set_init_view(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+
+    if (request.method != "POST"):
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    if request.session["user_type"] != "instructor":
+        print("Invalid add material request: Authenticated user is not librarian")
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    course_object = db_get_all_courses_of_instructor(request.user.username)
+    material_set_ids = db_get_all_sets_of_instructor(request.user.username)
+    return redirect(request,'materialset.html',{"material_sets":material_set_ids,"courses":course_object})
+
+def add_material_set(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+
+    if (request.method != "POST"):
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    if request.session["user_type"] != "instructor":
+        print("Invalid add material request: Authenticated user is not librarian")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    set_name = request.POST["set_name"]
+    set_publicity = request.POST["set_publicity"]
+    course  = request.POST["course"]
+    material_list = request.POST["material_list"]
 
     
     

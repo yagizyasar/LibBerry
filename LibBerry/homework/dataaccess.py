@@ -1,7 +1,7 @@
 from django.db import connection
 from home.dataaccess import to_dict
 
-def db_add_homework(hw_id, courses, due, set_id):
+def db_add_homework(hw_id, due, set_id, courses, creator_id):
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM homework_homework WHERE hw_id=%s;", [hw_id])
@@ -12,14 +12,31 @@ def db_add_homework(hw_id, courses, due, set_id):
         return
 
     cursor.execute("INSERT INTO homework_homework VALUES (%s, %s, %s);", [hw_id, due, set_id])
+    cursor.execute("INSERT INTO instructor_assigns_hw VALUES(%s, %s);", [hw_id, creator_id])
     for course in courses:
         db_add_homework_to_coursesection(course.get("course_id"), course.get("section"), course.get("semester"), course.get("year"), hw_id)
-
 
 def db_add_homework_to_coursesection(course_id, section, semester, year, hw_id):
     cursor = connection.cursor()
 
-    
+    cursor.execute("SELECT * FROM coursesection_has_hw WHERE course_id=%s AND section=%s AND semester=%s AND year=%s AND hw_id=%s;", [course_id, section, semester, year, hw_id])
+    res = cursor.fetchone()
+
+    if res != None:
+        print("Invalid add homework to coursesection: Homework already in coursesection")
+        return
+
+    cursor.execute("INSERT INTO coursesection_has_hw VALUES (%s, %s, %s, %s, %s);", [course_id, section, semester, year, hw_id])
+
+def db_add_instructor_to_homework(hw_id, instructor_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM instructor_assigns_hw WHERE instructor_id=%s AND hw_id=%s;", [instructor_id, hw_id])
+    res = cursor.fetchone()
+
+    if res != None:
+        print("Invalid add instructor to homework request: Instructor already exists in homework")
+        return
+    cursor.execute("INSERT INTO instructor_assigns_hw VALUES(%s, %s);", [hw_id, instructor_id])
 
 def db_add_student_to_coursesection(student_id,course_id,section,semester,year):
     cursor = connection.cursor()
@@ -30,8 +47,17 @@ def db_add_student_to_coursesection(student_id,course_id,section,semester,year):
         return
     cursor.execute("INSERT INTO student_takes_course VALUES (%s, %s, %s, %s,%s);",[student_id,course_id,section,semester,year])
 
+def db_delete_homework(hw_id):
+    cursor = connection.cursor()
 
-def db_delete_homework():
+    cursor.execute("SELECT * FROM homework_homework WHERE hw_id=%s;",[hw_id])
+    res = cursor.fetchone()
+
+    if res == None:
+        print("Invalid delete homework request: Homework does not exist")
+        return
+
+    cursor.execute("DELETE FROM homework_homework WHERE hw_id=%s;", [hw_id])
 
 def db_get_all_past_hws():
 
