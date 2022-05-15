@@ -15,6 +15,7 @@ class Material(models.Model):
     publish_date = models.DateField(null=False)
     amount = models.IntegerField(null=False)
     location = models.CharField(max_length=10)
+    rating = models.DecimalField(max_digits=4,decimal_places=2,null=True)
 class Custom_Material(models.Model):
     mat = models.ForeignKey(Material, on_delete=models.CASCADE, primary_key=True)
     type = models.CharField(max_length=10, null=False)

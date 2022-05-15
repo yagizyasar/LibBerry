@@ -48,7 +48,8 @@
     </div>
     <div class="right-side">
         <div class="centered">
-            <form action = "{% url 'search' %}" method = "get" class="search-form">
+            <form action = "{% url 'search' %}" method = "post" class="search-form">
+                {% csrf_token %}
                 <div class="searchbar-container" style="display:flex; flex-direction:row">
                     <input type="text" name="title" placeholder="Title">
                     <input type="text" name="author-creator" placeholder="Author/Creator">
@@ -57,7 +58,7 @@
                     <input type="text" name="set" placeholder="Set">
                     <div id = "external-rating-area">
                         <label for="external-rating">Rating (0 to 5):</label>
-                        <input type="range" id="external-rating" name="external_rating">
+                        <input type="range" id="external-rating" name="rating_threshold">
                     </div>
                     <button type = "submit" name="search-button">Search</button>
                 </div>

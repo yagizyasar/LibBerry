@@ -5,7 +5,7 @@ from django.db.models.expressions import RawSQL
 
 def to_dict(cursor):
     columns = [col[0] for col in cursor.description]
-    return [dict(zip(columns, row) for row in cursor.fetchall())]
+    return [dict(zip(columns, list(row))) for row in cursor.fetchall()]
 
 # update tables
 def db_register_mainuser(username, balance, registrar_id, type):
@@ -50,7 +50,7 @@ def get_all_users():
         cursor.execute("SELECT * FROM auth_user A, user_mainuser U WHERE A.username=U.user_id ORDER BY A.first_name,A.last_name;")
         desc = cursor.description
         column_names = [col[0] for col in desc]
-        data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
+        data = [dict(zip(column_names, list(row))) for row in cursor.fetchall()]
         return data
     except:
         print("fetching all user data failed in get_all_users")

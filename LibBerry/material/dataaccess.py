@@ -56,7 +56,7 @@ def db_remove_material(mat_id, amount):
     result = cursor.fetchone() # should be a single row if mat_id exists in table, or None if it doesn't
     if result != None: # remove request is for a printed material
         cursor.execute("DELETE FROM material_printed WHERE mat_id=%s;", [mat_id])
-        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        #cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
         cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
@@ -64,7 +64,7 @@ def db_remove_material(mat_id, amount):
     result = cursor.fetchone()
     if result != None: # remove request is for a periodical material
         cursor.execute("DELETE FROM material_periodical WHERE mat_id=%s;", [mat_id])
-        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        #cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
         cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
@@ -72,7 +72,7 @@ def db_remove_material(mat_id, amount):
     result = cursor.fetchone()
     if result != None: # remove request is for a audiovisual material
         cursor.execute("DELETE FROM material_audiovisual WHERE mat_id=%s;", [mat_id])
-        cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
+        #cursor.execute("DELETE FROM is_author_of WHERE mat_id=%s;", [mat_id])
         cursor.execute("DELETE FROM material_material WHERE mat_id=%s;", [mat_id])
         return
 
@@ -99,29 +99,32 @@ def db_add_material_set(set_id, creator_id, publicity, set_name):
     cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [set_id, publicity, set_name])
     cursor.execute("INSERT INTO instructor_has_set VALUES(%s, %s)", [creator_id, set_id])
 
-def db_add_material_to_material_set(mat_id, set_id):
+def db_add_materials_to_material_set(set_id, mat_ids):
+    cursor = connection.cursor()
+    for mat_id in mat_ids:
+        cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+        res = cursor.fetchone()
+
+        if res != None:
+            print("Invalid add material to set request: Material already in the set")
+            return
+    
+    for mat_id in mat_ids:
+        cursor.execute("INSERT INTO set_contains_mat VALUES (%s, %s);", [set_id, mat_id])
+
+def db_remove_material_from_material_set(set_id, mat_ids):
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
-    res = cursor.fetchone()
+    for mat_id in mat_ids:
+        cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+        res = cursor.fetchone()
 
-    if res != None:
-        print("Invalid add material to set request: Material already in the set")
-        return
+        if res == None:
+            print("Invalid remove material from set request: Material not in the set")
+            return
     
-    cursor.execute("INSERT INTO set_contains_mat VALUES (%s, %s);", [set_id, mat_id])
-
-def db_remove_material_from_material_set(mat_id, set_id):
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
-    res = cursor.fetchone()
-
-    if res == None:
-        print("Invalid remove material from set request: Material not in the set")
-        return
-    
-    cursor.execute("DELETE FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+    for mat_id in mat_ids:
+        cursor.execute("DELETE FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
 
 def db_generate_find_mat_query(params):
     query = "SELECT * FROM material_material M WHERE "
@@ -132,37 +135,37 @@ def db_generate_find_mat_query(params):
     authors = params.get("author")
     date = params.get("date")
     genre = params.get("genre")
-    set = params.get("set")
+    sets = params.get("set")
 
-    if title != None:
+    if title != None and title != "":
         query += "M.title=\"{}\" AND ".format(title)
-
-    if authors != None:
+    if authors != None and len(authors) > 0:
         for author in authors:
             query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
-
+    """
     if date != None:
-        query += "publish_date=\"{}\" AND ".format(date)
+        query += "M.publish_date=\"{}\" AND ".format(date)
+    """
+    if genre != None and genre != "":
+        query += "M.genre=\"{}\" AND ".format(genre)
 
-    if genre != None:
-        query += "genre=\"{}\" AND ".format(genre)
-
-    if set != None:
+    if sets != None and len(sets) > 0:
         for set in sets:
-            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id;) AND ".format(set)
+            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id) AND ".format(set)
     
     # rating threshold
-    query += "rating>={} AND ".format(params.get("rating_threshold"))
+    query += "(M.rating IS NULL OR M.rating>={}) AND ".format(params.get("rating_threshold"))
     
     # published after threshold
-    query += "publish_date>=\"{}\"".format(params.get("published_after"))
+    query += "M.publish_date>=\"{}\"".format(params.get("published_after"))
 
-    query = query[:-3]
+    #query = query[:-3]
     query += ";"
     print(query)
     cursor = connection.cursor()
     cursor.execute(query)
     res = to_dict(cursor)
-    print(res)
-    
+    #print(res)
+    print(len(res))
+    return res
     # TODO process query result
