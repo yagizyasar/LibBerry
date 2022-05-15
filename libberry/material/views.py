@@ -37,7 +37,7 @@ def add_material(request):
     type = request.POST["mat_type"]
     author_ids = request.POST["author_ids"]
 
-    print(type)
+    print(author_ids)
 
     if None in [mat_id, title, genre, publish_date, amount, location, type, author_ids]:
         print("Invalid add material request: Missing field in material")
@@ -131,17 +131,13 @@ def material_set_init_view(request):
         print("Invalid remove material request: User not authenticated")
         return redirect('login')
 
-    if (request.method != "POST"):
-        print("Invalid request method for search parameters.")
-        return redirect(request.META.get('HTTP_REFERER'))
-
     if request.session["user_type"] != "instructor":
         print("Invalid add material request: Authenticated user is not librarian")
-        return redirect(request.META.get('HTTP_REFERER'))
+        return redirect('home')
     
     course_object = db_get_all_courses_of_instructor(request.user.username)
     material_set_ids = db_get_all_sets_of_instructor(request.user.username)
-    return redirect(request,'materialset.html',{"material_sets":material_set_ids,"courses":course_object})
+    return render(request,'materialset.html',{"material_sets":material_set_ids,"courses":course_object})
 
 def add_material_set(request):
     if not request.user.is_authenticated:
@@ -160,6 +156,19 @@ def add_material_set(request):
     set_publicity = request.POST["set_publicity"]
     course  = request.POST["course"]
     material_list = request.POST["material_list"]
+
+def remove_material_set_view(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    
+    if request.session["user_type"] != "instructor":
+        print("Invalid add material request: Authenticated user is not librarian")
+        return redirect('home')
+    set_id = request.POST["set-id"]
+    #check koy
+    db_remove_material_set(set_id)
+    return redirect(request.META.get('HTTP_REFERER'))  
 
     
     

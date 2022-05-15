@@ -13,7 +13,7 @@ def db_add_material(mat_id,title,genre,publish_date,amount,location,author_ids):
         cursor.execute("UPDATE material_material SET amount=%s WHERE mat_id=%s",[updated_result,mat_id])
         return True
     else:   
-        cursor.execute("INSERT INTO material_material VALUES (%s, %s, %s, %s,%s,%s);", [mat_id, title, genre,publish_date,amount,location])
+        cursor.execute("INSERT INTO material_material VALUES (%s, %s, %s, %s,%s,%s,%s);", [mat_id, title, genre,publish_date,amount,location,"NULL"])
         for author_id in author_ids:
             cursor.execute("INSERT INTO is_author_of VALUES(%s, %s);", [author_id, mat_id])
         return False
@@ -87,16 +87,16 @@ def db_add_author(author_id, name, birth, bio):
     
     cursor.execute("INSERT INTO material_author VALUES(%s, %s, %s, %s);", [author_id, name, birth, bio])
 
-def db_add_material_set(set_id, creator_id, publicity, set_name):
+def db_add_material_set(creator_id, publicity, set_name):
     cursor = connection.cursor()
-
+    
     cursor.execute("SELECT * FROM material_material_set WHERE set_id=%s;", [set_id])
     res = cursor.fetchone()
     if res != None:
         print("Invalid add material set request: Set id already exists")
         return
     
-    cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [set_id, publicity, set_name])
+    cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [publicity, set_name])
     cursor.execute("INSERT INTO instructor_has_set VALUES(%s, %s)", [creator_id, set_id])
 
 def db_add_materials_to_material_set(set_id, mat_ids):
@@ -125,6 +125,18 @@ def db_remove_material_from_material_set(set_id, mat_ids):
     
     for mat_id in mat_ids:
         cursor.execute("DELETE FROM set_contains_mat WHERE set_id=%s AND mat_id=%s;", [set_id, mat_id])
+
+def db_remove_material_set(set_id):
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM material_material_set WHERE set_id=%s;", [set_id])
+    res = cursor.fetchone()
+
+    if res == None:
+        print("Invalid remove material set request: Set does not exist")
+        return
+
+    cursor.execute("DELETE FROM material_material_set WHERE set_id=%s;", [set_id])
 
 def db_get_all_mats():
     return db_generate_find_mat_query({"rating_threshold":0, "published_after":"1000-01-01"})

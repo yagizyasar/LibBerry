@@ -59,6 +59,17 @@ def db_delete_homework(hw_id):
 
     cursor.execute("DELETE FROM homework_homework WHERE hw_id=%s;", [hw_id])
 
-def db_get_all_past_hws():
+#def db_get_all_past_hws():
 
-def db_get_all_future_hws():
+#def db_get_all_future_hws():
+
+def db_add_coursesection(course_id, section, semester, year, instructor_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM course_section WHERE course_id=%s AND section=%s AND semester=%s AND year=%s;", [course_id, section, semester, year])
+    res = cursor.fetchone()
+
+    if res != None:
+        print("Invalid add course section request: Course section already exists")
+        return
+
+    cursor.execute("INSERT INTO course_section VALUES(%s, %s, %s, %s, %s);", [course_id, section, semester, year, instructor_id])
