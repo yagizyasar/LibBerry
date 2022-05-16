@@ -143,7 +143,12 @@ def db_get_all_mats():
     return db_generate_find_mat_query({"rating_threshold":0, "published_after":"1000-01-01"})
 
 def db_generate_find_mat_query(params):
-    query = "SELECT * FROM material_material M WHERE "
+    query = """SELECT *
+        FROM (material_material NATURAL JOIN 
+            (SELECT mat_id, 0 AS available FROM ((SELECT DISTINCT mat_id FROM material_material) MINUS (SELECT DISTINCT mat_id FROM user_reserves_mat WHERE status='borrowed' OR status='on hold'))
+            UNION
+            SELECT mat_id, COUNT(*) AS available FROM user_reserves_mat WHERE status='borrowed' OR status='on hold' GROUP BY mat_id)) as M
+        WHERE """
 
     # TODO search by multiple fields?
     # search fields
@@ -183,8 +188,13 @@ def db_generate_find_mat_query(params):
     cursor = connection.cursor()
     cursor.execute(query)
     res = to_dict(cursor)
+    cursor.execute()
     #print(res)
     print(len(res))
+
+    # get available amount of each book
+    
+    
     return res
     # TODO process query result
 
@@ -196,7 +206,7 @@ def db_get_all_sets_of_instructor(instructor_id):
 
 def db_get_all_courses_of_instructor(instructor_id):
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s;",[instructor_id])
+    cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s ORDER BY year DESC, semester DESC;",[instructor_id])
     res = to_dict(cursor)
     return res
 
@@ -252,3 +262,5 @@ def db_get_reservation_requests(status):
     cursor.execute("SELECT * FROM user_reserves_mat WHERE status=%s;", [status])
     res_dict = to_dict(cursor)
     return res_dict
+
+#def db_get_students_request yapılacak

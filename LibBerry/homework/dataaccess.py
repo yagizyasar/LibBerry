@@ -2,7 +2,7 @@ from sqlite3 import connect
 from django.db import connection
 from home.dataaccess import to_dict
 
-def db_add_homework(hw_id, due, set_id,creator_id):
+def db_add_homework(hw_id, due, set_id, instructor_id):
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM homework_homework WHERE hw_id=%s;", [hw_id])
@@ -13,9 +13,8 @@ def db_add_homework(hw_id, due, set_id,creator_id):
         return
 
     cursor.execute("INSERT INTO homework_homework VALUES (%s, %s, %s);", [hw_id, due, set_id])
-    cursor.execute("INSERT INTO instructor_assigns_hw VALUES(%s, %s);", [hw_id, creator_id])
+    cursor.execute("INSERT INTO instructor_assigns_hw VALUES(%s, %s);", [hw_id, instructor_id])
    
-
 def db_give_homework_to_coursesection(course_id, section, semester, year, hw_id):
     cursor = connection.cursor()
     """
@@ -28,11 +27,10 @@ def db_give_homework_to_coursesection(course_id, section, semester, year, hw_id)
     """
     cursor.execute("INSERT INTO student_has_hw (student_id, hw_id) SELECT * FROM (SELECT user_id AS student_id FROM user_student NATURAL JOIN student_takes_course WHERE course_id=%s), (SELECT %s);", [course_id, hw_id])
 
-    
-
-def db_give_homework_to_student(student_id, hw_id):
+def db_give_homework_to_student(student_ids, hw_id):
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO student_has_hw VALUES(%s, %s);", [student_id, hw_id])
+    for student_id in student_ids:
+        cursor.execute("INSERT INTO student_has_hw VALUES(%s, %s);", [student_id, hw_id])
 
 def db_add_instructor_to_homework(hw_id, instructor_id):
     cursor = connection.cursor()
@@ -70,13 +68,13 @@ def db_delete_homework(hw_id):
 #def db_get_all_future_hws():
 def db_get_all_homeworks_instructor(user_id):
      cursor = connection.cursor()
-     cursor.execute("SELECT hw_id,due,set_id FROM homework_homework NATURAL JOIN instructor_assigns_hw WHERE instructor_id=%s;",[user_id])
+     cursor.execute("SELECT hw_id,due,set_id FROM homework_homework NATURAL JOIN instructor_assigns_hw WHERE instructor_id=%s ORDER BY due DESC;",[user_id])
      res = to_dict(cursor)
      return res
 
 def db_get_all_homeworks_student(user_id):
     cursor = connection.cursor()
-    cursor.execute("SELECT hw_id FROM student_takes_course NATURAL JOIN coursesection_has_hw WHERE student_id=%s;",[user_id])
+    cursor.execute("SELECT hw_id FROM student_takes_course NATURAL JOIN coursesection_has_hw WHERE student_id=%s ORDER BY due DESC;",[user_id])
     res = to_dict(cursor)
     return res
 
@@ -93,7 +91,7 @@ def db_add_coursesection(course_id, section, semester, year, instructor_id):
 
 def db_get_all_courses_instructor(user_id):
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s;",[user_id])
+    cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s ORDER BY year DESC, semester DESC;",[user_id])
     res = to_dict(cursor)
     return res
 

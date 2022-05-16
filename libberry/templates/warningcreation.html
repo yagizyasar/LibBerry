@@ -1,0 +1,164 @@
+{% extends 'generic.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+<!--splitting screen first to show the users and the registration form-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="float:inline-start">
+            <div class="columnStyle">
+            <div class="selectWrapper">
+                <select class="selectBox" name="user-type-select" id="user-type-select"onchange="changeList(value)" >
+                    <option value="none"> Select type. </option>
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="librarian">Librarian</option>
+                    <option value="outside-member">Outside Member</option>
+                </select>
+            </div>
+            <div class="student-res-list" id="student-res-list"name="student-res-list" style="display:none;">
+                {%for tempres in student_reservation_list %} 
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        {% csrf_token %}
+                        <text>{{ tempres.user_id }}</text>
+                        <text>{{ tempres.mat_id }}</text>
+                        <text>{{ tempres.due_date }}</text>
+                    </div>
+                {%endfor%}
+            </div>
+            <div class="instructor-res-list"id="instructor-res-list"name="instructor-res-list" style="display:none;">
+                {%for tempres in instructor_reservation_list %} 
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        {% csrf_token %}
+                        <text>{{ tempres.user_id }}</text>
+                        <text>{{ tempres.mat_id }}</text>
+                        <text>{{ tempres.due_date }}</text>
+                    </div>
+                {%endfor%}
+            </div>
+            <div class="librarian-res-list"id="librarian-res-list"name="librarian-res-list" style="display:none;">
+                {%for tempres in librarian_reservation_list %} 
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        {% csrf_token %}
+                        <text>{{ tempres.user_id }}</text>
+                        <text>{{ tempres.mat_id }}</text>
+                        <text>{{ tempres.due_date }}</text>
+                    </div>
+                {%endfor%}
+            </div>
+            <div class="outsidemember-res-list" id="outsidemember-res-list" name="outsidemember-res-list" style="display:none;">
+                {%for tempres in outside_member_reservation_list %} 
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        {% csrf_token %}
+                        <text>{{ tempres.user_id }}</text>
+                        <text>{{ tempres.mat_id }}</text>
+                        <text>{{ tempres.due_date }}</text>
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+        </div>
+        <div class="col-sm">
+            <div class="columnStyle">
+            <div class="selectWrapper">
+                <select class="selectBox" name="warning-select" id="warning-select"onchange="changeForm(value)" >
+                    <option value="none"> Select type. </option>
+                    <option value="overdue">Overdue Warning</option>
+                    <option value="nearlydue">Nearly Due Warning</option>
+                </select>
+            </div>
+            <form action = "{% url 'warning_creation' %}"  method = "post" name = "warning-form" id = "warning-form" class = "warning-form" style="display:none;">
+                {% csrf_token %}
+                <div id = "user-id-area">
+                    <label for="user_id">User ID:</label>
+                    <input type="text" id="user_id" name="user_id">
+                </div>
+                <div id = "mat-id-area">
+                    <label for="mat_id">ID:</label>
+                    <input type="text" id="mat_id" name="mat_id">
+                </div>
+                <div id = "text-area">
+                    <label for="text">Last Name:</label>
+                    <input type="text" id="text" name="text">
+                </div>
+                <div id = "remaining-days-area">
+                    <label for="remaining_days">Email:</label>
+                    <input type="text" id="remaining_days" name="remaining_days">
+                </div>
+                <input type="hidden" id="type" name="type">
+                <input type="submit" value="Register">
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onFire(){ alert("Pressed.");}
+
+    function changeForm(value){
+        if (value == "overdue"){
+            document.getElementById('warning-form').style.display = 'block';
+            document.getElementById('user-id-area').style.display = 'block';
+            document.getElementById('mat-id-area').style.display = 'block';
+            document.getElementById('text-area').style.display = 'block';
+            document.getElementById('remaining-area').style.display = 'none';
+            document.getElementById('type').value = "overdue";
+        }
+        else if (value == "nearlydue"){
+            document.getElementById('warning-form').style.display = 'block';
+            document.getElementById('user-id-area').style.display = 'block';
+            document.getElementById('mat-id-area').style.display = 'block';
+            document.getElementById('text-area').style.display = 'block';
+            document.getElementById('remaining-area').style.display = 'block';
+            document.getElementById('type').value = "nearlydue";
+        }
+        else {
+            document.getElementById('warning-form').style.display = 'block';
+            document.getElementById('user-id-area').style.display = 'block';
+            document.getElementById('mat-id-area').style.display = 'block';
+            document.getElementById('text-area').style.display = 'block';
+            document.getElementById('remaining-area').style.display = 'block';
+            document.getElementById('password-area').style.display = 'none';
+        }
+    }
+    
+    function changeList(value){
+        if (value == "student"){
+            document.getElementById('student-res-list').style.display = 'block';
+            document.getElementById('instructor-res-list').style.display = 'none';
+            document.getElementById('librarian-res-list').style.display = 'none';
+            document.getElementById('outsidemember-res-list').style.display = 'none';
+        }
+        else if (value == "instructor"){
+            document.getElementById('student-res-list').style.display = 'none';
+            document.getElementById('instructor-res-list').style.display = 'block';
+            document.getElementById('librarian-res-list').style.display = 'none';
+            document.getElementById('outsidemember-res-list').style.display = 'none';
+        }
+        else if (value == "librarian"){
+            document.getElementById('student-res-list').style.display = 'none';
+            document.getElementById('instructor-res-list').style.display = 'none';
+            document.getElementById('librarian-res-list').style.display = 'block';
+            document.getElementById('outsidemember-res-list').style.display = 'none';
+        }
+        else if (value == "outside-member"){
+            document.getElementById('student-res-list').style.display = 'none';
+            document.getElementById('instructor-res-list').style.display = 'none';
+            document.getElementById('librarian-res-list').style.display = 'none';
+            document.getElementById('outsidemember-res-list').style.display = 'block';
+        }
+        else {
+            document.getElementById('student-res-list').style.display = 'none';
+            document.getElementById('instructor-res-list').style.display = 'none';
+            document.getElementById('librarian-res-list').style.display = 'none';
+            document.getElementById('outsidemember-res-list').style.display = 'none';
+        }
+    }
+</script>
+{% endblock content %}
