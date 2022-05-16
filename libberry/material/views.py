@@ -158,7 +158,7 @@ def add_material_set(request):
     material_list = request.POST["material_list"]
     if material_list == None or material_list == "":
         material_list = []
-    else
+    else:
         material_list = material_list.slice()
     db_add_material_set(set_name,request.user.username,set_publicity,)
 
