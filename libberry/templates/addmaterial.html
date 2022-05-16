@@ -44,12 +44,8 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" name="location">
             </div>
-            <div class= "container" name="author_area" style="float:left;">
-                <button class="add_form_field">Add New Author &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
-                <div>
-                    <label for="author_ids">Authors: </label>
-                    <input type="text" name="author_ids" class="author_ids">
-                </div>
+                <label for="author_ids">Authors: </label>
+                <input type="text" name="author_ids" class="author_ids">
             </div>
             <div id = "pages-area" style="float: left;">
                 <label for="pages">Pages:</label>
@@ -133,28 +129,5 @@
         }
         
     } 
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script> 
-    $(document).ready(function() {
-        $("button.add_form_field").click(function(e) {
-            e.preventDefault();
-            var name = $(this).closest(".container").find("input:first").attr("class")
-            var numInputs = 1
-            if (numInputs < 10) {
-                numInputs++;
-                if (name=="author_area") {
-                    $(this).closest(".container").append('<div><input type="text" name="author_ids[' + numInputs + 
-                        ']"/><a href="#" class="delete">Delete</a></div>');
-                }
-            } else alert('You reached the limits')
-        });
-
-        $(document).on("click", ".delete", function(e) {
-            numInputs--;
-            e.preventDefault();
-            $(this).parent('div').remove();
-        });
-    });
 </script>
 {%endblock content%}
