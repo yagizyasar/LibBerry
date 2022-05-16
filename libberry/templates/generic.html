@@ -22,12 +22,9 @@
         <div class="border-end bg-white" id="sidebar-wrapper">
             <div class="sidebar-heading border-bottom bg-light">{{user.username}}</div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">{{ user.name }}</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3">My Debt: {{ user.balance }}</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'logout' %}">Log Out</a>
             </div>
         </div>
@@ -81,25 +78,9 @@
                             {% elif request.session.user_type == "instructor" %}
                                 <li class="nav-item"><a class="nav-link" href="#!">Ask </a></li>
                                 <li class="nav-item"><a class="nav-link" href="#!">Request</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsCourses" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{% url '#!' %}">Courses</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="position:center; max-width:50%; height:auto; width:auto/9;"></a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsHomeworks" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Homeworks</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{% url '#!' %}">Homeworks</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upload</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
