@@ -202,7 +202,7 @@ def db_get_all_courses_of_instructor(instructor_id):
 
 def db_send_hold_request(user_id, mat_id, message=""):
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND (status<>'rejected' OR status<>'returned');", [user_id, mat_id])
+    cursor.execute("SELECT * FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND (status='on hold' OR status='borrowed');", [user_id, mat_id])
     res = cursor.fetchone()
     if res != None:
         print("Invalid borrow request: User already borrowed or has on hold material")
@@ -219,6 +219,10 @@ def db_send_hold_request(user_id, mat_id, message=""):
 
     cursor.execute("INSERT INTO user_reserves_mat VALUES(%s, %s, NOW(), '1', NULL, NULL, 'on hold', %s, NULL);", [user_id, mat_id, message])
 
+def db_cancel_hold_request(user_id, mat_id):
+    cursor = connection.cursor()
+    cursor.execute("UPDATE user_reserves_mat SET status='canceled', ret_date=NOW() WHERE user_id=%s, mat_id=%s;", [user_id, mat_id])
+
 def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message="", due=""):
     cursor = connection.cursor()
 
@@ -232,5 +236,19 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
     cursor = connection.cursor()
     cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
     due = datetime.strptime((cursor.fetchone())[0], "%y-%m-%d %H:%M:%S")
+    
+    if message == "" and due < datetime.now():
+        dif = datetime.now() - due
+        overdue_message = "Overdue by {} days, {} hours and {} minutes.".format(dif.days, dif.seconds // 3600, dif.seconds // 60)
+        balance_message = ""
+        if overdue_amount > 0:
+            balance_message = " {} liras were deducted from balance.".format(overdue_amount)
+        message = overdue_message + balance_message
 
     cursor.execute("UPDATE user_reserves_mat SET status='returned', message=%s, ret_date=NOW() WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [message, user_id, mat_id])
+
+def db_get_reservation_requests(status):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM user_reserves_mat WHERE status=%s;", [status])
+    res_dict = to_dict(cursor)
+    return res_dict
