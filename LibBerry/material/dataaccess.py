@@ -2,6 +2,7 @@ from django.db import connection
 from django.shortcuts import redirect
 from user.models import *
 from home.dataaccess import to_dict
+from datetime import datetime
 
 def db_add_material(mat_id,title,genre,publish_date,amount,location,author_ids):
     cursor = connection.cursor()
@@ -216,7 +217,7 @@ def db_send_hold_request(user_id, mat_id, message=""):
         print("Invalid send hold request: Material not available")
         return
 
-    cursor.execute("INSERT INTO user_reserves_mat VALUES(%s, %s, NOW(), '1', NULL, NULL, 'on hold', %s);", [user_id, mat_id, message])
+    cursor.execute("INSERT INTO user_reserves_mat VALUES(%s, %s, NOW(), '1', NULL, NULL, 'on hold', %s, NULL);", [user_id, mat_id, message])
 
 def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message="", due=""):
     cursor = connection.cursor()
@@ -226,3 +227,10 @@ def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message=""
         cursor.execute("UPDATE user_reserves_mat SET status='borrowed', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
     else:
         cursor.execute("UPDATE user_reserves_mat SET status='rejected', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
+
+def db_return_book(user_id, mat_id, message="", overdue_amount=0):
+    cursor = connection.cursor()
+    cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
+    due = datetime.strptime((cursor.fetchone())[0], "%y-%m-%d %H:%M:%S")
+
+    cursor.execute("UPDATE user_reserves_mat SET status='returned', message=%s, ret_date=NOW() WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [message, user_id, mat_id])

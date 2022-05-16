@@ -160,10 +160,10 @@ def add_material_set(request):
     if material_list == None or material_list == "":
         material_list = []
     else:
-        material_list = material_list.slice()
+        material_list = material_list.split()
     db_add_material_set(request.user.username,set_publicity,set_name)
     db_add_materials_to_material_set(set_name,material_list)
-    return render(request,'material_set_root_view')
+    return redirect('material_set_root_view')
 
 def remove_material_set_view(request):
     if not request.user.is_authenticated:
