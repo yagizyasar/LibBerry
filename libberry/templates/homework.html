@@ -3,7 +3,9 @@
 {% block content %}
 <html>
     {% if request.session.user_type == "instructor" %}
-    <div class="left-side"></div>
+    <div class="left-side">
+        {% for  %}
+    </div>
     <div class="right-side">
         <div class="centered">
             <form action = "{% url 'homework_add' %}"  method = "post" name = "homework-form" id = "homework-form" class = "homework-form" style="display:none;">
@@ -45,10 +47,10 @@
     <div class="left-side"></div>
     <div class="right-side">
         <div class="centered">
-            <label for="student_courses">My Courses</label>
-            <div name="student_courses" id="student_courses">
-            {% for scourse in student_courses%}
-                <a class="student_course_item" href="#" id="{{ scourse.course_id }}/{{ scourse.section }}">{{ scourse.course_id }}/{{ scourse.section }}</a>
+            <label for="student_hws">My Homeworks</label>
+            <div name="student_hws" id="student_hws">
+            {% for hw in homeworks%}
+                <a class="student_hw_item" href="#" id="{{ hw.hw_id }}">{{ hw.hw_id }}</a>
             {% endfor %}
             </div>
         </div>
