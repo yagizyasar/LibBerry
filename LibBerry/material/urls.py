@@ -8,5 +8,6 @@ urlpatterns = [
     path('',views.init_view,name='root_material_view'),
     path('search/',views.search_material,name='search'),
     path('materialset/',views.material_set_init_view,name='material_set_root_view'),
-    path('addmaterial/',views.add_material_root_view,name='add_material')
+    path('addmaterial/',views.add_material_root_view,name='add_material'),
+    path('addmaterialset/',views.add_material_set,name='material_set_add')
 ]

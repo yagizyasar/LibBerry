@@ -4,12 +4,12 @@
 <!--splitting screen first to show the users and the registration form-->
 <div class='left-side'>
     <div class='centered'>
-        <div class="material-set-list" id="material-set-list" name="material-set-list" style="display:none;">
+        <div class="material-set-list" id="material-set-list" name="material-set-list" style="display:block;">
             {% for tempset in material_sets %}
                 <!--student hepsi icin farkli if atmamiza gerek yok 
                     sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
                 <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
-                    <text>{{ tempset.set_name }}</text>
+                    <text>{{ tempset.set_id }}</text>
                     <input type="button" value="Update" style="float: right;" >
                     <form action = "{% url 'material_set_remove' %}" method="post" id="set-delete-form" name="set-delete-form">
                         {% csrf_token %}
@@ -24,7 +24,7 @@
 
 <div class='right-side'>
     <div class='centered'>
-        <form action = "{% url 'material_set_add' %}"  method = "post" name = "registration-form" id = "registration-form" class = "registration-form" style="display:none;">
+        <form action = "{% url 'material_set_add' %}"  method = "post" name = "registration-form" id = "registration-form" class = "registration-form" style="display:block;">
             {% csrf_token %}
             <div id = "set-name-area">
                 <label for="set-name">Name:</label>
@@ -39,7 +39,7 @@
             </div>
             <select name="set_course_select" id="set-course-select" onchange="returnValue(value)">
                 {% for course in courses %}
-                    <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.name }}/{{ course.section }} </option>
+                    <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
                 {% endfor %}
             </select>
             <input type="hidden" value="" name="course">

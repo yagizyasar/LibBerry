@@ -87,7 +87,7 @@ def db_add_author(author_id, name, birth, bio):
     
     cursor.execute("INSERT INTO material_author VALUES(%s, %s, %s, %s);", [author_id, name, birth, bio])
 
-def db_add_material_set(creator_id, publicity, set_name):
+def db_add_material_set(creator_id, publicity, set_id):
     cursor = connection.cursor()
     
     cursor.execute("SELECT * FROM material_material_set WHERE set_id=%s;", [set_id])
@@ -96,7 +96,7 @@ def db_add_material_set(creator_id, publicity, set_name):
         print("Invalid add material set request: Set id already exists")
         return
     
-    cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [publicity, set_name])
+    cursor.execute("INSERT INTO material_material_set VALUES(%s, %s, %s);", [set_id,publicity,set_id])
     cursor.execute("INSERT INTO instructor_has_set VALUES(%s, %s)", [creator_id, set_id])
 
 def db_add_materials_to_material_set(set_id, mat_ids):
@@ -198,3 +198,31 @@ def db_get_all_courses_of_instructor(instructor_id):
     cursor.execute("SELECT * FROM course_section WHERE instructor_id=%s;",[instructor_id])
     res = to_dict(cursor)
     return res
+
+def db_send_hold_request(user_id, mat_id, message=""):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND (status<>'rejected' OR status<>'returned');", [user_id, mat_id])
+    res = cursor.fetchone()
+    if res != None:
+        print("Invalid borrow request: User already borrowed or has on hold material")
+        return
+
+    cursor.execute("SELECT COUNT(*) FROM user_reserves_mat WHERE mat_id=%s AND (status='borrowed' OR status='on hold');", [mat_id])
+    unavailable_amount = (cursor.fetchone())[0]
+    cursor.execute("SELECT amount FROM material_material WHERE mat_id=%s;", [mat_id])
+    total_amount = (cursor.fetchone())[0]
+
+    if unavailable_amount >= total_amount:
+        print("Invalid send hold request: Material not available")
+        return
+
+    cursor.execute("INSERT INTO user_reserves_mat VALUES(%s, %s, NOW(), '1', NULL, NULL, 'on hold', %s);", [user_id, mat_id, message])
+
+def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message="", due=""):
+    cursor = connection.cursor()
+
+    # TODO constraint checking
+    if accepted:
+        cursor.execute("UPDATE user_reserves_mat SET status='borrowed', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
+    else:
+        cursor.execute("UPDATE user_reserves_mat SET status='rejected', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])

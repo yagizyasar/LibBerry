@@ -137,7 +137,8 @@ def material_set_init_view(request):
     
     course_object = db_get_all_courses_of_instructor(request.user.username)
     material_set_ids = db_get_all_sets_of_instructor(request.user.username)
-    return render(request,'materialset.html',{"material_sets":material_set_ids,"courses":course_object})
+    context = {"material_sets":material_set_ids,"courses":course_object}
+    return render(request,'materialset.html',context)
 
 def add_material_set(request):
     if not request.user.is_authenticated:
@@ -160,7 +161,9 @@ def add_material_set(request):
         material_list = []
     else:
         material_list = material_list.slice()
-    db_add_material_set(set_name,request.user.username,set_publicity,)
+    db_add_material_set(request.user.username,set_publicity,set_name)
+    db_add_materials_to_material_set(set_name,material_list)
+    return render(request,'material_set_root_view')
 
 def remove_material_set_view(request):
     if not request.user.is_authenticated:
