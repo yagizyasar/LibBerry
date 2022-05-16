@@ -40,7 +40,11 @@
                         <label for="material-set-select">Material Set for Homework:</label>
                         <select class="selectBox" name="material-select" id="course-select">
                         {% for set in mat_sets %}
+<<<<<<< HEAD
                             <option value="{{ set.set_id}}">{{ set.set_id }}</option>
+=======
+                            <option value="{{ set.set_id }}">{{ set.title }}</option>
+>>>>>>> 58bc52391ab4047f16c54fe06650f444f430a436
                         {% endfor %}
                     </select>
                 </div>

@@ -305,6 +305,8 @@ table {
   caption-side: bottom;
   border-collapse: collapse;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 caption {
@@ -1125,6 +1127,7 @@ progress {
 
 table, th, td {
   border: 1px solid;
+  word-break: break-all;
 }
 
 .columnStyle {
@@ -4080,6 +4083,8 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  color:rgb(41, 1, 41);
+  background-color: rgb(41, 1, 41);
 }
 .navbar > .container,
 .navbar > .container-fluid,

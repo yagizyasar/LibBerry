@@ -44,20 +44,17 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" name="location">
             </div>
-            <div class= "container" name="author_area" style="float:left;">
-                <button class="add_form_field">Add New Author &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
-                <div>
-                    <label for="author_ids">Authors: </label>
-                    <input type="text" name="author_ids" class="author_ids">
-                </div>
+            <div id = "author-area">
+                <label for="author_ids">Authors: </label>
+                <input type="text" name="author_ids" class="author_ids">
             </div>
-            <div id = "pages-area" style="float: left;">
+            <div id = "pages-area">
                 <label for="pages">Pages:</label>
                 <input type="text" id="pages" name="pages">
             </div>
             <div id = "external-rating-area">
-                <label for="external-rating">Rating (0 to 5):</label>
-                <input type="range" id="external-rating" name="external_rating">
+                <label for="external-rating">Rating (0 to 10):</label>
+                <input type="text" id="external-rating" name="external_rating">
             </div>
             <div id = "length-area">
                 <label for="length">Length:</label>
@@ -87,6 +84,7 @@
             document.getElementById('publish-date-area').style.display = 'block';
             document.getElementById('amount-area').style.display = 'block';
             document.getElementById('location-area').style.display = 'block';
+            document.getElementById('author-area').style.display = 'block';
             document.getElementById('pages-area').style.display = 'block';
             document.getElementById('external-rating-area').style.display = 'none';
             document.getElementById('length-area').style.display = 'none';
@@ -100,6 +98,7 @@
             document.getElementById('publish-date-area').style.display = 'block';
             document.getElementById('amount-area').style.display = 'block';
             document.getElementById('location-area').style.display = 'block';
+            document.getElementById('author-area').style.display = 'block';
             document.getElementById('pages-area').style.display = 'none';
             document.getElementById('external-rating-area').style.display = 'block';
             document.getElementById('length-area').style.displwy = 'block';
@@ -113,6 +112,7 @@
             document.getElementById('publish-date-area').style.display = 'block';
             document.getElementById('amount-area').style.display = 'block';
             document.getElementById('location-area').style.display = 'block';
+            document.getElementById('author-area').style.display = 'block';
             document.getElementById('pages-area').style.display = 'block';
             document.getElementById('external-rating-area').style.display = 'none';
             document.getElementById('length-area').style.display = 'none';
@@ -125,6 +125,7 @@
             document.getElementById('publish-date-area').style.display = 'none';
             document.getElementById('amount-area').style.display = 'none';
             document.getElementById('location-area').style.display = 'none';
+            document.getElementById('author-area').style.display = 'none';
             document.getElementById('pages-area').style.display = 'none';
             document.getElementById('external-rating-area').style.display = 'none';
             document.getElementById('length-area').style.display = 'none';
@@ -133,28 +134,5 @@
         }
         
     } 
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script> 
-    $(document).ready(function() {
-        $("button.add_form_field").click(function(e) {
-            e.preventDefault();
-            var name = $(this).closest(".container").find("input:first").attr("class")
-            var numInputs = 1
-            if (numInputs < 10) {
-                numInputs++;
-                if (name=="author_area") {
-                    $(this).closest(".container").append('<div><input type="text" name="author_ids[' + numInputs + 
-                        ']"/><a href="#" class="delete">Delete</a></div>');
-                }
-            } else alert('You reached the limits')
-        });
-
-        $(document).on("click", ".delete", function(e) {
-            numInputs--;
-            e.preventDefault();
-            $(this).parent('div').remove();
-        });
-    });
 </script>
 {%endblock content%}

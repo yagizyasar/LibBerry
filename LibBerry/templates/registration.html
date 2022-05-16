@@ -28,9 +28,9 @@
                     {% if tempuser.type == "student" %}
                     <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                         <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form"></form>
+                            {% csrf_token %}
                             <text>{{ tempuser.username }}</text>
                             <input type="button" value="Update" style="float:inline-end;">
-                            {% csrf_token %}
                             <input type="hidden" value = {{ tempuser.username }} name="username">
                             <input type="submit" value = "Delete" style="float:inline-end;">
                         </form>
@@ -53,7 +53,6 @@
                         </form>
                     </div>
                     {%endif%}
-                
                 {%endfor%}
             </div>
             <div class="librarian-list"id="librarian-list"name="librarian-list" style="display:none;">
