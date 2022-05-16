@@ -1,155 +1,168 @@
 {% extends 'generic.html' %}
 {% block content %}
-
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
 <!--splitting screen first to show the users and the registration form-->
-<div class='left-side'>
-    <div class='centered'>
-        <select name="register-list-select" id="register-list-select"onchange="changeList(value)" >
-            <option value="none"> ----- </option>
-            <option value="student">Student</option>
-            <option value="instructor">Instructor</option>
-            <option value="librarian">Librarian</option>
-            <option value="outside-member">Outside Member</option>
-        </select>
-        <div class="student-list"id="student-list"name="student-list" style="display:none;">
-            {%for tempuser in users %}
-                <!--student hepsi icin farkli if atmamiza gerek yok 
-                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == "student" %}
-                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
-                    <text>{{ tempuser.username }}</text>
-                    <input type="button" value="Update" style="float: right;" >
-                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
-                        {% csrf_token %}
-                        <input type="hidden" value = {{ tempuser.username }} name="username">
-                        <input type="submit" value = "Delete">
-                    </form>
-                </div>
-                {%endif%}
-            
-            {%endfor%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="float:inline-start">
+            <div class="columnStyle">
+            <div class="selectWrapper">
+                <select class="selectBox" name="register-list-select" id="register-list-select"onchange="changeList(value)" >
+                    <option value="none"> Select type. </option>
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="librarian">Librarian</option>
+                    <option value="outside-member">Outside Member</option>
+                </select>
+            </div>
+            <div class="student-list"id="student-list"name="student-list" style="display:none;">
+                {%for tempuser in users %}
+                    <!--student hepsi icin farkli if atmamiza gerek yok 
+                        sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                    {% if tempuser.type == "student" %}
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form"></form>
+                            <text>{{ tempuser.username }}</text>
+                            <input type="button" value="Update" style="float:inline-end;">
+                            {% csrf_token %}
+                            <input type="hidden" value = {{ tempuser.username }} name="username">
+                            <input type="submit" value = "Delete" style="float:inline-end;">
+                        </form>
+                    </div>
+                    {%endif%}
+                {%endfor%}
+            </div>
+            <div class="instructor-list"id="instructor-list"name="instructor-list" style="display:none;">
+                {%for tempuser in users %} 
+                    <!--student hepsi icin farkli if atmamiza gerek yok 
+                        sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                    {% if tempuser.type == "instructor" %}
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form"></form>
+                            <text>{{ tempuser.username }}</text>
+                            <input type="button" value="Update" style="float:inline-end;">
+                            {% csrf_token %}
+                            <input type="hidden" value = {{ tempuser.username }} name="username">
+                            <input type="submit" value = "Delete" style="float:inline-end;">
+                        </form>
+                    </div>
+                    {%endif%}
+                
+                {%endfor%}
+            </div>
+            <div class="librarian-list"id="librarian-list"name="librarian-list" style="display:none;">
+                {%for tempuser in users %} 
+                    <!--student hepsi icin farkli if atmamiza gerek yok 
+                        sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                    {% if tempuser.type == "librarian" %}
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form"></form>
+                            <text>{{ tempuser.username }}</text>
+                            <input type="button" value="Update" style="float:inline-end;">
+                            {% csrf_token %}
+                            <input type="hidden" value = {{ tempuser.username }} name="username">
+                            <input type="submit" value = "Delete" style="float:inline-end;">
+                        </form>
+                    </div>
+                    {%endif%}
+                
+                {%endfor%}
+            </div>
+            <div class="outside-member-list" id="outside-member-list" name="outside-member-list" style="display:none;">
+                {%for tempuser in users %} 
+                    <!--student hepsi icin farkli if atmamiza gerek yok 
+                        sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
+                    {% if tempuser.type == "outsidemember" %}
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form"></form>
+                            <text>{{ tempuser.username }}</text>
+                            <input type="button" value="Update" style="float:inline-end;">
+                            {% csrf_token %}
+                            <input type="hidden" value = {{ tempuser.username }} name="username">
+                            <input type="submit" value = "Delete" style="float:inline-end;">
+                        </form>
+                    </div>
+                    {%endif%}
+                
+                {%endfor%}
+            </div>
         </div>
-        <div class="instructor-list"id="instructor-list"name="instructor-list" style="display:none;">
-            {%for tempuser in users %} 
-                <!--student hepsi icin farkli if atmamiza gerek yok 
-                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == "instructor" %}
-                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
-                    <text>{{ tempuser.username }}</text>
-                    <input type="button" value="Update" style="float: right;">
-                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
-                        {% csrf_token %}
-                        <input type="hidden" value = {{ tempuser.username }} name="username">
-                        <input type="submit" value = "Delete">
-                    </form>
-                </div>
-                {%endif%}
-            
-            {%endfor%}
         </div>
-        <div class="librarian-list"id="librarian-list"name="librarian-list" style="display:none;">
-            {%for tempuser in users %} 
-                <!--student hepsi icin farkli if atmamiza gerek yok 
-                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == "librarian" %}
-                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
-                    <text>{{ tempuser.username }}</text>
-                    <input type="button" value="Update" style="float: right;">
-                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
-                        {% csrf_token %}
-                        <input type="hidden" value = {{ tempuser.username }} name="username">
-                        <input type="submit" value = "Delete">
-                    </form>
+        <div class="col-sm">
+            <div class="columnStyle">
+            <div class="selectWrapper">
+                <select class="selectBox" name="register-select" id="register-select"onchange="changeForm(value)" >
+                    <option value="none"> Select type. </option>
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="librarian">Librarian</option>
+                    <option value="outside-member">Outside Member</option>
+                </select>
+            </div>
+            <form action = "{% url 'user_register' %}"  method = "post" name = "registration-form" id = "registration-form" class = "registration-form" style="display:none;">
+                {% csrf_token %}
+                <div id = "id-area">
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" name="id">
                 </div>
-                {%endif%}
-            
-            {%endfor%}
-        </div>
-        <div class="outside-member-list" id="outside-member-list" name="outside-member-list" style="display:none;">
-            {%for tempuser in users %} 
-                <!--student hepsi icin farkli if atmamiza gerek yok 
-                    sanki sonucta hepsinin ismi cekiliyor, burayi bir de scroll* down  yapabilirz-->
-                {% if tempuser.type == "outsidemember" %}
-                <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
-                    <text>{{ tempuser.username }}</text>
-                    <input type="button" value="Update" style="float: right;">
-                    <form action = "{% url 'user_remove' %}" method="post" id="delete-form" name="delete-form">
-                        {% csrf_token %}
-                        <input type="hidden" value = {{ tempuser.username }} name="username">
-                        <input type="submit" value = "Delete">
-                    </form>
+                <div id = "first-name-area">
+                    <label for="name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name">
                 </div>
-                {%endif%}
-            
-            {%endfor%}
+                <div id = "last-name-area">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name">
+                </div>
+                <div id = "email-area">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div id = "dept-area">
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department">
+                </div>
+                <div id = "gpa-area">
+                    <label for="gpa">GPA:</label>
+                    <input type="text" id="gpa" name="gpa">
+                </div>
+                <div id = "spec-area">
+                    <label for="specialization">Specialization:</label>
+                    <input type="text" id="specialization" name="specialization">
+                </div>
+                <div id = "tenure-area">
+                    <label for="tenure">Tenure:</label>
+                    <input type="text" id="tenure" name="tenure">
+                </div>
+                <div id = "office-area">
+                    <label for="office">Office:</label>
+                    <input type="text" id="office" name="office">
+                </div>
+                <div id = "card-no-area">
+                    <label for="card_no">Card No:</label>
+                    <input type="text" id="card_no" name="card_no">
+                </div>
+                <div id = "expire-date-area">
+                    <label for="expire_date">Expire Date:</label>
+                    <input type="text" id="expire_date" name="expire_date">
+                </div>
+                <div id = "password-area">
+                    <label for="password">Password:</label>
+                    <input type="text" id="password" name="password">
+                </div>
+                <input type="hidden" id="type" name="type">
+                <input type="submit" value="Register">
+            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<div class='right-side'>
-    <div class='centered'>
-        <select name="register-select" id="register-select"onchange="changeForm(value)" >
-            <option value="none"> ----- </option>
-            <option value="student">Student</option>
-            <option value="instructor">Instructor</option>
-            <option value="librarian">Librarian</option>
-            <option value="outside-member">Outside Member</option>
-        </select>
-        <form action = "{% url 'user_register' %}"  method = "post" name = "registration-form" id = "registration-form" class = "registration-form" style="display:none;">
-            {% csrf_token %}
-            <div id = "id-area">
-                <label for="id">ID:</label>
-                <input type="text" id="id" name="id">
-            </div>
-            <div id = "first-name-area">
-                <label for="name">First Name:</label>
-                <input type="text" id="first_name" name="first_name">
-            </div>
-            <div id = "last-name-area">
-                <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name">
-            </div>
-            <div id = "email-area">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email">
-            </div>
-            <div id = "dept-area">
-                <label for="department">Department:</label>
-                <input type="text" id="department" name="department">
-            </div>
-            <div id = "gpa-area">
-                <label for="gpa">GPA:</label>
-                <input type="text" id="gpa" name="gpa">
-            </div>
-            <div id = "spec-area">
-                <label for="specialization">Specialization:</label>
-                <input type="text" id="specialization" name="specialization">
-            </div>
-            <div id = "tenure-area">
-                <label for="tenure">Tenure:</label>
-                <input type="text" id="tenure" name="tenure">
-            </div>
-            <div id = "office-area">
-                <label for="office">Office:</label>
-                <input type="text" id="office" name="office">
-            </div>
-            <div id = "card-no-area">
-                <label for="card_no">Card No:</label>
-                <input type="text" id="card_no" name="card_no">
-            </div>
-            <div id = "expire-date-area">
-                <label for="expire_date">Expire Date:</label>
-                <input type="text" id="expire_date" name="expire_date">
-            </div>
-            <div id = "password-area">
-                <label for="password">Password:</label>
-                <input type="text" id="password" name="password">
-            </div>
-            <input type="hidden" id="type" name="type">
-            <input type="submit" value="Register">
-        </form>
-    </div>
-</div>
 <script type="text/javascript">
     function onFire(){ alert("Pressed.");}
     function changeForm(value){

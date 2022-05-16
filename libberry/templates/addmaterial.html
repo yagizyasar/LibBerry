@@ -1,13 +1,23 @@
 {% extends 'generic.html' %}
 {%block content%}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+
 <div class='left-side'>
     <div class='centered'>
-        <select name="register-list-select" id="register-list-select"onchange="changeFormMaterial(value)" >
-            <option value="none"> ----- </option>
+        <div class="selectWrapper">
+        <select class="selectBox" name="register-list-select" id="register-list-select"onchange="changeFormMaterial(value)" >
+            <option value="none"> Select type. </option>
             <option value="printed">Printed</option>
             <option value="audiovisual">Audiovisual</option>
             <option value="periodical">Periodical</option>
         </select>
+        </div>
     <form action = "{% url 'add_material_request' %}"  method = "post" name = "add-material-form" id = "add-material-form" class = "add-material-form" style="display:none;">
             {% csrf_token %}
             <div id = "mat-id-area">
@@ -34,9 +44,11 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" name="location">
             </div>
-            <div class="container" id="author-area">
+            <br>
+            <div class= "container" name="author_area">
                 <button class="add_form_field">Add New Author &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
                 <div>
+                    <label for="author_ids">Authors: </label>
                     <input type="text" name="author_ids" class="author_ids">
                 </div>
             </div>
@@ -54,11 +66,13 @@
             </div>
             <div id = "period-area">
                 <label for="period">Period:</label>
-                <select id="period" name="period">
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                </select>
+                <div class="selectWrapper">
+                    <select class="selectBox" id="period" name="period">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
             </div>
             <input type="hidden" id="mat_type" name="mat_type">
             <input type="submit" value="Add Material">
@@ -89,7 +103,7 @@
             document.getElementById('location-area').style.display = 'block';
             document.getElementById('pages-area').style.display = 'none';
             document.getElementById('external-rating-area').style.display = 'block';
-            document.getElementById('length-area').style.display = 'block';
+            document.getElementById('length-area').style.displwy = 'block';
             document.getElementById('period-area').style.display = 'none';
             document.getElementById('mat_type').value = "audiovisual";
             
@@ -129,10 +143,10 @@
             var name = $(this).closest(".container").find("input:first").attr("class")
             var numInputs = 1
             if (numInputs < 10) {
-                alert(numInputs)
                 numInputs++;
-                if (name=="author_ids") {
-                    $(this).closest(".container").append('<div><input type="text" name="author_ids"[' + numInputs + ']"/><a href="#" class="delete">Delete</a></div>');
+                if (name=="author_area") {
+                    $(this).closest(".container").append('<div><input type="text" name="author_ids[' + numInputs + 
+                        ']"/><a href="#" class="delete">Delete</a></div>');
                 }
             } else alert('You reached the limits')
         });
@@ -141,7 +155,7 @@
             numInputs--;
             e.preventDefault();
             $(this).parent('div').remove();
-        })
+        });
     });
 </script>
 {%endblock content%}

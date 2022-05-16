@@ -1,91 +1,85 @@
 {% extends 'generic.html' %}
 {% load static %}
 {% block content %}
+<!DOCTYPE html>
 <html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
     <!--table for materials-->
-    <div class='left-side'>
-        <div class='centered'>
-            <!--categories of material-->
-            <fieldset>
-                <legend>Categories:</legend>
-                <div>
-                    <input type="checkbox" id="printed" name="printed" checked>
-                    <label for="printed">Printed</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="audiovisual" name="audiovisual">
-                    <label for="audiovisual">Audiovisual</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="periodical" name="periodical">
-                    <label for="periodical">Periodical</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="custom" name="custom">
-                    <label for="custom">Custom</label>
-                </div>
-            </fieldset>
-            <!--rating-->
-            <fieldset>
-            </fieldset>
-            <!--date intervals-->
-            <fieldset>
-                <legend>Publish Date</legend>
+    <div class='container'>
+        <div class="row">
+            <div class="col-sm">
+                <!--categories of material-->
+                <fieldset>
+                    <legend>Categories:</legend>
                     <div>
-                        <input type="date" name="start-date" min="0000-01-01">
-                        <label for="start-date">Start Date:</label>
-                        <input type="date" name="end-date" max="2022-15-05">
-                        <label for="end-date">End Date:</label>
+                        <input type="checkbox" id="printed" name="printed" checked>
+                        <label for="printed">Printed</label>
                     </div>
-            </fieldset>
-            <!--inclusion-->
-            <fieldset>
-                <legend>Set Inclusion</legend>
-                    <div>  
+                    <div>
+                        <input type="checkbox" id="audiovisual" name="audiovisual">
+                        <label for="audiovisual">Audiovisual</label>
                     </div>
-            </fieldset>
-        </div>
-    </div>
-    <div class="right-side">
-        <div class="centered">
-            <form action = "{% url 'search' %}" method = "post" class="search-form">
-                {% csrf_token %}
-                <div class="searchbar-container" style="display:flex; flex-direction:row">
-                    <input type="text" name="title" placeholder="Title">
-                    <input type="text" name="author" placeholder="Author/Creator">
-                    <input type="date" name="date" placeholder="Date">
-                    <input type="text" name="genre" placeholder="Genre">
-                    <input type="text" name="set" placeholder="Set">
-                    <div id = "external-rating-area">
-                        <label for="external-rating">Rating (0 to 10):</label>
-                        <input type="range" id="external-rating" name="rating_threshold">
+                    <div>
+                        <input type="checkbox" id="periodical" name="periodical">
+                        <label for="periodical">Periodical</label>
                     </div>
-                    <button type = "submit" name="search-button">Search</button>
-                </div>
-            </form>      
-            <div class="material-list">
-                <table>
-                    <tr>
-                        <th>Information</th>
-                        <th>Publish Date</th>
-                        <th>Rating</th>
-                        <th>Genre</th>
-                    </tr>
-                    
-                    {% for mat in materials %}
+                    <div>
+                        <input type="checkbox" id="custom" name="custom">
+                        <label for="custom">Custom</label>
+                    </div>
+                </fieldset>
+                <!--date intervals-->
+                <fieldset>
+                    <legend>Publish Date</legend>
+                        <div>
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" name="start-date" min="0000-01-01">
+                            <label for="end-date">End Date:</label>
+                            <input type="date" name="end-date" max="2022-15-05">
+                        </div>
+                </fieldset>
+            </div>
+            <div class="col-sm">
+                <form action = "{% url 'search' %}" method = "post" class="search-form">
+                    {% csrf_token %}
+                    <div class="searchbar-container" style="display:flex; flex-direction:row">
+                        <input type="text" name="title" placeholder="Title">
+                        <input type="text" name="author" placeholder="Author/Creator">
+                        <input type="date" name="date" placeholder="Date">
+                        <input type="text" name="genre" placeholder="Genre">
+                        <input type="text" name="set" placeholder="Set">
+                        <div id = "external-rating-area">
+                            <label for="external-rating">Rating (0 to 10):</label>
+                            <input type="range" id="external-rating" name="rating_threshold">
+                        </div>
+                        <button type = "submit" name="search-button">Search</button>
+                    </div>
+                </form>      
+                <div class="material-list">
+                    <table>
+                        <tr>
+                            <th>Information</th>
+                            <th>Publish Date</th>
+                            <th>Rating</th>
+                            <th>Genre</th>
+                        </tr>
+                        
+                        {% for mat in materials %}
                         <tr>
                             <td><a href="#">{{ mat.title }}</a></td>
                             <td>{{ mat.publish_date }}</td>
                             <td>{{ mat.rating }}</td>
                             <td>{{ mat.genre }}</td>
                         </tr>
-                    {% endfor %}
-                </table>         
-            </div>  
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
-
 {% endblock content %}
 

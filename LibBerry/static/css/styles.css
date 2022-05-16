@@ -304,6 +304,7 @@ svg {
 table {
   caption-side: bottom;
   border-collapse: collapse;
+  width: 100%;
 }
 
 caption {
@@ -339,6 +340,18 @@ button {
 
 button:focus:not(:focus-visible) {
   outline: 0;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: purple;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 18px;
+  -moz-border-radius: 5px;
 }
 
 input,
@@ -394,11 +407,16 @@ textarea {
   resize: vertical;
 }
 
-fieldset {
-  min-width: 0;
-  padding: 0;
-  margin: 0;
-  border: 0;
+fieldset
+{
+  background-color:rgb(249, 249, 249);
+  max-width:500px;
+  padding:16px;	
+}
+.legend1
+{
+  margin-bottom:0px;
+  margin-left:16px;
 }
 
 legend {
@@ -1104,6 +1122,33 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
+
+table, th, td {
+  border: 1px solid;
+}
+
+.columnStyle {
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);
+  background-repeat: repeat;
+  border-radius:10px;
+  padding: 5px;
+}
+
+.selectWrapper{
+  border-radius:16px;
+  display:inline-block;
+  overflow:hidden;
+  background:#cccccc;
+  border:1px solid #6f42c1;
+}
+.selectBox{
+  width:140px;
+  height:40px;
+  border:0px;
+  outline:none;
+}
+
 @media (min-width: 768px) {
   .col-md {
     flex: 1 0 0%;
@@ -11325,5 +11370,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
   body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: -15rem;
+
   }
 }

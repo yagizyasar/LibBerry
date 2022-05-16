@@ -1,8 +1,13 @@
 {% extends 'generic.html' %}
 {%load static%}
-
-
 {% block login-form %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
 <!--configure the action for the following form!!!!!!!!!!-->
 <form action = "{% url 'user_login' %}" method = "post" class="login-form">
     {% csrf_token %}
