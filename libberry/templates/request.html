@@ -1,0 +1,58 @@
+{% extends 'generic.html' %}
+{%load static%}
+{% block content %}
+<div class="left-side">
+    <h2>Rejected, Cancelled or Returned Requests</h2>
+    <table>
+        <tr>
+            <th>Material</th>
+            <th>Request Date</th>
+            <th>Reserve Date</th>
+            <th>Due Date</th>
+            <th>Message</th>
+        </tr>
+        {% for req in requests %}
+            {% if req.status == "cancelled" or req.status="returned" or req.status = "rejected" %}
+            <tr>
+                <td> {{ req.mat_id }} </td>
+                <td> {{ req.request_date }} </td>
+                <td> {{ req.reserve_date }} </td>
+                <td> {{ req.due_date }} </td>
+                <td> {{ req.message }} </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+<div class="right-side">
+    <h2>Borrowed or On Hold Requests</h2>
+    <table>
+        <tr>
+            <th>Material</th>
+            <th>Request Date</th>
+            <th>Reserve Date</th>
+            <th>Due Date</th>
+            <th>Message</th>
+        </tr>
+        {% for req in requests %}
+            {% if req.status == "on hold" or req.status == "borrowed" %}
+            <tr>
+                <td> {{ req.mat_id }} </td>
+                <td> {{ req.request_date }} </td>
+                <td> {{ req.reserve_date }} </td>
+                <td> {{ req.due_date }} </td>
+                <td> {{ req.message }} </td>
+                {% if req.status == "on hold" %}
+                <td>
+                    <form action = "{% url 'cancel_request' %}" method = "post" class="cancel-form">
+                        <input type="hidden" value ="{{req.mat_id}}" name="username">
+                        <input type="submit" value = "Cancel" style="float:inline-end;">
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endif %} 
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
