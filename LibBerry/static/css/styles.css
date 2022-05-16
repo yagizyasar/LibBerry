@@ -4305,7 +4305,7 @@ textarea.form-control-lg {
     z-index: 1000;
     flex-grow: 1;
     visibility: visible !important;
-    background-color: transparent;
+    background-color: purple;
     border-right: 0;
     border-left: 0;
     transition: none;
@@ -4544,7 +4544,7 @@ textarea.form-control-lg {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 .navbar-dark .navbar-text {
-  color: rgba(255, 255, 255, 0.55);
+  color: purple;
 }
 .navbar-dark .navbar-text a,
 .navbar-dark .navbar-text a:hover,
@@ -4552,6 +4552,37 @@ textarea.form-control-lg {
   color: #fff;
 }
 
+.button-navbar {
+  display: inline-block;
+  height: 54px;
+  padding: 0;
+  margin: 0;
+  vertical-align: top;
+  width: 54px;
+  border-color: purple;
+}
+
+button.btn {
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-image: none;
+  border: 0 none;
+  /* added these */
+  margin: 2px;
+  padding: 0;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  outline: 0 none;
+  border: 0 none;
+}
 .card {
   position: relative;
   display: flex;

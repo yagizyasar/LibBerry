@@ -37,13 +37,13 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <div class="container-fluid">
                     {% if request.session.user_type == "librarian" %}
-                    <button class="btn btn-primary" id="sidebarToggle"><a class="sidebar-link" href="#!"><img src="{% static '/assets/librarian_icon.png' %}" alt="Librarian" style="padding:0; max-width:20%; height:auto; width:auto/10;"></a></button>
+                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/librarian_icon.png' %}" width="48" height="48"></a></button>
                     {% elif request.session.user_type == "student" %}
-                    <button class="btn btn-primary" id="sidebarToggle"><a class="sidebar-link" href="#!"><img src="{% static '/assets/student_icon.png' %}" alt="Student" style="max-width:20%; height:auto; width:auto/10;"></a></button>
+                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/student.png' %}" width="48" height="48"></button>
                     {% elif request.session.user_type == "instructor" %}
-                    <button class="btn btn-primary" id="sidebarToggle"><a class="sidebar-link" href="#!"><img src="{% static '/assets/instructor_icon.png' %}" alt="Instructor" style="max-width:20%; height:auto; width:auto/10;"></a></button>
+                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/instructor.png' %}" width="48" height="48"></button>
                     {% elif request.session.user_type == "outsidemember" %}
-                    <button class="btn btn-primary" id="sidebarToggle"><a class="sidebar-link" href="#!"><img src="{% static '/assets/outsidemember_icon.jpg' %}" alt="Outside Member" style="max-width:20%; height:auto; width:auto/10;"></a></button>
+                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/outsidemember.png' %}" width="48" height="48"></button>
                     {% endif %}
                    
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
