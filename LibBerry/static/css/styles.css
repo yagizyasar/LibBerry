@@ -305,6 +305,8 @@ table {
   caption-side: bottom;
   border-collapse: collapse;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 caption {
@@ -1125,6 +1127,7 @@ progress {
 
 table, th, td {
   border: 1px solid;
+  word-break: break-all;
 }
 
 .columnStyle {
