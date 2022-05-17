@@ -19,11 +19,10 @@
     
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
-        <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">{{user.username}}</div>
+        <div class="border-end" style="background-color:rgb(41, 1, 41);" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom" style="background-color:#fefefe;">{{user.username}}</div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3">My Debt: {{ user.balance }}</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3">My Debt: {{ request.session.user_balance }}</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'logout' %}">Log Out</a>
             </div>
         </div>
@@ -48,13 +47,7 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}"><img class="right" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="max-width:50%; height:auto; width:auto;"></a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}">Discover</a></li>
                             {% if request.session.user_type == "librarian"%}
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" role="button"  aria-haspopup="true" aria-expanded="false">Requests</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{% url 'display_hold_request_root' %}">See Requests</a>
-                                    </div>
-                                </li>
-                                
+                                <li class="nav-item"><a class="nav-link" href="{% url 'display_hold_request_root' %}">Requests</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'warning_creation_root' %}">Warning Operations</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'register_panel' %}">User Operations</a></li> 
                                 <li class="nav-item"><a class="nav-link" href="{% url 'add_material' %}">Material Operations</a></li>
@@ -65,7 +58,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" role="button"  aria-haspopup="true" aria-expanded="false">Homework</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{% url 'create_homework' %}">Assign and Create Homework</a>
+                                        <a class="dropdown-item" href="{% url 'init_homework' %}">Assign and Create Homework</a>
                                         <a class="dropdown-item" href="#!">Create Homework</a>
                                     </div>
                                 </li>
