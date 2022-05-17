@@ -82,10 +82,13 @@
                             <h2> {{ req.user_id }}/{{ req.mat_id }} </h2>
                             <p> {{ req.message }} </p>
                             <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
-                                <input type="text" placeholder="Your Response" name="answer_request">
+                                <input type="text" placeholder="Your Response" name="message">
                                 <input type="hidden" value="{{req.mat_id}}" name="mat_id">
                                 <input type="hidden" value="{{req.user_id}}" name="user_id">
-                                <input type="submit" id = "submit-answer" value = "Answer" style="float:inline-end;">
+                                <input type="hidden" value="" id="answer" name="answer">
+                                <input type="datetime" name="due_date">
+                                <input type="submit" id = "submit-answer-accept" value = "Accept" style="float:inline-end;" onclick="saveAnswer(value)">
+                                <input type="submit" id = "submit-answer-decline" value = "Decline" style="float:inline-end;" onclick="saveAnswer(value)">
                             </form>
                             <button id="close">Close</button>
                         </div>
@@ -100,18 +103,31 @@
     const open_details = document.getElementById('open-details');
     const modal_container = document.getElementById('modal-container');
     const close = document.getElementById('close');
-    const submit_answer = document.getElementById('submit-answer');
+    const decline = document.getElementById('submit-answer-decline');
+    const accept = document.getElementById('submit-answer-accept');
 
     open_details.addEventListener('click', () => {
         modal_container.classList.add('show');
     });
-    submit_answer.addEventListener('click', () => {
-        modal_container.classList.remove('show');
-    });
-    close.addEventListener('click', () => {
+    accept.addEventListener('click', () => {
         modal_container.classList.remove('show');
     });
 
+    decline.addEventListener('click', () => {
+        modal_container.classList.remove('show');
+    });
+
+    close.addEventListener('click', () => {
+        modal_container.classList.remove('show');
+    });
+    function saveAnswer(value){
+        if (value == "Accept"){
+            document.getElementById("answer").value = "true";
+        }
+        else if (value == "Decline") {
+            document.getElementById("answer").value = "false";
+        }
+    }
 </script>
 {% endif %}
 {% endblock %}

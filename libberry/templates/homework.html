@@ -72,7 +72,7 @@
                         <select class="selectBox" name="course-select" id="course-select">
                             <option value "Please select a course">Please select a course</option>
                         {% for course in courses %}
-                            <option value="{{ course.course_id }} {{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
+                            <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
                         {% endfor %}
                         </select>
                     </div>
@@ -113,7 +113,11 @@
     <script type="text/javascript">
         function updateSections(value){
             document.getElementById("student-area").style.display="block";
-            document.getElementById("student-select").innerText = "{% for ss in student_section %} {% if ss.course_id == " + value + " %} <input type='checkbox' value='{{ ss.user_id }}'> {% endif %} {% endfor %}"
+            var student_div  = document.getElementById("student-select");
+            var new_div = document.createElement("div");
+            new_div.innerHTML = "{% for ss in student_section %} {% if ss.course_id == " + value + " %} <input type='checkbox' value='{{ ss.user_id }}'> {% endif %} {% endfor %}";
+            student_div.appendChild(new_div);
+            alert(new_div.innerHTML);
         }
         function changeHwForm(value){
             if(value == "ind"){
