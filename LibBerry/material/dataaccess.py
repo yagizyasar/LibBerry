@@ -392,6 +392,7 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
     cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
     due = cursor.fetchone()[0]
     print(due)
+    print(type(due))
     #due = datetime.strptime(due, "%y-%m-%d %H:%M:%S")
     overdue_amount = int(overdue_amount)
     if message == "" and due < datetime.now():
