@@ -311,6 +311,7 @@ def display_all_hold_requests_init_view(request):
     if request.session["user_type"] != "librarian":
         return redirect('home')
     context = db_get_all_reservation_requests()
+    request.session["user_balance"] = db_get_user_balance(request.user.username)
     return render(request,'librarian_request.html',{"requests":context})
 
 def conclude_hold_request(request):
@@ -345,7 +346,10 @@ def return_mat(request):
     if overdue_amount == None:
         overdue_amount = 0
     db_return_book(user_id, mat_id, overdue_amount=overdue_amount)
+
+    request.session["user_balance"] = db_get_user_balance(request.user.username)
     return redirect('display_hold_request_root')
+
 
 def rate_mat(request):
     if not request.user.is_authenticated:
