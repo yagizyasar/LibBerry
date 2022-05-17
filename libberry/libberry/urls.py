@@ -21,4 +21,5 @@ urlpatterns = [
     path('',include('home.urls')),
     path('material/',include('material.urls')),
     path('homework/',include('homework.urls')),
+    path('warning/',include('warning.urls')),
 ]
