@@ -7,18 +7,21 @@
     {% load static %}
     <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
 </head>
-<body>
+<body style="align-items: center;
+justify-content: center;">
 <!--configure the action for the following form!!!!!!!!!!-->
-<form action = "{% url 'user_login' %}" method = "post" class="login-form">
-    {% csrf_token %}
-    <div id = "id-area">
-        <label for="user-id">ID</label>
-        <input type="text" id="user-id" name="user-id" required>
-    </div>
-    <div id = "password-area">
-        <label for="user-password">Password</label>
-        <input type="password" id="user-password" name="user-password" required>
-    </div>
-    <input type="submit" value="Login">
-</form>
+<div style="text-align:center;">
+    <form action = "{% url 'user_login' %}" method = "post" class="login-form" style="display: inline-block;">
+        {% csrf_token %}
+        <div id = "id-area">
+            <label style="float-left"for="user-id">ID:</label><br>
+            <input style="float-left"type="text" id="user-id" name="user-id" required>
+        </div>
+        <div id = "password-area">
+            <label style="float-right"for="user-password">Password:</label><br>
+            <input style="float-left"type="password" id="user-password" name="user-password" required>
+        </div>
+        <input type="submit" value="Login">
+    </form>
+</div>
 {% endblock %}
