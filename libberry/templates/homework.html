@@ -20,7 +20,7 @@
                 <option value="sec">Directly with Sections</option>
                 <option value="ind">Individually</option>
             </select>
-            <form action = "{% url 'homework_add' %}"  method = "post" name = "homework-form1" id = "homework-form1" class = "homework-form1" style="display:block;">
+            <form action = "{% url 'create_homework' %}"  method = "post" name = "homework-form1" id = "homework-form1" class = "homework-form1" style="display:block;">
                 {% csrf_token %}
                 <div id="title-area1">
                     <label for="title1">Title:</label>
