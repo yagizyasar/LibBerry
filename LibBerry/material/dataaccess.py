@@ -427,4 +427,5 @@ def db_get_mat_unavailable_amounts():
     cursor = connection.cursor()
     cursor.execute("(SELECT mat_id, COUNT(*) AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id) UNION (SELECT mat_id, 0 AS unavailable FROM material_material WHERE mat_id NOT IN (SELECT mat_id AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id));")
     res = to_dict(cursor)
+    print(len(res))
     return res

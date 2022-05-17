@@ -12,7 +12,8 @@ def init_view(request):
     audiovisual_dict = db_get_all_audiovisuals()
     periodical_dict = db_get_all_periodicals()
     printed_dict = db_get_all_printeds()
-    return render(request,'materials.html',{"materials":return_dict, "materials_audiovisual":audiovisual_dict, "materials_periodical":periodical_dict, "materials_printed":printed_dict})
+    unavailable_dict = db_get_unavailable_counts()
+    return render(request,'materials.html',{"materials":return_dict, "materials_audiovisual":audiovisual_dict, "materials_periodical":periodical_dict, "materials_printed":printed_dict, "materials_unavailable":unavailable_dict})
 
 def add_material_root_view(request):
     return render(request,'addmaterial.html')
