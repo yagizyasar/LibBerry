@@ -9,8 +9,10 @@ import datetime
 # Create your views here.
 def init_view(request):
     return_dict = db_get_all_mats()
-
-    return render(request,'materials.html',{"materials":return_dict})
+    audiovisual_dict = db_get_all_audiovisuals()
+    periodical_dict = db_get_all_periodicals()
+    printed_dict = db_get_all_printeds()
+    return render(request,'materials.html',{"materials":return_dict, "materials_audiovisual":audiovisual_dict, "materials_periodical":periodical_dict, "materials_printed":printed_dict})
 
 def add_material_root_view(request):
     return render(request,'addmaterial.html')
@@ -107,7 +109,8 @@ def search_material(request):
     if len(author_list) != 0:
         author_list = author_list.split()
 
-    published_date = request.POST["date"]
+    published_date_after = request.POST["date_after"]
+    published_date_before = request.POST["date_before"]
     genre = request.POST["genre"]
     set = request.POST["set"]
     if set == "":
@@ -119,10 +122,14 @@ def search_material(request):
         rating = 0
     rating = float(rating) / 10.0
 
-    if(published_date == None or published_date == ""):
-        published_date = "1000-01-01"
+    if(published_date_after == None or published_date_after == ""):
+        published_date_after = "1000-01-01"
+
+    if(published_date_before == None or published_date_before == ""):
+        published_date_before = "3000-01-01"
+
     print(author_list)
-    params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
+    params = {"title":title,"author":author_list,"published_after":published_date_after,"published_before":published_date_before,"genre":genre,"set":set,"rating_threshold":rating}
     all_dict = db_generate_find_mat_query(params)
     printed_dict = db_generate_find_printed_query(params)
     periodical_dict = db_generate_find_periodical_query(params)
@@ -302,8 +309,6 @@ def display_all_hold_requests_init_view(request):
     if request.session["user_type"] != "librarian":
         return redirect('home')
     context = db_get_all_reservation_requests()
-    print("Context is")
-    print(context)
     return render(request,'librarian_request.html',{"requests":context})
 
 def conclude_hold_request(request):
@@ -315,7 +320,7 @@ def conclude_hold_request(request):
     message = request.POST["message"]
     mat_id = request.POST["mat_id"]
     user_id = request.POST["user_id"]
-    answer = request.POST["conclude_button"]
+    answer = request.POST["answer"]
     due_date = request.POST["due_date"]
     if(answer == "true"):
         answer = True
