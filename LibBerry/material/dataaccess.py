@@ -414,3 +414,11 @@ def db_get_all_reservation_requests():
     res_dict = to_dict(cursor)
     return res_dict
 
+def db_rate_mat(user_id, mat_id, rating):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM user_rates_mat WHERE user_id=%s AND mat_id=%s;", [user_id, mat_id])
+    res = cursor.fetchone()
+    if res != None:
+        cursor.execute("UPDATE user_rates_mat SET rating=%s WHERE user_id=%s AND mat_id=%s;", [rating, user_id, mat_id])
+    else:
+        cursor.execute("INSERT INTO user_rates_mat VALUES(%s, %s, %s);", [user_id, mat_id, rating])

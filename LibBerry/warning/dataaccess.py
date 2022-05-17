@@ -5,7 +5,7 @@ from user.models import *
 from home.dataaccess import to_dict
 from datetime import datetime
 
-def db_send_nearly_due_warning(warn_id, message, send_date, user_id, librarian_id, remaining_days, mat_id="-"):
+def db_send_nearly_due_warning(message, send_date, user_id, librarian_id, remaining_days, mat_id):
     cursor = connection.cursor()
 
     if mat_id != "-":
