@@ -20,9 +20,9 @@
                 <option value="sec">Directly with Sections</option>
                 <option value="ind">Individually</option>
             </select>
-            <form action = "{% url 'homework_add' %}"  method = "post" name = "homework-form1" id = "homework-form1" class = "homework-form1" style="display:block;">
+            <form action = "{% url 'create_homework' %}"  method = "post" name = "homework-form1" id = "homework-form1" class = "homework-form1" style="display:block;">
                 {% csrf_token %}
-                <div id="title-area1">
+                <div id="title-area">
                     <label for="title1">Title:</label>
                     <input type="text" id="title1" name="title">
                 </div>
@@ -55,7 +55,45 @@
                     </select>
                 </div>
                 <input type="hidden" id="type" name="type">
-                <input type="submit" value="add-material"> 
+                <input type="submit" value="Assign Homework"> 
+            </form>
+
+            <form action = "{% url 'create_homework' %}"  method = "post" name = "homework-form2" id = "homework-form2" class = "homework-form2" style="display:none;">
+                {% csrf_token %}
+                <div id="title-area1">
+                    <label for="title1">Title:</label>
+                    <input type="text" id="title1" name="title">
+                </div>
+                <div id = "course-area1">
+                    <label for="course-select">For Course:</label>
+                    <div class="selectWrapper">
+                        <select class="selectBox" name="course-select" id="course-select"onchange="updateSections(value)" >
+                        {% for course in courses %}
+                            <option value="{{ course.course_id }} {{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div id = "student-area" style="display:none;">
+                    <label for="student-select">Select Students:</label>
+                    <div class="scrollmenu" name="student-select" id="student-select">
+                    </div>
+                </div>
+                <div id = "deadline-area1">
+                    <label for="deadline">Deadline:</label>
+                    <input type="datetime-local" id="deadline" name="deadline" onload="constrainDate()" onchange="constrainDate()">
+                </div>
+                <div id = "material-set-area1">
+                    <div class="selectWrapper">
+                        <label for="material-set-select">Material Set for Homework:</label>
+                        <select class="selectBox" name="material-select" id="course-select">
+                        {% for set in mat_sets %}
+                            <option value="{{ set.set_id}}">{{ set.set_id }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" id="type" name="type">
+                <input type="submit" value="Assign Homework"> 
             </form>
         </div>
     </div> 
@@ -76,14 +114,17 @@
 
     <script type="text/javascript">
         function updateStudents(value){
+            document.getElementById("student-area").style.display="block";
             document.getElementById("student-select").innerText = "{% for ss in student_section %} {% if ss.course_id == " + value + " %} <input type='checkbox' value='{{ ss.user_id }}'> {% endif %} {% endfor %}"
         }
         function changeHwForm(value){
             if(value == "ind"){
-                document.getElementById("student-area").style.display="block";
+                document.getElementById("homework-form2").style.display="block";
+                document.getElementById("homework-form1").style.display="none";
             }
             else if (value == "sec") {
-                document.getElementById("student-area").style.display="none";
+                document.getElementById("homework-form1").style.display="block";
+                document.getElementById("homework-form2").style.display="none";
             }
         }
     </script>
