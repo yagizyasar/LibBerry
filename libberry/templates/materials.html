@@ -1,5 +1,6 @@
 {% extends 'generic.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block content %}
 <!DOCTYPE html>
 <html>
@@ -86,7 +87,7 @@
                         <td>{{ mat.amount }}</td>
                         {% for availmat in materials_unavailable%}
                             {% if mat.mat_id == availmat.mat_id %}
-                            <td>{{availmat.unavailable}}</td>
+                            <td>{% sub mat.amount availmat.unavailable %}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
@@ -141,7 +142,7 @@
                         <td>{{ printmat.amount }}</td>
                         {% for availmat in materials_unavailable%}
                             {% if printmat.mat_id == availmat.mat_id %}
-                            <td>{{availmat.unavailable}}</td>
+                            <td>{% sub printmat.amount availmat.unavailable %}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
@@ -196,7 +197,7 @@
                         <td>{{ avmat.amount }}</td>
                         {% for availmat in materials_unavailable%}
                             {% if avmat.mat_id == availmat.mat_id %}
-                            <td>{{availmat.unavailable}}</td>
+                            <td>{% sub avmat.amount availmat.unavailable %}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
@@ -244,7 +245,7 @@
                         <td>{{ permat.amount }}</td>
                         {% for availmat in materials_unavailable%}
                             {% if permat.mat_id == availmat.mat_id %}
-                            <td>{{availmat.unavailable}}</td>
+                            <td>{% sub availmat.amount availmat.unavailable %}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
@@ -297,7 +298,7 @@
                         <td>{{ custommat.amount }}</td>
                         {% for availmat in materials_unavailable%}
                             {% if custommat.mat_id == availmat.mat_id %}
-                            <td>{{availmat.unavailable}}</td>
+                            <td>{% sub custommat.amount availmat.unavailable %}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
