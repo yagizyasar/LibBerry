@@ -16,40 +16,39 @@
             <fieldset>
                 <legend>Categories:</legend>
                 <div>
-                    <input type="checkbox" id="printed" name="printed" checked>
+                    <input type="radio" id="all" value="all" name="category" onchange="changeTable(value)" checked>
+                    <label for="all">All</label>
+                    <p></p>
+                    <input type="radio" id="printed" value="printed" name="category" onchange="changeTable(value)">
                     <label for="printed">Printed</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="audiovisual" name="audiovisual">
+                    <p></p>
+                    <input type="radio" id="audiovisual" value="audiovisual" name="category" onchange="changeTable(value)">
                     <label for="audiovisual">Audiovisual</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="periodical" name="periodical">
+                    <p></p>
+                    <input type="radio" id="periodical" value="periodical" name="category" onchange="changeTable(value)">
                     <label for="periodical">Periodical</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="custom" name="custom">
+                    <p></p>
+                    <input type="radio" id="custom" value="custom" name="category" onchange="changeTable(value)">
                     <label for="custom">Custom</label>
                 </div>
             </fieldset>
             <!--date intervals-->
+            <form action = "{% url 'search' %}" method = "post" class="search-form">
+            {% csrf_token %}
             <fieldset>
                 <legend>Publish Date</legend>
                     <div>
-                        <label for="start-date">Start Date:</label>
-                        <input type="date" name="start-date" min="0000-01-01">
-                        <label for="end-date">End Date:</label>
-                        <input type="date" name="end-date" max="2022-15-05">
+                        <label for="date_after">Published After: </label>
+                        <input type="date" name="date_after" min="0001-01-01">
+                        <label for="date_before">Published Before:</label>
+                        <input type="date" name="date_before" max="2022-05-18">
                     </div>
             </fieldset>
         </div>
         <div class="col-sm">
-            <form action = "{% url 'search' %}" method = "post" class="search-form">
-                {% csrf_token %}
                 <div class="searchbar-container" style="display:flex; flex-direction:row">
                     <input type="text" name="title" placeholder="Title">
                     <input type="text" name="author" placeholder="Author/Creator">
-                    <input type="date" name="date" placeholder="Date">
                     <input type="text" name="genre" placeholder="Genre">
                     <input type="text" name="set" placeholder="Set">
                     <div id = "external-rating-area">
@@ -62,12 +61,13 @@
             </form>      
             <div class="material-list">
                 <table>
+                <tbody style="display: block;" id="all-table" name="all-table">
                     <tr>
                         <th>Information</th>
                         <th>Publish Date</th>
                         <th>Rating</th>
                         <th>Genre</th>
-                        <th>Available Amount</th>
+                        <th>Total Amount</th>
                         <th>Request</th>
                     </tr>
                     
@@ -87,10 +87,180 @@
                        </form>
                     </tr>
                     {% endfor %}
+                </tbody>
+                </table>
+                <table>
+                    <tbody style="display: none;" id="printed-table" name="printed-table">
+                    <tr>
+                        <th>Information</th>
+                        <th>Publish Date</th>
+                        <th>Rating</th>
+                        <th>Genre</th>
+                        <th>Pages</th>
+                        <th>Total Amount</th>
+                        <th>Request</th>
+                    </tr>
+                    
+                    {% for printmat in materials_printed %}
+                    <tr>
+                        <td><a href="#">{{ printmat.title }}</a></td>
+                        <td>{{ printmat.publish_date }}</td>
+                        <td>{{ printmat.rating }}</td>
+                        <td>{{ printmat.genre }}</td>
+                        <td>{{ printmat.pages }}</td>
+                        <td>{{ printmat.amount }}</td>
+                        <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
+                            <!--will be available-->
+                            {% csrf_token %}
+                           <td><input type="text" width="float:right;" name="request-text">
+                               <input type="submit" value="Hold Request" style="float:inline-end;"></td>
+                            <input type="hidden" value={{ printmat.mat_id }} name="mat_id">
+                       </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <table>
+                    <tbody style="display: none;" id="audiovisual-table" name="audiovisual-table">
+                    <tr>
+                        <th>Information</th>
+                        <th>Publish Date</th>
+                        <th>Rating</th>
+                        <th>Genre</th>
+                        <th>Length</th>
+                        <th>Total Amount</th>
+                        <th>Request</th>
+                    </tr>
+                    
+                    {% for avmat in materials_audiovisual %}
+                    <tr>
+                        <td><a href="#">{{ avmat.title }}</a></td>
+                        <td>{{ avmat.publish_date }}</td>
+                        <td>{{ avmat.rating }}</td>
+                        <td>{{ avmat.genre }}</td>
+                        <td>{{ avmat.length }}</td>
+                        <td>{{ avmat.amount }}</td>
+                        <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
+                            <!--will be available-->
+                            {% csrf_token %}
+                           <td><input type="text" width="float:right;" name="request-text">
+                               <input type="submit" value="Hold Request" style="float:inline-end;"></td>
+                            <input type="hidden" value={{ avmat.mat_id }} name="mat_id">
+                       </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <table>
+                    <tbody style="display: none;" id="periodical-table" name="periodical-table">
+                    <tr>
+                        <th>Information</th>
+                        <th>Publish Date</th>
+                        <th>Rating</th>
+                        <th>Genre</th>
+                        <th>Period</th>
+                        <th>Total Amount</th>
+                        <th>Request</th>
+                    </tr>
+                    
+                    {% for permat in materials_periodical %}
+                    <tr>
+                        <td><a href="#">{{ permat.title }}</a></td>
+                        <td>{{ permat.publish_date }}</td>
+                        <td>{{ permat.rating }}</td>
+                        <td>{{ permat.genre }}</td>
+                        <td>{{ permat.period }}</td>
+                        <td>{{ permat.amount }}</td>
+                        <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
+                            <!--will be available-->
+                            {% csrf_token %}
+                           <td><input type="text" width="float:right;" name="request-text">
+                               <input type="submit" value="Hold Request" style="float:inline-end;"></td>
+                            <input type="hidden" value={{ permat.mat_id }} name="mat_id">
+                       </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <table>
+                    <tbody style="display: none;" id="custom-table" name="custom-table">
+                    <tr>
+                        <th>Information</th>
+                        <th>Publish Date</th>
+                        <th>Rating</th>
+                        <th>Genre</th>
+                        <th>Total Amount</th>
+                        <th>Request</th>
+                    </tr>
+                    
+                    {% for custommat in materials_custom %}
+                    <tr>
+                        <td><a href="#">{{ custommat.title }}</a></td>
+                        <td>{{ custommat.publish_date }}</td>
+                        <td>{{ custommat.rating }}</td>
+                        <td>{{ custommat.genre }}</td>
+                        <td>{{ custommat.amount }}</td>
+                        <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
+                            <!--will be available-->
+                            {% csrf_token %}
+                           <td><input type="text" width="float:right;" name="request-text">
+                               <input type="submit" value="Hold Request" style="float:inline-end;"></td>
+                            <input type="hidden" value={{ custommat.mat_id }} name="mat_id">
+                       </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function changeTable(value){
+        if (value == "all"){
+            document.getElementById('all-table').style.display = 'block';
+            document.getElementById('printed-table').style.display = 'none';
+            document.getElementById('audiovisual-table').style.display = 'none';
+            document.getElementById('periodical-table-top').style.display = 'none';
+            document.getElementById('periodical-table-rows').style.display = 'none';
+            document.getElementById('custom-table').style.display = 'none';
+        }
+        else if (value == "printed"){
+            document.getElementById('all-table').style.display = 'none';
+            document.getElementById('printed-table').style.display = 'block';
+            document.getElementById('audiovisual-table').style.display = 'none';
+            document.getElementById('periodical-table').style.display = 'none';
+            document.getElementById('custom-table').style.display = 'none';
+        }
+        else if (value == "audiovisual"){
+            document.getElementById('all-table').style.display = 'none';
+            document.getElementById('printed-table').style.display = 'none';
+            document.getElementById('audiovisual-table').style.display = 'block';
+            document.getElementById('periodical-table').style.display = 'none';
+            document.getElementById('custom-table').style.display = 'none';
+        }
+        else if (value == "custom"){
+            document.getElementById('all-table').style.display = 'none';
+            document.getElementById('printed-table').style.display = 'none';
+            document.getElementById('audiovisual-table').style.display = 'none';
+            document.getElementById('periodical-table').style.display = 'none';
+            document.getElementById('custom-table').style.display = 'block';
+        }
+        else if (value == "periodical"){
+            document.getElementById('all-table').style.display = 'none';
+            document.getElementById('printed-table').style.display = 'none';
+            document.getElementById('audiovisual-table').style.display = 'none';
+            document.getElementById('periodical-table').style.display = 'block';
+            document.getElementById('custom-table').style.display = 'none';
+        }
+        else {
+            document.getElementById('all-table').style.display = 'none';
+            document.getElementById('printed-table').style.display = 'none';
+            document.getElementById('audiovisual-table').style.display = 'none';
+            document.getElementById('periodical-table').style.display = 'none';
+            document.getElementById('custom-table').style.display = 'none';
+        }
+    }
+</script>
 {% endblock content %}
 
