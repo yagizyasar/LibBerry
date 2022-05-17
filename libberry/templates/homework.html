@@ -60,11 +60,11 @@
 
             <form action = "{% url 'create_homework' %}"  method = "post" name = "homework-form2" id = "homework-form2" class = "homework-form2" style="display:none;">
                 {% csrf_token %}
-                <div id="title-area1">
-                    <label for="title1">Title:</label>
-                    <input type="text" id="title1" name="title">
+                <div id="title-area2">
+                    <label for="title2">Title:</label>
+                    <input type="text" id="title2" name="title">
                 </div>
-                <div id = "course-area1">
+                <div id = "course-area2">
                     <label for="course-select">For Course:</label>
                     <div class="selectWrapper">
                         <select class="selectBox" name="course-select" id="course-select2" onchange="updateSections(value)" >
