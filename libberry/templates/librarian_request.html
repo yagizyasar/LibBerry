@@ -75,18 +75,25 @@
                 <td> {{ req.reserve_date }} </td>
                 <td> {{ req.due_date }} </td>
                 <td> {{ req.message }} </td>
-                <td> 
-                    <div>
-                        <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
-                            {% csrf_token %}
-                            <input type="text" placeholder="Your Response" name="message">
-                            <input type="hidden" value="{{req.mat_id}}" name="mat_id">
-                            <input type="hidden" value="{{req.user_id}}" name="user_id">
-                            <input type="hidden" name="answer" id="answer-{{ req.user_id }}-{{ req.mat_id }}">
-                            <input type="datetime-local" name="due_date" placeholder="Due Date">
-                            <input type="submit" value = "Accept" name="conclude_button" style="float:inline-end;" onclick="closePopupTrue(value)">
-                            <input type="submit" value = "Decline" name="conclude_button" style="float:inline-end;" onclick="saveAnswerFalse(value)">
-                        </form>
+                <td>
+                    <div style="box-sizing:border-box;">
+                        <button value="{{ req.user_id }}-{{ req.mat_id }}" onclick="openPopup(value)">Details</button>
+                        <div class="modal-container" id="modal-container-{{ req.user_id }}-{{ req.mat_id }}" style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.3); position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; display:none;">
+                            <div style="background-color: #fff; border-radius: 5px;padding: 30px 50px;width: 600px;max-width: 100%;text-align: center;">
+                                <h2> {{ req.user_id }}/{{ req.mat_id }} </h2>
+                                <p> {{ req.message }} </p>
+                                <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
+                                    <input type="text" placeholder="Your Response" name="message">
+                                    <input type="hidden" value="{{req.mat_id}}" name="mat_id">
+                                    <input type="hidden" value="{{req.user_id}}" name="user_id">
+                                    <input type="hidden" name="answer" id="answer-{{ req.user_id }}-{{ req.mat_id }}">
+                                    <input type="datetime-local" name="due_date">
+                                    <input type="submit" value = "Accept" name="conclude_button" style="float:inline-end;" onclick="closePopupTrue(value)">
+                                    <input type="submit" value = "Decline" name="conclude_button" style="float:inline-end;" onclick="saveAnswerFalse(value)">
+                                </form>
+                                <button value="{{ req.user_id }}-{{ req.mat_id }}" onclick="closePopup(value)">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -95,12 +102,24 @@
     </table>
 </div>
 <script type="text/javascript">
+    
+    function openPopup(value){
+        document.getElementById('modal-container-' + value).style.display = "block";
+    }
+
+    function closePopup(value){
+        document.getElementById('modal-container-' + value).style.display = "none";
+    }
     function closePopupTrue(value){
         document.getElementById('answer-' + value).value = "true";
+        document.getElementById('modal-container-' + value).style.display = "none";
     }
     function closePopupFalse(value){
         document.getElementById('answer-' + value).value = "false";
+        document.getElementById('modal-container-' + value).style.display = "none";
     }
 </script>
 {% endif %}
 {% endblock %}
+
+  
