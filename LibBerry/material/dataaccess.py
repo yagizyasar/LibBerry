@@ -409,13 +409,13 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
 
 def db_get_reservation_requests(status):
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM user_reserves_mat WHERE status=%s;", [status])
+    cursor.execute("SELECT * FROM user_reserves_mat WHERE status=%s ORDER BY request_date DESC;", [status])
     res_dict = to_dict(cursor)
     return res_dict
 
 def db_get_all_reservation_requests():
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM user_reserves_mat")
+    cursor.execute("SELECT * FROM user_reserves_mat ORDER BY request_date DESC;")
     res_dict = to_dict(cursor)
     return res_dict
 
