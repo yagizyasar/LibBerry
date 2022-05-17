@@ -10,7 +10,7 @@
     <meta name="author" content="" />
     <title>LibBerry - A School Library Database</title>
     <!-- Logo-->
-    <link rel="icon" type="image/x-icon" href="{% static 'assets/logolibberry2.png' %}" />
+    <link rel="icon" type="image/png" href="{% static '/assets/logolibbery2.png' %}" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
 </head>
@@ -45,40 +45,28 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}"><img class="right" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="max-width:50%; height:auto; width:auto;"></a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}">Discover</a></li>
                             {% if request.session.user_type == "librarian"%}
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Borrow Operations</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requests</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Hold</a>
-                                        <a class="dropdown-item" href="#!">Return</a>
+                                        <a class="dropdown-item" href="{% url 'display_hold_request_root' %}">See Requests</a>
                                     </div>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownWarning" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Warning Operations</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Warning Creation</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownReply" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reply</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Reply Requests</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="max-width:50%; height:auto; width:auto/9;"></a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User Operations</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{% url 'register_panel' %}">Register Users</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'add_material' %}">Material Operations</a></li>
+                                
+                                <li class="nav-item"><a class="nav-link" href="{% url 'warning_creation_root' %}">Warning Operations</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'register_panel' %}">User Operations</a></li> 
+                                <li class="nav-item"><a class="nav-link" href="{% url 'add_material' %}">User Operations</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Course Operations</a></li>
+                                
                             {% elif request.session.user_type == "instructor" %}
-                                <li class="nav-item"><a class="nav-link" href="#!">Ask </a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Request</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="position:center; max-width:50%; height:auto; width:auto/9;"></a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requests</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#">See Requests</a>
+                                    </div>
+                                </li>
                                 <li class="nav-item"><a class="nav-link" href="#">Homeworks</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Homework</a>
@@ -99,15 +87,9 @@
                                     </div>
                                 </li>
                             {% elif request.session.user_type == "student" %}
-                                <li class="nav-item"><a class="nav-link" href="#!">Ask </a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Request</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="position:center; max-width:50%; height:auto; width:auto/9;"></a></li>
                                 <li class="nav-item"><a class="nav-link" href="#!">My Homeworks</a></li>
                                 
                             {% elif request.session.user_type == "outsidemember" %}
-                                <li class="nav-item"><a class="nav-link" href="#!">Ask </a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Request</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="position:center; max-width:50%; height:auto; width:auto/9;"></a></li>
                                 <li class="nav-item"><a class="nav-link" href="#!">Request Extension</a></li>
                             
                             {% endif %}

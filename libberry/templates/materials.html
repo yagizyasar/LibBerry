@@ -97,6 +97,13 @@
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ mat.mat_id }} name="mat_id">
                        </form>
+                       {%else%}
+                       <form action="{% url 'rate_material'%}" method = "post" name = "rate-material-form" id = "rate-material-form" class = "rate-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" step="0.1" style="width: 5em" min="0" max="10" name="new_rating">
+                            <input type="submit" value="Rate" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ mat.mat_id }} name="rate_mat_id">
+                       </form>
                        {%endif%}
                     </tr>
                     {% endfor %}
@@ -139,6 +146,13 @@
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ printmat.mat_id }} name="mat_id">
                        </form>
+                       {%else%}
+                       <form action="{% url 'rate_material'%}" method = "post" name = "rate-material-form" id = "rate-material-form" class = "rate-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" step="0.1" style="width: 5em" min="0" max="10" name="new_rating">
+                            <input type="submit" value="Rate" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ printmat.mat_id }} name="rate_mat_id">
+                       </form>
                        {%endif%}
                     </tr>
                     {% endfor %}
@@ -177,7 +191,7 @@
                        {% if request.session.user_type == "librarian" %}
                        <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
                         {% csrf_token %}
-                        <td><input type="number" style="width: 5em" size="5" name="amount">
+                        <td><input type="number" step="0.1" style="width: 5em" min="0" max="10" name="new_rating">
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ avmat.mat_id }} name="mat_id">
                        </form>
@@ -223,6 +237,13 @@
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ permat.mat_id }} name="mat_id">
                        </form>
+                       {%else%}
+                       <form action="{% url 'rate_material'%}" method = "post" name = "rate-material-form" id = "rate-material-form" class = "rate-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" step="0.1" style="width: 5em" min="0" max="10" name="new_rating">
+                            <input type="submit" value="Rate" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ mat.mat_id }} name="rate_mat_id">
+                       </form>
                        {%endif%}
                     </tr>
                     {% endfor %}
@@ -262,6 +283,13 @@
                         <td><input type="number" style="width: 5em" name="amount">
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ custommat.mat_id }} name="mat_id">
+                       </form>
+                       {%else%}
+                       <form action="{% url 'rate_material'%}" method = "post" name = "rate-material-form" id = "rate-material-form" class = "rate-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" step="0.1" style="width: 5em" min="0" max="10" name="new_rating">
+                            <input type="submit" value="Rate" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ mat.mat_id }} name="rate_mat_id">
                        </form>
                        {%endif%}
                     </tr>
