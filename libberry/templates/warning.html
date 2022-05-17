@@ -1,0 +1,32 @@
+{% extends 'generic.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+<div class="warning-list">
+    <table>
+        <tr>
+            <th>Warning ID</th>
+            <th>Material ID</th>
+            <th>Text</th>
+            <th>Sent Date Time</th>
+            <th>Remaining Days</th>
+        </tr>
+        <!--current user's warnings-->
+        {% for warn in users_warnings %}
+        <tr>
+            <!--variablelar modellere göre yapıldı değişebilir-->
+            <td><a href="#">{{ warn.warn_id }}</a></td>
+            <td>{{ warn.mat_id }}</td>
+            <td>{{ warn.text }}</td>
+            <td>{{ warn.sent_datetime }}
+            <td>{{ warn.remaining_days }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
