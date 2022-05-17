@@ -9,5 +9,5 @@ urlpatterns = [
     path('coursecreationandstudent/',views.register_student_or_course_root,name='course_register_root'),
     path('registerstudentocourse/',views.register_student_to_course,name='register_student_course'),
     path('registercourse/',views.register_course,name='create_course'),
-    path('homeworkseperate/',views.init_homework_2,name='init_homework_two'),
+    path('homeworkseperate/',views.init_homework_2,name='init_homework_2'),
 ]
