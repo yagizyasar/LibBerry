@@ -11,9 +11,26 @@ def init_warning_list_view(request):
     else:
         return redirect('home')
 
-def create_warning(request):
+def create_overdue_warning(request):
      if request.user.is_authenticated and request.method == "POST" and request.session["user_type"] == "librarian":
-         context = db_get_reservation_requests("borrowed")
-         print(context)
+        user_id = request.POST["user_id"]
+        message = request.POST["text"]
+        librarian_id = request.user.username
+        mat_id = request.POST["mat_id"]
+        debt = request.POST["balance"]
+        db_send_overdue_warning(message,user_id,librarian_id,mat_id,debt)
+        return redirect(request.META.get('HTTP_REFERER'))
      else:
+        return redirect('home')
+
+def create_neardue_warning(request):
+    if request.user.is_authenticated and request.method == "POST" and request.session["user_type"] == "librarian":
+        user_id = request.POST["user_id"]
+        message = request.POST["text"]
+        librarian_id = request.user.username
+        mat_id = request.POST["mat_id"]
+        remaing_days = request.POST["remaining_days"]
+        db_send_neardue_warning(message,user_id,librarian_id,mat_id,remaing_days)
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
         return redirect('home')

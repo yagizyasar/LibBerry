@@ -13,4 +13,5 @@ urlpatterns = [
     path('makeholdrequest/',views.make_hold_request,name='hold_material_request'),
     path('conclude_hold_request/',views.conclude_hold_request,name='answer_request'),
     path('displayallrequests/',views.display_all_hold_requests_init_view,name='display_hold_request_root'),
+    path('ratemat/', views.rate_mat, name='rate_material')
 ]

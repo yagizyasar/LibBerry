@@ -330,8 +330,18 @@ def conclude_hold_request(request):
     db_conclude_hold_request(user_id,mat_id,request.user.username,answer,message,due_date)
     return redirect('display_hold_request_root')
     
+def rate_mat(request):
+    if not request.user.is_authenticated:
+        print("User not authenticated")
+        return redirect('login')
+    if request.session["user_type"] == "librarian":
+        print("Librarians cannot rate materials")
+        return redirect('home')
 
-    
+    mat_id = request.POST["rate_mat_id"]
+    rating = request.POST["new_rating"]
+    db_rate_mat(request.user.username, mat_id, rating)
+    return redirect(request.META.get('HTTP_REFERER'))
     
     
 
