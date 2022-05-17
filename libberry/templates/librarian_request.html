@@ -77,8 +77,8 @@
                 <td> {{ req.message }} </td>
                 <td>
                     <button id="open-details">Details</button>
-                    <div class="modal-container" id="modal-container">
-                        <div class="modal">
+                    <div class="modal-container" id="modal-container" style="display: flex; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.3); position: fixed; opacity: 0; pointer-events: none; top: 0; left: 0; height: 100vh; width: 100vw;">
+                        <div class="modal" style="background-color: #fff; border-radius: 5px;padding: 30px 50px;width: 600px;max-width: 100%;text-align: center;">
                             <h2> {{ req.user_id }}/{{ req.mat_id }} </h2>
                             <p> {{ req.message }} </p>
                             <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
@@ -131,3 +131,5 @@
 </script>
 {% endif %}
 {% endblock %}
+
+  
