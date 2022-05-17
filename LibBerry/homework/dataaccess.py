@@ -71,13 +71,19 @@ def db_get_all_homeworks_instructor(user_id):
      cursor.execute("SELECT hw_id,due,set_id FROM homework_homework NATURAL JOIN instructor_assigns_hw WHERE instructor_id=%s ORDER BY due DESC;",[user_id])
      res = to_dict(cursor)
      return res
-
+"""
 def db_get_all_homeworks_student(user_id):
     cursor = connection.cursor()
     cursor.execute("SELECT hw_id FROM student_takes_course NATURAL JOIN coursesection_has_hw WHERE student_id=%s ORDER BY due DESC;",[user_id])
     res = to_dict(cursor)
     return res
-
+"""
+def db_get_students_homeworks(user_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT hw_id FROM student_has_hw WHERE student_id=%s;", [user_id])
+    res_dict = to_dict(cursor)
+    return res_dict
+    
 def db_add_coursesection(course_id, section, semester, year, instructor_id):
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM course_section WHERE course_id=%s AND section=%s AND semester=%s AND year=%s;", [course_id, section, semester, year])

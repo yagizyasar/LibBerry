@@ -144,7 +144,7 @@ def db_get_all_mats():
 
 def db_generate_find_mat_query(params):
     #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
-    query = "SELECT * FROM material_material AS M WHERE "
+    query = "SELECT * AS M.available FROM material_material AS M WHERE "
 
     # TODO search by multiple fields?
     # search fields
@@ -185,10 +185,14 @@ def db_generate_find_mat_query(params):
     print(len(res))
 
     # get available amount of each book
-    
-    
     return res
     # TODO process query result
+
+def db_get_unavailable_counts():
+    cursor = connection.cursor()
+    cursor.execute("SELECT mat_id, COUNT(*) AS unavailable FROM user_reserves_mat WHERE status='borrowed' OR status='on hold' GROUP BY mat_id;")
+    res = to_dict(cursor)
+    return res
 
 def db_get_all_sets_of_instructor(instructor_id):
      cursor = connection.cursor()
@@ -255,4 +259,3 @@ def db_get_reservation_requests(status):
     res_dict = to_dict(cursor)
     return res_dict
 
-#def db_get_students_request yapılacak
