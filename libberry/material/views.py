@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from user.models import *
 from django.views.decorators.csrf import csrf_exempt
 from .dataaccess import *
-
+import datetime
 # Create your views here.
 def init_view(request):
     return_dict = db_get_all_mats()
@@ -176,7 +176,19 @@ def remove_material_set_view(request):
     set_id = request.POST["set-id"]
     #check koy
     db_remove_material_set(set_id)
-    return redirect(request.META.get('HTTP_REFERER'))  
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def make_hold_request(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    else:
+        mat_id = request.POST["mat_id"]
+        user_id = request.user.username
+        text = request.POST["request-text"]
+        db_send_hold_request(user_id,mat_id,text)
+        return redirect(request.META.get('HTTP_REFERER'))
+    
 
     
     

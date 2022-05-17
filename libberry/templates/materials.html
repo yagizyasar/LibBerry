@@ -78,8 +78,9 @@
                         <td>{{ mat.rating }}</td>
                         <td>{{ mat.genre }}</td>
                         <td>{{ mat.amount }}</td>
-                        <form action="hold_material_request" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
+                        <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
                             <!--will be available-->
+                            {% csrf_token %}
                            <td><input type="text" width="float:right;" name="request-text">
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ mat.mat_id }} name="mat_id">
