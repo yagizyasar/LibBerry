@@ -43,7 +43,7 @@
                     <option value="nearlydue">Nearly Due Warning</option>
                 </select>
             </div>
-                <form action = "{% url 'warning_creation' %}"  method = "post" name = "warning-form" id = "warning-form" class = "warning-form" style="display:none;">
+                <form action = "{% url 'create_overdue_warning' %}"  method = "post" name = "overdue-warning-form" id = "overdue-warning-form" class = "overdue-warning-form" style="display:none;">
                     {% csrf_token %}
                     <div id = "user-id-area">
                         <label for="user_id">User ID:</label>
@@ -61,11 +61,26 @@
                         <label for="balance">Balance:</label>
                         <input type="text" id="balance" name="balance">
                     </div>
+                    <input type="submit" value="Send Warning">
+                </form>
+                <form action = "{% url 'create_nearlydue_warning' %}"  method = "post" name = "nearlydue-warning-form" id = "nearlydue-warning-form" class = "nearlydue-warning-form" style="display:none;">
+                    {% csrf_token %}
+                    <div id = "user-id-area">
+                        <label for="user_id">User ID:</label>
+                        <input type="text" id="user_id" name="user_id">
+                    </div>
+                    <div id = "mat-id-area">
+                        <label for="mat_id">Material ID:</label>
+                        <input type="text" id="mat_id" name="mat_id">
+                    </div>
+                    <div id = "text-area">
+                        <label for="text">Text:</label>
+                        <input type="text" id="text" name="text">
+                    </div>
                     <div id = "remaining-days-area">
                         <label for="remaining_days">Remaining Days:</label>
-                        <input type="text" id="remaining_days" name="remaining_days">
+                        <input type="number" id="remaining_days" name="remaining_days">
                     </div>
-                    <input type="hidden" id="type" name="type">
                     <input type="submit" value="Send Warning">
                 </form>
             </div>
@@ -79,23 +94,24 @@
 
     function changeForm(value){
         if (value == "overdue"){
-            document.getElementById('warning-form').style.display = 'block';
+            document.getElementById('overdue-warning-form').style.display = 'block';
+            document.getElementById('nearlydue-warning-form').style.display = 'none';
             document.getElementById('user-id-area').style.display = 'block';
             document.getElementById('mat-id-area').style.display = 'block';
             document.getElementById('text-area').style.display = 'block';
             document.getElementById('balance-area').style.display = 'block';
-            document.getElementById('remaining-area').style.display = 'none';
-            document.getElementById('type').value = "overdue";
+            document.getElementById('remaining-days-area').style.display = 'none';
         } else if (value == "nearlydue"){
-            document.getElementById('warning-form').style.display = 'block';
+            document.getElementById('overdue-warning-form').style.display = 'none';
+            document.getElementById('nearlydue-warning-form').style.display = 'block';
             document.getElementById('user-id-area').style.display = 'block';
             document.getElementById('mat-id-area').style.display = 'block';
             document.getElementById('text-area').style.display = 'block';
             document.getElementById('balance-area').style.display = 'none';
             document.getElementById('remaining-area').style.display = 'block';
-            document.getElementById('type').value = "nearlydue";
         } else {
-            document.getElementById('warning-form').style.display = 'none';
+            document.getElementById('overdue-warning-form').style.display = 'none';
+            document.getElementById('nearlydue-warning-form').style.display = 'none';
             document.getElementById('user-id-area').style.display = 'none';
             document.getElementById('mat-id-area').style.display = 'none';
             document.getElementById('text-area').style.display = 'none';
