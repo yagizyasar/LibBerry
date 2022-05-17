@@ -31,7 +31,7 @@
                     <label for="course-select">For Course:</label>
                     <div class="selectWrapper">
                         <select class="selectBox" name="course-select" id="course-select2" onchange="updateSections(value)" >
-                            <option value "Please select a course">Please select a course</option>
+                            <option value="zero">Please select a course</option>
                         {% for course in courses %}
                             <option value="{{ course.course_id }}/{{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
                         {% endfor %}
@@ -116,18 +116,28 @@
 
     <script type="text/javascript">
         function updateSections(value){
-            document.getElementById("student-area").style.display="block";
-            var student_div  = document.getElementById("student-select");
-            var i = student_div.childElementCount;
-            var splitted;
-            for (let j = 0; j<i; j+=2 ){
-                splitted = student_div.children[j].value.split("%");
-                if (splitted[1] == value) {
-                    student_div.children[j].style.display = "block";
-                    student_div.children[j+1].style.display = "block";
-                }
-                    
+            if (value == "zero") {
+                document.getElementById("student-area").style.display="none";
             }
+            else{
+                document.getElementById("student-area").style.display="block";
+                var student_div  = document.getElementById("student-select");
+                var i = student_div.childElementCount;
+                var splitted;
+                for (let j = 0; j<i; j+=2 ){
+                    splitted = student_div.children[j].value.split("%");
+                    if (splitted[1] == value) {
+                        student_div.children[j].style.display = "block";
+                        student_div.children[j+1].style.display = "block";
+                    }
+                    else{
+                        student_div.children[j].style.display = "none";
+                        student_div.children[j+1].style.display = "none";
+                    }
+                        
+                }
+            }
+            
         }
         function changeHwForm(value){
             if(value == "ind"){
