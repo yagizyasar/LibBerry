@@ -89,8 +89,8 @@
                                     <input type="hidden" value="{{req.user_id}}" name="user_id">
                                     <input type="hidden" name="answer" id="answer-{{ req.user_id }}-{{ req.mat_id }}">
                                     <input type="datetime-local" name="due_date">
-                                    <input type="submit" name="{{ req.user_id }}-{{ req.mat_id }}" value = "Accept" name="conclude_button" style="float:inline-end;" onclick="closePopupTrue(name)">
-                                    <input type="submit" name="{{ req.user_id }}-{{ req.mat_id }}" value = "Decline" name="conclude_button" style="float:inline-end;" onclick="saveAnswerFalse(name)">
+                                    <button type="submit" value="{{ req.user_id }}-{{ req.mat_id }}"  name="conclude_button" style="float:inline-end;" onclick="closePopupTrue(value)">Accept</button>
+                                    <button type="submit" value="{{ req.user_id }}-{{ req.mat_id }}"  name="conclude_button" style="float:inline-end;" onclick="saveAnswerFalse(value)">Decline</button>
                                 </form>
                                 <button value="{{ req.user_id }}-{{ req.mat_id }}" onclick="closePopup(value)">Close</button>
                             </div>
@@ -111,11 +111,11 @@
     function closePopup(value){
         document.getElementById('modal-container-' + value).style.display = "none";
     }
-    function closePopupTrue(name){
-        document.getElementById('answer-' + id).value = "true";
-        document.getElementById('modal-container-' + id).style.display = "none";
+    function closePopupTrue(value){
+        document.getElementById('answer-' + value).value = "true";
+        document.getElementById('modal-container-' + value).style.display = "none";
     }
-    function closePopupFalse(name){
+    function closePopupFalse(value){
         document.getElementById('answer-' + value).value = "false";
         document.getElementById('modal-container-' + value).style.display = "none";
     }

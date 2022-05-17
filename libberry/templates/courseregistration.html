@@ -7,10 +7,10 @@
     <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
 </head>
 <body>
-
 <div class="container">
     <div class="row">
         <div class="col-sm">
+            <h5>Courses</h5>
             <div class="columnStyle">
                 <div class="course-list" id="course-list" name="course-list" style="display:block;">
                     {%for tempcourse in courses %}
@@ -28,6 +28,7 @@
             </div>
         </div>
         <div class="col-sm">
+            <h5>Register Student or Instructor to Course</h5>
             <div class="columnStyle">
                 <div class="selectWrapper">
                     <select class="selectBox" name="register-course-select" id="register-course-select"onchange="changeForm(value)" >

@@ -57,7 +57,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownWarning" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Warning Operations</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Returned Warnings</a>
+                                        <a class="dropdown-item" href="{% url 'warning_creation' %}">Warning Creation</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -81,9 +81,9 @@
                                 <li class="nav-item"><a class="nav-link" href="#"><img class="center" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="position:center; max-width:50%; height:auto; width:auto/9;"></a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Homeworks</a></li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upload</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Homework</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
+                                        <a class="dropdown-item" href="{% url 'create_homework' %}">Give Homework</a>
                                         <a class="dropdown-item" href="#!">Another action</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#!">Something else here</a>
