@@ -7,7 +7,9 @@ def init_homework_view(request):
         hws = db_get_all_homeworks_instructor(request.user.username)
         courses = db_get_all_courses_instructor(request.user.username)
         material_sets = db_get_all_materialsets_instructor(request.user.username)
-        return render(request,'homework.html',{"homeworks":hws,"courses":courses,"mat_sets":material_sets})
+        students = db_get_all_students_of_instructor(request.user.username)
+        print(students)
+        return render(request,'homework.html',{"homeworks":hws,"courses":courses,"mat_sets":material_sets,"student_section":students})
     elif request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "student":
         context = db_get_students_homeworks(request.user.username)
         return render(request,'homework.html',{"homeworks":context})

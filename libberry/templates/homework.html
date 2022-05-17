@@ -42,7 +42,7 @@
                     <label for="student-select">Select Students:</label>
                     <div class="scrollmenu" name="student-select" id="student-select">
                         {% for ss in student_section %} 
-                            <input type='checkbox' value='{{ ss.user_id }}-{{ ss.course_id }}/{{ course.section }}' style="display:none;"> 
+                            <input type='checkbox' value='{{ ss.student_id }}-{{ ss.course_id }}/{{ course.section }}' style="display:block;"> 
                         {% endfor %}
                     </div>
                 </div>
