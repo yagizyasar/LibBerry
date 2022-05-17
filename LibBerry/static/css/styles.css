@@ -63,7 +63,9 @@
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
 }
-
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
 *,
 *::before,
 *::after {
@@ -6601,6 +6603,14 @@ button.btn {
 
 .ratio-21x9 {
   --bs-aspect-ratio: 42.8571428571%;
+}
+
+fieldset
+{
+    border:2px solid green;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
 }
 
 .fixed-top {
