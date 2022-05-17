@@ -143,12 +143,25 @@ def db_get_all_mats():
     return db_generate_find_mat_query({"rating_threshold":0, "published_after":"1000-01-01"})
 
 def db_generate_find_mat_query(params):
-    query = """SELECT *
-        FROM (material_material NATURAL JOIN 
-            (SELECT mat_id, 0 AS available FROM ((SELECT DISTINCT mat_id FROM material_material) MINUS (SELECT DISTINCT mat_id FROM user_reserves_mat WHERE status='borrowed' OR status='on hold'))
+    query = """
+    SELECT * FROM 
+    (
+        material_material NATURAL JOIN 
+        (
+            (
+                SELECT T1.mat_id, 0 AS available FROM
+                (
+                    SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')
+                ) AS T1
+            )
             UNION
-            SELECT mat_id, COUNT(*) AS available FROM user_reserves_mat WHERE status='borrowed' OR status='on hold' GROUP BY mat_id)) as M
-        WHERE """
+            (
+                SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id
+            )
+        )
+    ) AS M
+    WHERE 
+    """
 
     # TODO search by multiple fields?
     # search fields
