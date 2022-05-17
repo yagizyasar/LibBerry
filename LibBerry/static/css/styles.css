@@ -237,11 +237,11 @@ sup {
 }
 
 a {
-  color: #0d6efd;
+  color: #ffffff;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a58ca;
+  color: #ffffff;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3826,10 +3826,10 @@ textarea.form-control-lg {
 }
 .dropdown-item:hover, .dropdown-item:focus {
   color: #1e2125;
-  background-color: rgba(128, 0, 128, 0.432);
+  background-color: rgb(49, 2, 49);
 }
 .dropdown-item.active, .dropdown-item:active {
-  color: #fff;
+  color: rgb(39, 0, 51);
   text-decoration: none;
   background-color: #0d6efd;
 }
@@ -3875,7 +3875,7 @@ textarea.form-control-lg {
   background-color: #0d6efd;
 }
 .dropdown-menu-dark .dropdown-item.disabled, .dropdown-menu-dark .dropdown-item:disabled {
-  color: #adb5bd;
+  color: #390258;
 }
 .dropdown-menu-dark .dropdown-divider {
   border-color: rgba(0, 0, 0, 0.15);
@@ -3992,9 +3992,9 @@ textarea.form-control-lg {
 }
 
 .nav-link {
-  display: block;
+  display: flex;
   padding: 0.5rem 1rem;
-  color: #0d6efd;
+  color: #fcfcfc;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -4004,10 +4004,10 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #0a58ca;
+  color: #ffffff;
 }
 .nav-link.disabled {
-  color: #6c757d;
+  color: #ffffff;
   pointer-events: none;
   cursor: default;
 }
@@ -4021,19 +4021,20 @@ textarea.form-control-lg {
   border: 1px solid transparent;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+  color:#fff;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
   border-color: #e9ecef #e9ecef #dee2e6;
   isolation: isolate;
 }
 .nav-tabs .nav-link.disabled {
-  color: #6c757d;
+  color: #ffffff;
   background-color: transparent;
   border-color: transparent;
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
+  color: #ffffff;
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -4044,6 +4045,7 @@ textarea.form-control-lg {
 }
 
 .nav-pills .nav-link {
+  color: white;
   background: none;
   border: 0;
   border-radius: 0.25rem;
@@ -4498,7 +4500,7 @@ textarea.form-control-lg {
   color: rgba(0, 0, 0, 0.9);
 }
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.55);
+  color: rgb(255, 255, 255);
 }
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
   color: rgba(0, 0, 0, 0.7);
@@ -7930,7 +7932,7 @@ fieldset
 
 .bg-light {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+  background-color: rgba(#390258, var(--bs-bg-opacity)) !important;
 }
 
 .bg-dark {
