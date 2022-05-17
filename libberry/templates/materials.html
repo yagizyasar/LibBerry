@@ -71,7 +71,6 @@
                         <th>Rating</th>
                         <th>Genre</th>
                         <th>Amount</th>
-                        <th>Avail.</th>
                         <th>Request</th>
                         {% if request.session.user_type == "librarian" %}
                         <th>Delete</th>
@@ -85,11 +84,6 @@
                         <td>{{ mat.rating }}</td>
                         <td>{{ mat.genre }}</td>
                         <td>{{ mat.amount }}</td>
-                        {% for availmat in materials_unavailable%}
-                            {% if mat.mat_id == availmat.mat_id %}
-                            <td>{% sub mat.amount availmat.unavailable %}</td>
-                            {% endif %}
-                        {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
                             <!--will be available-->
                             {% csrf_token %}
@@ -125,7 +119,6 @@
                         <th>Genre</th>
                         <th>Pages</th>
                         <th>Amount</th>
-                        <th>Avail.</th>
                         <th>Request</th>
                         {% if request.session.user_type == "librarian" %}
                         <th>Delete</th>
@@ -140,11 +133,6 @@
                         <td>{{ printmat.genre }}</td>
                         <td>{{ printmat.pages }}</td>
                         <td>{{ printmat.amount }}</td>
-                        {% for availmat in materials_unavailable%}
-                            {% if printmat.mat_id == availmat.mat_id %}
-                            <td>{% sub printmat.amount availmat.unavailable %}</td>
-                            {% endif %}
-                        {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
                             <!--will be available-->
                             {% csrf_token %}
@@ -180,7 +168,6 @@
                         <th>Genre</th>
                         <th>Length</th>
                         <th>Amount</th>
-                        <th>Avail.</th>
                         <th>Request</th>
                         {% if request.session.user_type == "librarian" %}
                         <th>Delete</th>
@@ -195,11 +182,6 @@
                         <td>{{ avmat.genre }}</td>
                         <td>{{ avmat.length }}</td>
                         <td>{{ avmat.amount }}</td>
-                        {% for availmat in materials_unavailable%}
-                            {% if avmat.mat_id == availmat.mat_id %}
-                            <td>{% sub avmat.amount availmat.unavailable %}</td>
-                            {% endif %}
-                        {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
                             <!--will be available-->
                             {% csrf_token %}
@@ -228,7 +210,6 @@
                         <th>Genre</th>
                         <th>Period</th>
                         <th>Amount</th>
-                        <th>Avail.</th>
                         <th>Request</th>
                         {% if request.session.user_type == "librarian" %}
                         <th>Delete</th>
@@ -244,8 +225,10 @@
                         <td>{{ permat.period }}</td>
                         <td>{{ permat.amount }}</td>
                         {% for availmat in materials_unavailable%}
-                            {% if permat.mat_id == availmat.mat_id %}
-                            <td>{% sub availmat.amount availmat.unavailable %}</td>
+                            {% if permat.mat_id == availmat.mat_id  and availmat.unavailable != 0 %}
+                            <td>{% sub permat.amount availmat.unavailable %}</td>
+                            {% elif permat.mat_id == availmat.mat_id %}
+                            <td>{{ permat.amount }}</td>
                             {% endif %}
                         {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
@@ -282,7 +265,6 @@
                         <th>Rating</th>
                         <th>Genre</th>
                         <th>Amount</th>
-                        <th>Avail.</th>
                         <th>Request</th>
                         {% if request.session.user_type == "librarian" %}
                         <th>Delete</th>
@@ -296,11 +278,6 @@
                         <td>{{ custommat.rating }}</td>
                         <td>{{ custommat.genre }}</td>
                         <td>{{ custommat.amount }}</td>
-                        {% for availmat in materials_unavailable%}
-                            {% if custommat.mat_id == availmat.mat_id %}
-                            <td>{% sub custommat.amount availmat.unavailable %}</td>
-                            {% endif %}
-                        {%endfor%}
                         <form action="{% url 'hold_material_request' %}" method = "post" name = "hold-material-form" id = "hold-material-form" class = "hold-material-form" style="display:block;">
                             <!--will be available-->
                             {% csrf_token %}
