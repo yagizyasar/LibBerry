@@ -94,7 +94,7 @@
                        {% if request.session.user_type == "librarian" %}
                        <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
                         {% csrf_token %}
-                        <td><input type="number" style="width: 5em" name="amount">
+                        <td><input type="number" style="width: 5em" step="1" min="1" name="amount">
                             <input type="submit" value="Delete" style="float:inline-end;"></td>
                          <input type="hidden" value={{ mat.mat_id }} name="mat_id">
                        </form>
