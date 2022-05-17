@@ -67,7 +67,7 @@
                 <div id = "course-area1">
                     <label for="course-select">For Course:</label>
                     <div class="selectWrapper">
-                        <select class="selectBox" name="course-select" id="course-select"onchange="updateSections(value)" >
+                        <select class="selectBox" name="course-select" id="course-select2" onchange="updateSections(value)" >
                         {% for course in courses %}
                             <option value="{{ course.course_id }} {{ course.section }}"> {{ course.course_id }}/{{ course.section }} </option>
                         {% endfor %}
@@ -79,20 +79,20 @@
                     <div class="scrollmenu" name="student-select" id="student-select">
                     </div>
                 </div>
-                <div id = "deadline-area1">
-                    <label for="deadline">Deadline:</label>
-                    <input type="datetime-local" id="deadline" name="deadline" onload="constrainDate()" onchange="constrainDate()">
+                <div id = "deadline-area2">
+                    <label for="deadline2">Deadline:</label>
+                    <input type="datetime-local" id="deadline2" name="deadline2" onload="constrainDate()" onchange="constrainDate()">
                 </div>
-                <div id = "material-set-area1">
+                <div id = "material-set-area2">
                     <div class="selectWrapper">
                         <label for="material-set-select">Material Set for Homework:</label>
-                        <select class="selectBox" name="material-select" id="course-select">
+                        <select class="selectBox" name="material-select" id="course-select2">
                         {% for set in mat_sets %}
                             <option value="{{ set.set_id}}">{{ set.set_id }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <input type="hidden" id="type" name="type">
+                <input type="hidden" id="type2" name="type">
                 <input type="submit" value="Assign Homework"> 
             </form>
         </div>
