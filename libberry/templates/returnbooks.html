@@ -1,0 +1,38 @@
+{% extends 'generic.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+<div class="return-list">
+    <table>
+        <tr>
+            <th>Material ID</th>
+            <th>Material Title</th>
+            <th>User ID</th>
+            <th>Due Date</th>
+            <th>Action</th>
+        </tr>
+
+        <!--materials that are reserved-->
+        <!-- res_id, mat_id, mat_title, user_id and due_date are needed -->
+        {% for tempres in reserved_materials %}
+        <tr>
+            <!--variablelar modellere göre yapıldı değişebilir-->
+            <td>{{ tempres.mat_id }}</td>
+            <td>{{ tempres.title }}</td>
+            <td>{{ tempres.user_id }}</td>
+            <td>{{ tempres.due_date }}
+                <form action="return_material_request" method = "post" name = "return-material-form" id = "return-material-form" class = "return-material-form" style="display:block;">
+                    <!--will be available-->
+                   <td><input type="submit" value="Return" style="float:inline-end;"></td>
+                   <input type="hidden" value = {{ tempres.res_id }} name="res_id">
+               </form>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

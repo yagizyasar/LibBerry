@@ -1,0 +1,88 @@
+{% extends 'generic.html' %}
+{% load static %}
+{% block content %}
+{% if request.session.user_type == "librarian" %}
+<div class="left-side">
+    <h2>Answered Requests</h2>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Material</th>
+            <th>Request Date</th>
+            <th>Reserve Date</th>
+            <th>Due Date</th>
+            <th>Message</th>
+        </tr>
+        {% for req in requests %}
+            {% if req.status == "cancelled" or req.status="returned" or req.status = "rejected" or req.status == "borrowed" %}
+            <tr>
+                <td> {{ req.user_id }} </td>
+                <td> {{ req.mat_id }} </td>
+                <td> {{ req.request_date }} </td>
+                <td> {{ req.reserve_date }} </td>
+                <td> {{ req.due_date }} </td>
+                <td> {{ req.message }} </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+<div class="right-side">
+    <h2>Waiting Requests</h2>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Material</th>
+            <th>Request Date</th>
+            <th>Reserve Date</th>
+            <th>Due Date</th>
+            <th>Message</th>
+            <th></th>
+        </tr>
+        {% for req in requests %}
+            {% if req.status == "on hold" %}
+            <tr>
+                <td> {{ req.user_id }} </td>
+                <td> {{ req.mat_id }} </td>
+                <td> {{ req.request_date }} </td>
+                <td> {{ req.reserve_date }} </td>
+                <td> {{ req.due_date }} </td>
+                <td> {{ req.message }} </td>
+                <td>
+                    <button id="open-details">Details</button>
+                    <div class="modal-container" id="modal-container">
+                        <div class="modal">
+                            <h2> {{ req.user_id }}/{{ req.mat_id }} </h2>
+                            <p> {{ req.message }} </p>
+                            <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
+                                <input type="text" placeholder="Your Response" name="answer_request">
+                                <input type="submit" id = "submit-answer" value = "Answer" style="float:inline-end;">
+                            </form>
+                            <button id="close">Close</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endif %} 
+        {% endfor %}
+    </table>
+</div>
+<script type="text/javascript">
+    const open_details = document.getElementById('open-details');
+    const modal_container = document.getElementById('modal-container');
+    const close = document.getElementById('close');
+    const submit_answer = document.getElementById('submit-answer');
+
+    open_details.addEventListener('click', () => {
+        modal_container.classList.add('show');
+    });
+    submit_answer.addEventListener('click', () => {
+        modal_container.classList.remove('show');
+    });
+    close.addEventListener('click', () => {
+        modal_container.classList.remove('show');
+    });
+
+</script>
+{% endif %}
+{% endblock %}
