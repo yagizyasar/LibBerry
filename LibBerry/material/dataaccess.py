@@ -33,7 +33,6 @@ def db_add_material_audiovisual(mat_id,title,genre,publish_date,amount,location,
 
 def db_remove_material(mat_id, amount):
     cursor = connection.cursor()
-    
     cursor.execute("SELECT amount FROM material_material WHERE mat_id=%s;", [mat_id])
     result_amount = cursor.fetchone()
 
@@ -41,7 +40,7 @@ def db_remove_material(mat_id, amount):
         print("Invalid remove material request: Material does not exist")
         return redirect('remove_material')
     
-    if amount > result_amount[0]:
+    if (amount) > result_amount[0]:
         print("Invalid remove material request: Requested remove amount larger than the amount in library")
         return redirect('remove_material')
     

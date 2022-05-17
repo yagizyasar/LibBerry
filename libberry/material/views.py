@@ -86,7 +86,7 @@ def remove_material(request):
 
     mat_id = request.POST["mat_id"]
     amount = request.POST["amount"]
-
+    amount = int(amount)
     if mat_id == None or amount == None:
         print("Invalid remove material request: Missing field")
         return

@@ -32,4 +32,9 @@ def db_get_user_borrowed_books(user_id):
 def db_get_due_date(user_id, mat_id):
     cursor = connection.cursor()
     cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
-    return cursor.execute()
+    res = to_dict(cursor)
+    return res
+
+def db_get_user_warnings(user_id):
+    cursor = connection.cursor()
+    cursor.execute()
