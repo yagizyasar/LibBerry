@@ -8,6 +8,7 @@
 </head>
 <body>
 <!--splitting screen first to show the users and the registration form-->
+{% if request.session.user_type == "librarian" %}
 <div class="container">
     <div class="row">
         <div class="col-sm" style="float:inline-start">
@@ -44,8 +45,12 @@
                         <input type="text" id="mat_id" name="mat_id">
                     </div>
                     <div id = "text-area">
-                        <label for="text">Textt:</label>
+                        <label for="text">Text:</label>
                         <input type="text" id="text" name="text">
+                    </div>
+                    <div id = "balance-area">
+                        <label for="balance">Balance:</label>
+                        <input type="text" id="balance" name="balance">
                     </div>
                     <div id = "remaining-days-area">
                         <label for="remaining_days">Remaining Days:</label>
@@ -58,6 +63,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <script type="text/javascript">
     function onFire(){ alert("Pressed.");}
@@ -68,18 +74,18 @@
             document.getElementById('user-id-area').style.display = 'block';
             document.getElementById('mat-id-area').style.display = 'block';
             document.getElementById('text-area').style.display = 'block';
+            document.getElementById('balance-area').style.display = 'block';
             document.getElementById('remaining-area').style.display = 'none';
             document.getElementById('type').value = "overdue";
-        }
-        else if (value == "nearlydue"){
+        } else if (value == "nearlydue"){
             document.getElementById('warning-form').style.display = 'block';
             document.getElementById('user-id-area').style.display = 'block';
             document.getElementById('mat-id-area').style.display = 'block';
             document.getElementById('text-area').style.display = 'block';
+            document.getElementById('balance-area').style.display = 'none';
             document.getElementById('remaining-area').style.display = 'block';
             document.getElementById('type').value = "nearlydue";
-        }
-        else {
+        } else {
             document.getElementById('warning-form').style.display = 'block';
             document.getElementById('user-id-area').style.display = 'block';
             document.getElementById('mat-id-area').style.display = 'block';
