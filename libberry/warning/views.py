@@ -6,6 +6,7 @@ from material.dataaccess import db_get_reservation_requests
 def init_warning_list_view(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
        context = db_get_reservation_requests("borrowed")
+       print(context)
        return render(request,'warningcreation.html',{"reservation_list":context})
     else:
         return redirect('home')

@@ -13,13 +13,13 @@
     <div class="row">
         <div class="col-sm" style="float:inline-start">
             <div class="columnStyle">
-            <div class="res-list" id="res-list"name="res-list" style="display:none;">
+            <div class="res-list" id="res-list"name="res-list" style="display:block;">
                 {%for tempres in reservation_list %} 
                     <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
                         {% csrf_token %}
                         <text>{{ tempres.user_id }}</text>
                         <text>{{ tempres.mat_id }}</text>
-                        <text>{{ tempres.due_date }}</text>
+                        <text>{{ tempres.request_date }}</text>
                     </div>
                 {%endfor%}
             </div>
