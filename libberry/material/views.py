@@ -327,7 +327,7 @@ def conclude_hold_request(request):
     else:
         answer = False
     db_conclude_hold_request(user_id,mat_id,request.user.username,answer,message,due_date)
-    return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('display_hold_request_root')
     
 
     

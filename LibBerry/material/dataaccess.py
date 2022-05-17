@@ -164,7 +164,10 @@ def db_generate_find_mat_query(params):
     sets = params.get("set")
 
     if title != None and title != "":
-        query += "M.title=\"{}\" AND ".format(title)
+        if "%" in title or "_" in title:
+            query += "M.title LIKE \"{}\" AND ".format(title)
+        else:
+            query += "M.title=\"{}\" AND ".format(title)
     if authors != None and len(authors) > 0:
         for author in authors:
             query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
