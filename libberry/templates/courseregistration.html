@@ -61,7 +61,7 @@
                     </div>
                     <input type="submit" value="Register Student">
                 </form>
-                <form action = "{% url 'register_instructor_course' %}"  method = "post" name = "register-instructor-course-form" id = "register-instructor-course-form" class = "register-student-course-form" style="display:none;">
+                <form action = "{% url 'register_course' %}"  method = "post" name = "register-instructor-course-form" id = "register-instructor-course-form" class = "register-student-course-form" style="display:none;">
                     {% csrf_token %}
                     <div id = "user-id-area-instructor">
                         <label for="user_id_instructor">User ID:</label>

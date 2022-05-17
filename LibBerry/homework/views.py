@@ -45,6 +45,18 @@ def add_homework_to_student(request):
     if not request.user.is_authenticated:
         return redirect('user_login')
 
+def register_student_to_course(request):
+    print("woo")
+
+def register_course(request):
+    print("woo")
+
+def register_student_or_course_root(request):
+    if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "instructor":
+       return render(request,'courseregistration.html')
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))
+
 
     
 
