@@ -71,6 +71,9 @@
                         <th>Genre</th>
                         <th>Total Amount</th>
                         <th>Request</th>
+                        {% if request.session.user_type == "librarian" %}
+                        <th>Delete</th>
+                        {% endif %}
                     </tr>
                     
                     {% for mat in materials %}
@@ -87,6 +90,14 @@
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ mat.mat_id }} name="mat_id">
                        </form>
+                       {% if request.session.user_type == "librarian" %}
+                       <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" style="width: 5em" name="amount">
+                            <input type="submit" value="Delete" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ mat.mat_id }} name="mat_id">
+                       </form>
+                       {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -101,6 +112,9 @@
                         <th>Pages</th>
                         <th>Total Amount</th>
                         <th>Request</th>
+                        {% if request.session.user_type == "librarian" %}
+                        <th>Delete</th>
+                        {% endif %}
                     </tr>
                     
                     {% for printmat in materials_printed %}
@@ -118,6 +132,14 @@
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ printmat.mat_id }} name="mat_id">
                        </form>
+                       {% if request.session.user_type == "librarian" %}
+                       <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" style="width: 5em" name="amount">
+                            <input type="submit" value="Delete" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ printmat.mat_id }} name="mat_id">
+                       </form>
+                       {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -132,6 +154,9 @@
                         <th>Length</th>
                         <th>Total Amount</th>
                         <th>Request</th>
+                        {% if request.session.user_type == "librarian" %}
+                        <th>Delete</th>
+                        {% endif %}
                     </tr>
                     
                     {% for avmat in materials_audiovisual %}
@@ -149,6 +174,14 @@
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ avmat.mat_id }} name="mat_id">
                        </form>
+                       {% if request.session.user_type == "librarian" %}
+                       <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" style="width: 5em" size="5" name="amount">
+                            <input type="submit" value="Delete" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ avmat.mat_id }} name="mat_id">
+                       </form>
+                       {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -163,6 +196,9 @@
                         <th>Period</th>
                         <th>Total Amount</th>
                         <th>Request</th>
+                        {% if request.session.user_type == "librarian" %}
+                        <th>Delete</th>
+                        {% endif %}
                     </tr>
                     
                     {% for permat in materials_periodical %}
@@ -180,6 +216,14 @@
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ permat.mat_id }} name="mat_id">
                        </form>
+                       {% if request.session.user_type == "librarian" %}
+                       <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" style="width: 5em" name="amount">
+                            <input type="submit" value="Delete" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ permat.mat_id }} name="mat_id">
+                       </form>
+                       {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -193,6 +237,9 @@
                         <th>Genre</th>
                         <th>Total Amount</th>
                         <th>Request</th>
+                        {% if request.session.user_type == "librarian" %}
+                        <th>Delete</th>
+                        {% endif %}
                     </tr>
                     
                     {% for custommat in materials_custom %}
@@ -209,6 +256,14 @@
                                <input type="submit" value="Hold Request" style="float:inline-end;"></td>
                             <input type="hidden" value={{ custommat.mat_id }} name="mat_id">
                        </form>
+                       {% if request.session.user_type == "librarian" %}
+                       <form action="{% url 'remove_material'%}" method = "post" name = "remove-material-form" id = "remove-material-form" class = "remove-material-form" style="display:block;">
+                        {% csrf_token %}
+                        <td><input type="number" style="width: 5em" name="amount">
+                            <input type="submit" value="Delete" style="float:inline-end;"></td>
+                         <input type="hidden" value={{ custommat.mat_id }} name="mat_id">
+                       </form>
+                       {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
