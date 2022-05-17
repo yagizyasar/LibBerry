@@ -390,7 +390,9 @@ def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message=""
 def db_return_book(user_id, mat_id, message="", overdue_amount=0):
     cursor = connection.cursor()
     cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
-    due = datetime.strptime((cursor.fetchone())[0], "%y-%m-%d %H:%M:%S")
+    due = cursor.fetchone()
+    print(due)
+    due = datetime.strptime(due, "%y-%m-%d %H:%M:%S")
     
     if message == "" and due < datetime.now():
         dif = datetime.now() - due

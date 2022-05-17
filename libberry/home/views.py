@@ -7,6 +7,7 @@ from user.models import *
 from django.views.decorators.csrf import csrf_exempt
 from .dataaccess import *
 from django.http import HttpResponseRedirect
+from material.dataaccess import *
 
 def init_view(request):
     return render(request,'login.html')
@@ -38,8 +39,9 @@ def user_login(request):
         login(request,user)
         print("User logged in")
         request.session["user_type"] = get_user_type(user.username)
-        request.session["user_balance"] = get_user_balance(user.username)
+        request.session["user_balance"] = db_get_user_balance(user.username)
         # TODO save more variables if needed
+        print(request.session["user_balance"])
         return redirect('home')
         # TODO redirect page i gelince yolla
     else:
