@@ -51,8 +51,8 @@
                 <td> {{ req.message }} </td>
                 <form action="{% url 'return_material'%}" method = "post" name = "return-material-form" id = "return-material-form" class = "return-material-form" style="display:block;">
                     {% csrf_token %}
-                    <input type="hidden" value={{ req.mat_id }} name="mat_id">
-                    <input type="hidden" value={{ req.user_id }} name="user_id">
+                    <input type="hidden" value={{ req.mat_id }} name="mat_id_return">
+                    <input type="hidden" value={{ req.user_id }} name="user_id_return">
                     <td><input type="number" step="0.5" style="width: 5em" value="0" min="0" max="1000" name="overdue_amount">
                         <input type="submit" value="Return" style="float:inline-end;"></td>s
                    </form>
