@@ -331,7 +331,22 @@ def conclude_hold_request(request):
         answer = False
     db_conclude_hold_request(user_id,mat_id,request.user.username,answer,message,due_date)
     return redirect('display_hold_request_root')
-    
+
+def return_mat(request):
+    if not request.user.is_authenticated:
+        print("User not authenticated")
+        return redirect('login')
+    if request.session["user_type"] != "librarian":
+        return redirect('home')
+
+    user_id = request.POST["user_id"]
+    mat_id = request.POST["mat_id"]
+    overdue_amount = request.POST["overdue_amount"]
+    if overdue_amount == None:
+        overdue_amount = 0
+    db_return_book(user_id, mat_id, overdue_amount=overdue_amount)
+    return redirect('return_material')
+
 def rate_mat(request):
     if not request.user.is_authenticated:
         print("User not authenticated")

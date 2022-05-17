@@ -38,6 +38,7 @@ def user_login(request):
         login(request,user)
         print("User logged in")
         request.session["user_type"] = get_user_type(user.username)
+        request.session["user_balance"] = get_user_balance(user.username)
         # TODO save more variables if needed
         return redirect('home')
         # TODO redirect page i gelince yolla

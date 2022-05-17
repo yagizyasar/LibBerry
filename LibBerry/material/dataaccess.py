@@ -397,10 +397,12 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
         overdue_message = "Overdue by {} days, {} hours and {} minutes.".format(dif.days, dif.seconds // 3600, dif.seconds // 60)
         balance_message = ""
         if overdue_amount > 0:
-            balance_message = " {} liras were deducted from balance.".format(overdue_amount)
+            balance_message = " {} liras were added to debt.".format(overdue_amount)
         message = overdue_message + balance_message
 
     cursor.execute("UPDATE user_reserves_mat SET status='returned', message=%s, ret_date=NOW() WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [message, user_id, mat_id])
+    oldbal = db_get_user_balance(user_id)
+    cursor.execute("UPDATE user_mainuser SET balance=%s WHERE user_id=%s;", [oldbal + overdue_amount, user_id])
 
 def db_get_reservation_requests(status):
     cursor = connection.cursor()
@@ -425,7 +427,13 @@ def db_rate_mat(user_id, mat_id, rating):
 
 def db_get_mat_unavailable_amounts():
     cursor = connection.cursor()
-    cursor.execute("(SELECT mat_id, COUNT(*) AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id) UNION (SELECT mat_id, 0 AS unavailable FROM material_material WHERE mat_id NOT IN (SELECT mat_id AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id));")
+    cursor.execute("(SELECT mat_id, COUNT(*) AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id) UNION (SELECT mat_id, 0 AS unavailable FROM material_material WHERE mat_id NOT IN (SELECT mat_id FROM user_reserves_mat WHERE status='on hold' OR status='borrowed'));")
     res = to_dict(cursor)
     print(len(res))
+    return res
+
+def db_get_user_balance(user_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT balance FROM user_mainuser WHERE user_id=%s;", [user_id])
+    res = (cursor.fetchone())[0]
     return res
