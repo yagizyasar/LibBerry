@@ -28,23 +28,20 @@
             </div>
         </div>
         <div class="col-sm">
-            <h5>Register Student or Instructor to Course</h5>
+            <h5>Register Student to Course</h5>
             <div class="columnStyle">
-                <div class="selectWrapper">
-                    <select class="selectBox" name="register-course-select" id="register-course-select" onchange="changeForm(value)" >
-                        <option value="none"> Select type. </option>
-                        <option value="student">Student</option>
-                        <option value="instructor">Instructor</option>
-                    </select>
-                </div>
                 <form action = "{% url 'register_student_course' %}"  method = "post" name = "register-student-course-form" id = "register-student-course-form" class = "register-student-course-form" style="display:none;">
                     {% csrf_token %}
                     <div id = "user-id-area-student">
                         <label for="user_id_student">User ID:</label>
                         <input type="text" id="user_id_student" name="user_id_student">
                     </div>
+                    <div id = "course-id-area-student">
+                        <label for="course_id_student">Course ID:</label>
+                        <input type="text" id="course_id_student" name="course_id_student">
+                    </div>
                     <div id = "section-area-student">
-                        <label for="section_student">Material ID:</label>
+                        <label for="section_student">Section:</label>
                         <input type="text" id="section_student" name="section_student">
                     </div>
                     <div id = "semester-area-student">
@@ -61,6 +58,7 @@
                     </div>
                     <input type="submit" value="Register Student">
                 </form>
+<<<<<<< HEAD
                 <form action = "{% url 'register_course' %}"  method = "post" name = "register-instructor-course-form" id = "register-instructor-course-form" class = "register-student-course-form" style="display:none;">
                     {% csrf_token %}
                     <div id = "user-id-area-instructor">
@@ -89,6 +87,8 @@
                     </div>
                     <input type="submit" value="Register Instructor">
                 </form>
+=======
+>>>>>>> 898607879a1df30bdaed332644da3e1cc4eb1b70
             </div>
         </div>
         <div class="col-sm">
@@ -115,27 +115,13 @@
                         <label for="year">Year:</label>
                         <input type="text" id="year" name="year">
                     </div>
+                    <div id = "instructor-id-area">
+                        <label for="instructor_id">Instructor ID:</label>
+                        <input type="text" id="instructor_id" name="instructor_id">
+                    </div>
                     <input type="submit" value="Create Course Section">
                 </form>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function onFire(){ alert("Pressed.");}
-
-    function changeForm(value){
-        if (value == "student"){
-            document.getElementById('register-student-course-form').style.display = 'block';
-            document.getElementById('register-instructor-course-form').style.display = 'none';
-        }
-        else if (value == "instructor"){
-            document.getElementById('register-student-course-form').style.display = 'none';
-            document.getElementById('register-instructor-course-form').style.display = 'block';
-        }
-        else {
-            document.getElementById('register-student-course-form').style.display = 'none';
-            document.getElementById('register-instructor-course-form').style.display = 'none';
-        }
-    }
-</script>
