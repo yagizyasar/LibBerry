@@ -422,3 +422,9 @@ def db_rate_mat(user_id, mat_id, rating):
         cursor.execute("UPDATE user_rates_mat SET rating=%s WHERE user_id=%s AND mat_id=%s;", [rating, user_id, mat_id])
     else:
         cursor.execute("INSERT INTO user_rates_mat VALUES(%s, %s, %s);", [user_id, mat_id, rating])
+
+def db_get_mat_unavailable_amounts():
+    cursor = connection.cursor()
+    cursor.execute("(SELECT mat_id, COUNT(*) AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id) UNION (SELECT mat_id, 0 AS unavailable FROM material_material WHERE mat_id NOT IN (SELECT mat_id AS unavailable FROM user_reserves_mat WHERE status='on hold' OR status='borrowed' GROUP BY mat_id));")
+    res = to_dict(cursor)
+    return res

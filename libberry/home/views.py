@@ -43,7 +43,7 @@ def user_login(request):
         # TODO redirect page i gelince yolla
     else:
         print("Invalid login request: Wrong username or password")
-        # TODO adama error ver
+        return redirect('home')
 
 @csrf_exempt
 def user_register(request):
