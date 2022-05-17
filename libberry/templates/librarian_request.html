@@ -53,15 +53,9 @@
                     {% csrf_token %}
                     <input type="hidden" value={{ req.mat_id }} name="mat_id_return">
                     <input type="hidden" value={{ req.user_id }} name="user_id_return">
-<<<<<<< HEAD
-                    <td><input type="number" step="0.5" style="width: 5em" value="0" min="0" max="1000" placeholder="debt" name="overdue_amount">
-                        <input type="submit" value="Return" style="float:inline-end;"></td>s
-                   </form>
-=======
                     <td><input type="number" step="0.5" style="width: 5em" value="0" min="0" max="1000" name="overdue_amount">
                         <input type="submit" value="Return" style="float:inline-end;"></td>
                 </form>
->>>>>>> a00c571304b5818e72fa46fb711f7387719476f5
             </tr>
             {% endif %}
         {% endfor %}
