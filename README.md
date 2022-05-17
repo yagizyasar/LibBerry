@@ -8,6 +8,8 @@ This is a website of Group 27 CS 353 Term Project Spring 2022, Bilkent Universit
 [Proposal Report](https://drive.google.com/file/d/1mABg5RuekYhEWTyY5PM72-ovcYbgtJt8/view?usp=sharing)
  <br /> 
 [Design Report](https://drive.google.com/file/d/1M7BmLC2wvr98ADkEviNZlKgK1nms45F2/view?usp=sharing)
+ <br /> 
+[Final Report](https://drive.google.com/file/d/1QiGRLp9FaKCQTh3doAjLQD0cV5kGTRGT/view?usp=sharing)
 
 ****
 
