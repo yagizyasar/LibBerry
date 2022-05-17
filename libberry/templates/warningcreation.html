@@ -15,6 +15,16 @@
             <h5>Reservations</h5>
             <div class="columnStyle">
             <div class="res-list" id="res-list"name="res-list" style="display:block;">
+<<<<<<< HEAD
+                {%for tempres in reservation_list %} 
+                    <div class='scrollmenu' style = 'overflow: auto; white-space: nowrap;'>
+                        {% csrf_token %}
+                        <text>{{ tempres.user_id }}</text>
+                        <text>{{ tempres.mat_id }}</text>
+                        <text>{{ tempres.request_date }}</text>
+                    </div>
+                {%endfor%}
+=======
                 <table>
                     <tr>
                         <th>User ID</th>
@@ -30,6 +40,7 @@
                     </tr>
                     {% endfor %}
                 </table>
+>>>>>>> 2fc2dbf047eed53447cce38949d9bc8e8ab41dc1
             </div>
         </div>
         </div>
