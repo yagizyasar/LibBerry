@@ -30,26 +30,26 @@
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom">
                 <div class="container-fluid">
                     {% if request.session.user_type == "librarian" %}
-                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/librarian_icon.png' %}" width="48" height="48"></a></button>
+                    <button style="background-color:#fff;"class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/librarian_icon.png' %}" width="48" height="48"></a></button>
                     {% elif request.session.user_type == "student" %}
-                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/student_icon.png' %}" width="48" height="48"></button>
+                    <button style="background-color:#fff;"class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/student_icon.png' %}" width="48" height="48"></button>
                     {% elif request.session.user_type == "instructor" %}
-                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/instructor_icon.png' %}" width="48" height="48"></button>
+                    <button style="background-color:#fff;"class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/instructor_icon.png' %}" width="48" height="48"></button>
                     {% elif request.session.user_type == "outsidemember" %}
-                    <button class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/outsidemember_icon.png' %}" width="48" height="48"></button>
+                    <button style="background-color:#fff;"class="button-navbar" id="sidebarToggle" width="48" height="48"><a class="sidebar-link" href="#!"></a><img src="{% static '/assets/outsidemember_icon.png' %}" width="48" height="48"></button>
                     {% endif %}
                    
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <button style="background-color:#fff;"class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}"><img class="right" src="{% static '/assets/logolibberry.jpg' %}" alt="Libberry Logo" style="max-width:50%; height:auto; width:auto;"></a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'root_material_view' %}">Discover</a></li>
                             {% if request.session.user_type == "librarian"%}
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requests</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" role="button"  aria-haspopup="true" aria-expanded="false">Requests</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{% url 'display_hold_request_root' %}">See Requests</a>
                                     </div>
@@ -57,41 +57,22 @@
                                 
                                 <li class="nav-item"><a class="nav-link" href="{% url 'warning_creation_root' %}">Warning Operations</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'register_panel' %}">User Operations</a></li> 
-                                <li class="nav-item"><a class="nav-link" href="{% url 'add_material' %}">User Operations</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'add_material' %}">Material Operations</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">Course Operations</a></li>
                                 
                             {% elif request.session.user_type == "instructor" %}
+                                <li class="nav-item"><a class="nav-link" href="#">See Requests</a></li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownBorrow" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requests</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" role="button"  aria-haspopup="true" aria-expanded="false">Homework</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">See Requests</a>
+                                        <a class="dropdown-item" href="{% url 'create_homework' %}">Assign and Create Homework</a>
+                                        <a class="dropdown-item" href="#!">Create Homework</a>
                                     </div>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="#">Homeworks</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsUpload" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Homework</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{% url 'create_homework' %}">Give Homework</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdownInsMaterialSets" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Material Sets</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
+                                <li class="nav-item"><a class="nav-link" href="#"> My Courses</a></li>
                             {% elif request.session.user_type == "student" %}
-                                <li class="nav-item"><a class="nav-link" href="#!">My Homeworks</a></li>
-                                
-                            {% elif request.session.user_type == "outsidemember" %}
-                                <li class="nav-item"><a class="nav-link" href="#!">Request Extension</a></li>
-                            
+                                <li class="nav-item"><a class="nav-link" href="create_homework">My Homeworks</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">My Courses</a></li>
                             {% endif %}
                         </ul>
                     </div>
