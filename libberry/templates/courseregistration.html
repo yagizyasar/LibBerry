@@ -31,7 +31,7 @@
             <h5>Register Student or Instructor to Course</h5>
             <div class="columnStyle">
                 <div class="selectWrapper">
-                    <select class="selectBox" name="register-course-select" id="register-course-select"onchange="changeForm(value)" >
+                    <select class="selectBox" name="register-course-select" id="register-course-select" onchange="changeForm(value)" >
                         <option value="none"> Select type. </option>
                         <option value="student">Student</option>
                         <option value="instructor">Instructor</option>
@@ -43,19 +43,17 @@
                         <label for="user_id_student">User ID:</label>
                         <input type="text" id="user_id_student" name="user_id_student">
                     </div>
-                    <div id = "course-id-area">
-                        <label for="mat_id_student">Material ID:</label>
-                        <input type="text" id="mat_id_student" name="mat_id_student">
+                    <div id = "section-area-student">
+                        <label for="section_student">Material ID:</label>
+                        <input type="text" id="section_student" name="section_student">
                     </div>
-                    <div id = "semester-area">
-                        <div class="selectWrapper">
-                            <select class="selectBox" name="semester" id="semester" >
-                                <option value="none"> Select type. </option>
-                                <option value="fall">Fall</option>
-                                <option value="spring">Spring</option>
-                                <option value="summer">Summer</option>
-                            </select>
-                        </div>
+                    <div id = "semester-area-student">
+                        <label for="set-semester-student-fall">Fall</label>
+                        <input type="radio" value="fall" id="set-semester-student-fall" name="set_semester_student" checked="checked">
+                        <label for="set-semester-student-spring">Spring</label>
+                        <input type="radio" value="spring" id="set-semester-student-spring" name="set_semester_student">
+                        <label for="set-semester-student-summer">Spring</label>
+                        <input type="radio" value="summer" id="set-semester-student-summer" name="set_semester_student">
                     </div>
                     <div id = "year-area-student">
                         <label for="year_student">Year:</label>
@@ -77,14 +75,13 @@
                         <label for="section_instructor">Section:</label>
                         <input type="text" id="section_instructor" name="section_instructor">
                     </div>
-                    <div id = "semester-area-instructor">
-                        <div class="selectWrapper">
-                                <option value="none"> Select type. </option>
-                                <option value="fall">Fall</option>
-                                <option value="spring">Spring</option>
-                                <option value="summer">Summer</option>
-                            </select>
-                        </div>
+                    <div id = "semester-area-instructorr">
+                        <label for="set-semester-instructor-fall">Fall</label>
+                        <input type="radio" value="fall" id="set-semester-instructor-fall" name="set_semester_instructor" checked="checked">
+                        <label for="set-semester-instructor-spring">Spring</label>
+                        <input type="radio" value="spring" id="set-semester-instructor-spring" name="set_semester_instructor">
+                        <label for="set-semester-instructor-summer">Spring</label>
+                        <input type="radio" value="summer" id="set-semester-instructor-summer" name="set_semester_instructor">
                     </div>
                     <div id = "year-area-instructor">
                         <label for="year_instructor">Year:</label>
@@ -103,18 +100,16 @@
                         <input type="text" id="course_id" name="course_id">
                     </div>
                     <div id = "section-area">
-                        <label for="course_id">Course ID:</label>
-                        <input type="text" id="course_id" name="course_id">
+                        <label for="section">Section:</label>
+                        <input type="text" id="section" name="section">
                     </div>
                     <div id = "semester-area">
-                        <div class="selectWrapper">
-                            <select class="selectBox" name="semester" id="semester" >
-                                <option value="none"> Select type. </option>
-                                <option value="fall">Fall</option>
-                                <option value="spring">Spring</option>
-                                <option value="summer">Summer</option>
-                            </select>
-                        </div>
+                        <label for="set-semester-fall">Fall</label>
+                        <input type="radio" value="fall" id="set-semester-fall" name="set_semester" checked="checked">
+                        <label for="set-semester-spring">Spring</label>
+                        <input type="radio" value="spring" id="set-semester-spring" name="set_semester">
+                        <label for="set-semester-summer">Spring</label>
+                        <input type="radio" value="summer" id="set-semester-summer" name="set_semester">
                     </div>
                     <div id = "year-area">
                         <label for="year">Year:</label>
