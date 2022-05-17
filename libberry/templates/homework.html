@@ -42,7 +42,8 @@
                     <label for="student-select">Select Students:</label>
                     <div class="scrollmenu" name="student-select" id="student-select">
                         {% for ss in student_section %} 
-                            <input type='checkbox' value='{{ ss.user_id }}-{{ ss.course_id }}/{{ course.section }}' style="display:none;"> 
+                            <input type='checkbox' name='{{ ss.student_id }}-{{ ss.course_id }}/{{ course.section }}' value='{{ ss.user_id }}-{{ ss.course_id }}/{{ course.section }}' style="display:none;">
+                            <label for="{{ ss.user_id }}-{{ ss.course_id }}/{{ course.section }}"> {{ ss.student_id }} </label> 
                         {% endfor %}
                     </div>
                 </div>
@@ -121,7 +122,7 @@
             var i = student_div.childElementCount;
             alert(i);
             var splitted;
-            for (let j = 0; j<i; j++ ){
+            for (let j = 0; j<i; j+=2 ){
                 splitted = list[j].value.split("-")
                 
                 if (splitted[1] == value) {
