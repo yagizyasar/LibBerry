@@ -1,0 +1,46 @@
+{% extends 'generic.html' %}
+{% load static %}
+{% block content %}
+<html>
+    {% if request.session.user_type == "instructor" %}
+    <div class="left-side">
+        <div class="centered">
+            <label for="student_hws">Given Homeworks</label>
+            <div name="instructor_hws" id="instructor_hws">
+            {% for hw in homeworks%}
+                <a class="instructor_hw_item" href="#" id="{{ hw.hw_id }}">{{ hw.hw_id }}</a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="right-side" id="right-side-section">
+        <div class="centered">
+            <label>Assign Homework:</label>
+            <form action = "{% url 'create_homework' %}"  method = "post" name = "homework-form2" id = "homework-form2" class = "homework-form2" style="display:none;">
+                {% csrf_token %}
+                <div id="title-area2">
+                    <label for="title2">Title:</label>
+                    <input type="text" id="title2" name="title">
+                </div>
+                
+                <div id = "deadline-area2">
+                    <label for="deadline2">Deadline:</label>
+                    <input type="datetime-local" id="deadline2" name="deadline2">
+                </div>
+                <div id = "material-set-area2">
+                    <div class="selectWrapper">
+                        <label for="material-set-select">Material Set for Homework:</label>
+                        <select class="selectBox" name="material-set-select" id="material-set-select2">
+                        {% for set in mat_sets %}
+                            <option value="{{ set.set_id }}">{{ set.set_id }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <input type="submit" value="Assign Homework"> 
+            </form>
+        </div>
+    </div> 
+</html>
+{% endblock content %}

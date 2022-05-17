@@ -5,7 +5,7 @@
     {% if request.session.user_type == "instructor" %}
     <div class="left-side">
         <div class="centered">
-            <label for="student_hws">Given Homeworks</label>
+            <label for="instructors_hws">Given Homeworks</label>
             <div name="instructor_hws" id="instructor_hws">
             {% for hw in homeworks%}
                 <a class="instructor_hw_item" href="#" id="{{ hw.hw_id }}">{{ hw.hw_id }}</a>
