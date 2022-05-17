@@ -10,5 +10,7 @@ urlpatterns = [
     path('materialset/',views.material_set_init_view,name='material_set_root_view'),
     path('addmaterial/',views.add_material_root_view,name='add_material'),
     path('addmaterialset/',views.add_material_set,name='material_set_add'),
-    path('makeholdrequest/',views.make_hold_request,name='hold_material_request')
+    path('makeholdrequest/',views.make_hold_request,name='hold_material_request'),
+    path('conclude_hold_request/',views.db_conclude_hold_request,name='answer_request'),
+    path('displayholdrequests/',views.display_all_hold_requests_init_view,name='display_hold_request_root'),
 ]

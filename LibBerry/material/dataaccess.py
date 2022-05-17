@@ -187,7 +187,7 @@ def db_generate_find_mat_query(params):
 
 def db_generate_find_audiovisual_query(params):
     #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
-    query = "SELECT * FROM material_material AS M WHERE "
+    query = "SELECT * FROM (SELECT * FROM material_material NATURAL JOIN material_audiovisual) AS M WHERE "
 
     # TODO search by multiple fields?
     # search fields
@@ -230,7 +230,7 @@ def db_generate_find_audiovisual_query(params):
 
 def db_generate_find_printed_query(params):
     #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
-    query = "SELECT * FROM material_material AS M WHERE "
+    query = "SELECT * FROM (SELECT * FROM material_material NATURAL JOIN material_printed ) AS M WHERE "
 
     # TODO search by multiple fields?
     # search fields
@@ -273,7 +273,7 @@ def db_generate_find_printed_query(params):
 
 def db_generate_find_periodical_query(params):
     #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
-    query = "SELECT * FROM material_material AS M WHERE "
+    query = "SELECT * FROM (SELECT * FROM material_material NATURAL JOIN material_periodical) AS M WHERE "
 
     # TODO search by multiple fields?
     # search fields

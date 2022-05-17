@@ -123,8 +123,114 @@ def search_material(request):
         published_date = "1000-01-01"
     print(author_list)
     params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
-    return_dict = db_generate_find_mat_query(params)
+    all_dict = db_generate_find_mat_query(params)
+    printed_dict = db_generate_find_printed_query(params)
+    periodical_dict = db_generate_find_periodical_query(params)
+    audiovisual_dict = db_generate_find_audiovisual_query(params)
+    return render(request,'materials.html',{"materials":all_dict, "materials_printed":printed_dict, "materials_periodical":periodical_dict, "materials_audiovisual":audiovisual_dict})
+
+def search_audiovisual(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    if request.method != "POST":
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    title = request.POST["title"]
+    author_list = request.POST["author"]
+    if author_list == "" or author_list == None:
+        author_list = []
+    if len(author_list) != 0:
+        author_list = author_list.split()
+
+    published_date = request.POST["date"]
+    genre = request.POST["genre"]
+    set = request.POST["set"]
+    if set == "":
+        set = None
+    if set != None and set != "":
+        set = set.split()
+    rating = request.POST["rating_threshold"]
+    if(rating == None or rating == ""):
+        rating = 0
+    rating = float(rating) / 10.0
+
+    if(published_date == None or published_date == ""):
+        published_date = "1000-01-01"
+    print(author_list)
+    params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
+    return_dict = db_generate_find_audiovisual_query(params)
     return render(request,'materials.html',{"materials":return_dict})
+
+def search_printed(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    if request.method != "POST":
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    title = request.POST["title"]
+    author_list = request.POST["author"]
+    if author_list == "" or author_list == None:
+        author_list = []
+    if len(author_list) != 0:
+        author_list = author_list.split()
+
+    published_date = request.POST["date"]
+    genre = request.POST["genre"]
+    set = request.POST["set"]
+    if set == "":
+        set = None
+    if set != None and set != "":
+        set = set.split()
+    rating = request.POST["rating_threshold"]
+    if(rating == None or rating == ""):
+        rating = 0
+    rating = float(rating) / 10.0
+
+    if(published_date == None or published_date == ""):
+        published_date = "1000-01-01"
+    print(author_list)
+    params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
+    return_dict = db_generate_find_printed_query(params)
+    return render(request,'materials.html',{"materials":return_dict})
+
+def search_periodical(request):
+    if not request.user.is_authenticated:
+        print("Invalid remove material request: User not authenticated")
+        return redirect('login')
+    if request.method != "POST":
+        print("Invalid request method for search parameters.")
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    title = request.POST["title"]
+    author_list = request.POST["author"]
+    if author_list == "" or author_list == None:
+        author_list = []
+    if len(author_list) != 0:
+        author_list = author_list.split()
+
+    published_date = request.POST["date"]
+    genre = request.POST["genre"]
+    set = request.POST["set"]
+    if set == "":
+        set = None
+    if set != None and set != "":
+        set = set.split()
+    rating = request.POST["rating_threshold"]
+    if(rating == None or rating == ""):
+        rating = 0
+    rating = float(rating) / 10.0
+
+    if(published_date == None or published_date == ""):
+        published_date = "1000-01-01"
+    print(author_list)
+    params = {"title":title,"author":author_list,"published_after":published_date,"genre":genre,"set":set,"rating_threshold":rating}
+    return_dict = db_generate_find_periodical_query(params)
+    return render(request,'materials.html',{"materials":return_dict})
+
 
 def material_set_init_view(request):
     if not request.user.is_authenticated:
@@ -196,6 +302,8 @@ def display_all_hold_requests_init_view(request):
     if request.session["user_type"] != "librarian":
         return redirect('home')
     context = db_get_all_reservation_requests()
+    print("Context is")
+    print(context)
     return render(request,'librarian_request.html',{"requests":context})
 
 def conclude_hold_request(request):
@@ -204,14 +312,17 @@ def conclude_hold_request(request):
         return redirect('login')
     if request.session["user_type"] != "librarian":
         return redirect('home')
-    answer = request.POST["answer_request"]
+    message = request.POST["message"]
     mat_id = request.POST["mat_id"]
     user_id = request.POST["user_id"]
-    if(answer == "true" or answer == "True"):
+    answer = request.POST["conclude_button"]
+    due_date = request.POST["due_date"]
+    if(answer == "true"):
         answer = True
     else:
         answer = False
-    #db_conclude_hold_request(user_id,mat_id,request.user.username,answer,)
+    db_conclude_hold_request(user_id,mat_id,request.user.username,answer,message,due_date)
+    return redirect(request.META.get('HTTP_REFERER'))
     
 
     

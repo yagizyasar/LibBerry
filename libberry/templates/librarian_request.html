@@ -14,7 +14,7 @@
             <th>Message</th>
         </tr>
         {% for req in requests %}
-            {% if req.status == "cancelled" or req.status="returned" or req.status = "rejected"  %}
+            {% if req.status == "cancelled" or req.status == "returned" or req.status == "rejected"  %}
             <tr>
                 <td> {{ req.user_id }} </td>
                 <td> {{ req.mat_id }} </td>
@@ -85,10 +85,9 @@
                                 <input type="text" placeholder="Your Response" name="message">
                                 <input type="hidden" value="{{req.mat_id}}" name="mat_id">
                                 <input type="hidden" value="{{req.user_id}}" name="user_id">
-                                <input type="hidden" value="" id="answer" name="answer">
                                 <input type="datetime" name="due_date">
-                                <input type="submit" id = "submit-answer-accept" value = "Accept" style="float:inline-end;" onclick="saveAnswer(value)">
-                                <input type="submit" id = "submit-answer-decline" value = "Decline" style="float:inline-end;" onclick="saveAnswer(value)">
+                                <input type="submit" id = "submit-answer-accept" value = "Accept" name="conclude_button" style="float:inline-end;" onclick="saveAnswer(value)">
+                                <input type="submit" id = "submit-answer-decline" value = "Decline" name="conclude_button" style="float:inline-end;" onclick="saveAnswer(value)">
                             </form>
                             <button id="close">Close</button>
                         </div>
