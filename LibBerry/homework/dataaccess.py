@@ -118,3 +118,4 @@ def db_get_all_courses():
     cursor.execute("SELECT * FROM course_section")
     res = to_dict(cursor)
     return res
+
