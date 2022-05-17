@@ -28,23 +28,20 @@
             </div>
         </div>
         <div class="col-sm">
-            <h5>Register Student or Instructor to Course</h5>
+            <h5>Register Student to Course</h5>
             <div class="columnStyle">
-                <div class="selectWrapper">
-                    <select class="selectBox" name="register-course-select" id="register-course-select" onchange="changeForm(value)" >
-                        <option value="none"> Select type. </option>
-                        <option value="student">Student</option>
-                        <option value="instructor">Instructor</option>
-                    </select>
-                </div>
                 <form action = "{% url 'register_student_course' %}"  method = "post" name = "register-student-course-form" id = "register-student-course-form" class = "register-student-course-form" style="display:none;">
                     {% csrf_token %}
                     <div id = "user-id-area-student">
                         <label for="user_id_student">User ID:</label>
                         <input type="text" id="user_id_student" name="user_id_student">
                     </div>
+                    <div id = "course-id-area-student">
+                        <label for="course_id_student">Course ID:</label>
+                        <input type="text" id="course_id_student" name="course_id_student">
+                    </div>
                     <div id = "section-area-student">
-                        <label for="section_student">Material ID:</label>
+                        <label for="section_student">Section:</label>
                         <input type="text" id="section_student" name="section_student">
                     </div>
                     <div id = "semester-area-student">
@@ -60,34 +57,6 @@
                         <input type="text" id="year_student" name="year_student">
                     </div>
                     <input type="submit" value="Register Student">
-                </form>
-                <form action = "{% url 'register_instructor_course' %}"  method = "post" name = "register-instructor-course-form" id = "register-instructor-course-form" class = "register-student-course-form" style="display:none;">
-                    {% csrf_token %}
-                    <div id = "user-id-area-instructor">
-                        <label for="user_id_instructor">User ID:</label>
-                        <input type="text" id="user_id_instructor" name="user_id_instructor">
-                    </div>
-                    <div id = "course-id-area-instructor">
-                        <label for="course_id_instructor">Course ID:</label>
-                        <input type="text" id="course_id_instructor" name="course_id_instructor">
-                    </div>
-                    <div id = "section-area-instructor">
-                        <label for="section_instructor">Section:</label>
-                        <input type="text" id="section_instructor" name="section_instructor">
-                    </div>
-                    <div id = "semester-area-instructorr">
-                        <label for="set-semester-instructor-fall">Fall</label>
-                        <input type="radio" value="fall" id="set-semester-instructor-fall" name="set_semester_instructor" checked="checked">
-                        <label for="set-semester-instructor-spring">Spring</label>
-                        <input type="radio" value="spring" id="set-semester-instructor-spring" name="set_semester_instructor">
-                        <label for="set-semester-instructor-summer">Spring</label>
-                        <input type="radio" value="summer" id="set-semester-instructor-summer" name="set_semester_instructor">
-                    </div>
-                    <div id = "year-area-instructor">
-                        <label for="year_instructor">Year:</label>
-                        <input type="text" id="year_instructor" name="year_instructor">
-                    </div>
-                    <input type="submit" value="Register Instructor">
                 </form>
             </div>
         </div>
@@ -115,27 +84,13 @@
                         <label for="year">Year:</label>
                         <input type="text" id="year" name="year">
                     </div>
+                    <div id = "instructor-id-area">
+                        <label for="instructor_id">Instructor ID:</label>
+                        <input type="text" id="instructor_id" name="instructor_id">
+                    </div>
                     <input type="submit" value="Create Course Section">
                 </form>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function onFire(){ alert("Pressed.");}
-
-    function changeForm(value){
-        if (value == "student"){
-            document.getElementById('register-student-course-form').style.display = 'block';
-            document.getElementById('register-instructor-course-form').style.display = 'none';
-        }
-        else if (value == "instructor"){
-            document.getElementById('register-student-course-form').style.display = 'none';
-            document.getElementById('register-instructor-course-form').style.display = 'block';
-        }
-        else {
-            document.getElementById('register-student-course-form').style.display = 'none';
-            document.getElementById('register-instructor-course-form').style.display = 'none';
-        }
-    }
-</script>
