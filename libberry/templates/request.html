@@ -1,5 +1,5 @@
 {% extends 'generic.html' %}
-{%load static%}
+{% load static %}
 {% block content %}
 <div class="left-side">
     <h2>Rejected, Cancelled or Returned Requests</h2>
@@ -33,6 +33,7 @@
             <th>Reserve Date</th>
             <th>Due Date</th>
             <th>Message</th>
+            <th></th>
         </tr>
         {% for req in requests %}
             {% if req.status == "on hold" or req.status == "borrowed" %}
