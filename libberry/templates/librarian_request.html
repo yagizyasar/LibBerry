@@ -83,6 +83,8 @@
                             <p> {{ req.message }} </p>
                             <form action = "{% url 'answer_request' %}" method = "post" class="answer-request-form">
                                 <input type="text" placeholder="Your Response" name="answer_request">
+                                <input type="hidden" value="{{req.mat_id}}" name="mat_id">
+                                <input type="hidden" value="{{req.user_id}}" name="user_id">
                                 <input type="submit" id = "submit-answer" value = "Answer" style="float:inline-end;">
                             </form>
                             <button id="close">Close</button>

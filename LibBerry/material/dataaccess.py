@@ -183,10 +183,136 @@ def db_generate_find_mat_query(params):
     #cursor.execute()
     print(res)
     print(len(res))
-
-    # get available amount of each book
     return res
-    # TODO process query result
+
+def db_generate_find_audiovisual_query(params):
+    #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
+    query = "SELECT * FROM material_material AS M WHERE "
+
+    # TODO search by multiple fields?
+    # search fields
+    title = params.get("title")
+    authors = params.get("author")
+    date = params.get("date")
+    genre = params.get("genre")
+    sets = params.get("set")
+
+    if title != None and title != "":
+        query += "M.title=\"{}\" AND ".format(title)
+    if authors != None and len(authors) > 0:
+        for author in authors:
+            query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
+    if genre != None and genre != "":
+        query += "M.genre=\"{}\" AND ".format(genre)
+
+    if sets != None and len(sets) > 0:
+        for set in sets:
+            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id) AND ".format(set)
+    
+    # rating threshold
+    query += "(M.rating IS NULL OR M.rating>={}) AND ".format(params.get("rating_threshold"))
+    
+    # published after threshold
+    query += "M.publish_date>=\"{}\"".format(params.get("published_after"))
+    
+    #query = query[:-3]
+    if query[-6:] == "WHERE ":
+        query = query[:-7]
+    query += ";"
+    print(query)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    res = to_dict(cursor)
+    #cursor.execute()
+    print(res)
+    print(len(res))
+    return res
+
+def db_generate_find_printed_query(params):
+    #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
+    query = "SELECT * FROM material_material AS M WHERE "
+
+    # TODO search by multiple fields?
+    # search fields
+    title = params.get("title")
+    authors = params.get("author")
+    date = params.get("date")
+    genre = params.get("genre")
+    sets = params.get("set")
+
+    if title != None and title != "":
+        query += "M.title=\"{}\" AND ".format(title)
+    if authors != None and len(authors) > 0:
+        for author in authors:
+            query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
+    if genre != None and genre != "":
+        query += "M.genre=\"{}\" AND ".format(genre)
+
+    if sets != None and len(sets) > 0:
+        for set in sets:
+            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id) AND ".format(set)
+    
+    # rating threshold
+    query += "(M.rating IS NULL OR M.rating>={}) AND ".format(params.get("rating_threshold"))
+    
+    # published after threshold
+    query += "M.publish_date>=\"{}\"".format(params.get("published_after"))
+    
+    #query = query[:-3]
+    if query[-6:] == "WHERE ":
+        query = query[:-7]
+    query += ";"
+    print(query)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    res = to_dict(cursor)
+    #cursor.execute()
+    print(res)
+    print(len(res))
+    return res
+
+def db_generate_find_periodical_query(params):
+    #query = "SELECT * FROM (material_material NATURAL JOIN ((SELECT T1.mat_id, 0 AS available FROM (SELECT DISTINCT T4.mat_id AS mat_id FROM material_material T4 WHERE T4.mat_id NOT IN (SELECT DISTINCT T3.mat_id AS mat_id FROM user_reserves_mat AS T3 WHERE T3.status='borrowed' OR T3.status='on hold')) AS T1 UNION SELECT T2.mat_id AS mat_id, COUNT(*) AS available FROM user_reserves_mat AS T2 WHERE T2.status='borrowed' OR T2.status='on hold' GROUP BY T2.mat_id) AS T5) AS T9) AS M;"
+    query = "SELECT * FROM material_material AS M WHERE "
+
+    # TODO search by multiple fields?
+    # search fields
+    title = params.get("title")
+    authors = params.get("author")
+    date = params.get("date")
+    genre = params.get("genre")
+    sets = params.get("set")
+
+    if title != None and title != "":
+        query += "M.title=\"{}\" AND ".format(title)
+    if authors != None and len(authors) > 0:
+        for author in authors:
+            query += "EXISTS (SELECT * FROM is_author_of I WHERE author_id={} AND mat_id=M.mat_id) AND ".format(author)
+    if genre != None and genre != "":
+        query += "M.genre=\"{}\" AND ".format(genre)
+
+    if sets != None and len(sets) > 0:
+        for set in sets:
+            query += "EXISTS (SELECT * FROM set_contains_mat C WHERE C.set_id={} AND C.mat_id=M.mat_id) AND ".format(set)
+    
+    # rating threshold
+    query += "(M.rating IS NULL OR M.rating>={}) AND ".format(params.get("rating_threshold"))
+    
+    # published after threshold
+    query += "M.publish_date>=\"{}\"".format(params.get("published_after"))
+    
+    #query = query[:-3]
+    if query[-6:] == "WHERE ":
+        query = query[:-7]
+    query += ";"
+    print(query)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    res = to_dict(cursor)
+    #cursor.execute()
+    print(res)
+    print(len(res))
+    return res
 
 def db_get_unavailable_counts():
     cursor = connection.cursor()
@@ -256,6 +382,12 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
 def db_get_reservation_requests(status):
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM user_reserves_mat WHERE status=%s;", [status])
+    res_dict = to_dict(cursor)
+    return res_dict
+
+def db_get_all_reservation_requests():
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM user_reserves_mat")
     res_dict = to_dict(cursor)
     return res_dict
 

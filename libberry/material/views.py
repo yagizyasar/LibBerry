@@ -188,6 +188,34 @@ def make_hold_request(request):
         text = request.POST["request-text"]
         db_send_hold_request(user_id,mat_id,text)
         return redirect(request.META.get('HTTP_REFERER'))
+
+def display_all_hold_requests_init_view(request):
+    if not request.user.is_authenticated:
+        print("User not authenticated")
+        return redirect('login')
+    if request.session["user_type"] != "librarian":
+        return redirect('home')
+    context = db_get_all_reservation_requests()
+    return render(request,'librarian_request.html',{"requests":context})
+
+def conclude_hold_request(request):
+    if not request.user.is_authenticated:
+        print("User not authenticated")
+        return redirect('login')
+    if request.session["user_type"] != "librarian":
+        return redirect('home')
+    answer = request.POST["answer_request"]
+    mat_id = request.POST["mat_id"]
+    user_id = request.POST["user_id"]
+    if(answer == "true" or answer == "True"):
+        answer = True
+    else:
+        answer = False
+    #db_conclude_hold_request(user_id,mat_id,request.user.username,answer,)
+    
+
+    
+    
     
 
     
