@@ -384,9 +384,9 @@ def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message=""
 
     # TODO constraint checking
     if accepted:
-        cursor.execute("UPDATE user_reserves_mat SET status='borrowed', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
+        cursor.execute("UPDATE user_reserves_mat SET status='borrowed', message=%s, librarian_id=%s, reserve_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
     else:
-        cursor.execute("UPDATE user_reserves_mat SET status='rejected', message=%s, librarian_id=%s, res_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
+        cursor.execute("UPDATE user_reserves_mat SET status='rejected', message=%s, librarian_id=%s, reserve_date=NOW(), due_date=%s WHERE user_id=%s AND mat_id=%s AND status='on hold';", [message, librarian_id, due, user_id, mat_id])
 
 def db_return_book(user_id, mat_id, message="", overdue_amount=0):
     cursor = connection.cursor()

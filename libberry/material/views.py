@@ -322,6 +322,7 @@ def conclude_hold_request(request):
     user_id = request.POST["user_id"]
     answer = request.POST["answer"]
     due_date = request.POST["due_date"]
+    print(answer)
     if(answer == "true"):
         answer = True
     else:
