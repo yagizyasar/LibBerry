@@ -10,8 +10,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            <h5>Courses</h5>
             <div class="columnStyle">
+                <h5>Courses</h5>
                 <div class="course-list" id="course-list" name="course-list" style="display:block;">
                     {%for tempcourse in courses %}
                         <!--student hepsi icin farkli if atmamiza gerek yok 
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="col-sm">
-            <h5>Register Student to Course</h5>
             <div class="columnStyle">
+                <h5>Register Student to Course</h5>
                 <form action = "{% url 'register_student_course' %}"  method = "post" name = "register-student-course-form" id = "register-student-course-form" class = "register-student-course-form" style="display:block;">
                     {% csrf_token %}
                     <div id = "user-id-area-student">
@@ -62,6 +62,7 @@
         </div>
         <div class="col-sm">
             <div class="columnStyle">
+                <h5>Add New Course</h5>
                 <form action = "{% url 'create_course' %}"  method = "post" name = "create-course-form" id = "create-course-form" class = "creates-course-form" style="display:block;">
                     {% csrf_token %}
                     <div id = "course-id-area">
