@@ -46,10 +46,25 @@ def add_homework_to_student(request):
         return redirect('user_login')
 
 def register_student_to_course(request):
-    print("woo")
+     if request.user.is_authenticated and request.method == "POST" and request.session["user_type"] == "librarian":
+        user_id_student = request.POST["user_id_student"]
+        course_id_student = request.POST["course_id_student"]
+        section_student = request.POST["section_student"]
+        set_semester_student = request.POST["set_semester_student"]
+        year = request.POST["year_student"]
+        db_add_student_to_coursesection(user_id_student,course_id_student,section_student,set_semester_student,year)
+        return redirect(request.META.get('HTTP_REFERER'))
+
 
 def register_course(request):
-    print("woo")
+    if request.user.is_authenticated and request.method == "POST" and request.session["user_type"] == "librarian":
+        course_id = request.POST["course_id"]
+        section = request.POST["section"]
+        set_semester = request.POST["set_semester"]
+        year = request.POST["year"]
+        instructor_id = request.POST["instructor_id"]
+        db_add_coursesection(course_id,section,set_semester,year,instructor_id)
+        return redirect(request.META.get('HTTP_REFERER'))
 
 def register_student_or_course_root(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
