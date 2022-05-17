@@ -14,7 +14,7 @@
             <th>Message</th>
         </tr>
         {% for req in requests %}
-            {% if req.status == "cancelled" or req.status="returned" or req.status = "rejected" or req.status == "borrowed" %}
+            {% if req.status == "cancelled" or req.status="returned" or req.status = "rejected"  %}
             <tr>
                 <td> {{ req.user_id }} </td>
                 <td> {{ req.mat_id }} </td>
@@ -27,7 +27,34 @@
         {% endfor %}
     </table>
 </div>
-<div class="right-side">
+
+<div class="middle-side">
+    <h2>In Process Requests</h2>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Material</th>
+            <th>Request Date</th>
+            <th>Reserve Date</th>
+            <th>Due Date</th>
+            <th>Message</th>
+        </tr>
+        {% for req in requests %}
+            {% if req.status == "borrowed"  %}
+            <tr>
+                <td> {{ req.user_id }} </td>
+                <td> {{ req.mat_id }} </td>
+                <td> {{ req.request_date }} </td>
+                <td> {{ req.reserve_date }} </td>
+                <td> {{ req.due_date }} </td>
+                <td> {{ req.message }} </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+
+<div class="middle-side">
     <h2>Waiting Requests</h2>
     <table>
         <tr>
