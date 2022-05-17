@@ -390,10 +390,10 @@ def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message=""
 def db_return_book(user_id, mat_id, message="", overdue_amount=0):
     cursor = connection.cursor()
     cursor.execute("SELECT due_date FROM user_reserves_mat WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [user_id, mat_id])
-    due = cursor.fetchone()
+    due = cursor.fetchone()[0]
     print(due)
-    due = datetime.strptime(due, "%y-%m-%d %H:%M:%S")
-    
+    #due = datetime.strptime(due, "%y-%m-%d %H:%M:%S")
+    overdue_amount = int(overdue_amount)
     if message == "" and due < datetime.now():
         dif = datetime.now() - due
         overdue_message = "Overdue by {} days, {} hours and {} minutes.".format(dif.days, dif.seconds // 3600, dif.seconds // 60)
@@ -402,7 +402,7 @@ def db_return_book(user_id, mat_id, message="", overdue_amount=0):
             balance_message = " {} liras were added to debt.".format(overdue_amount)
         message = overdue_message + balance_message
 
-    cursor.execute("UPDATE user_reserves_mat SET status='returned', message=%s, ret_date=NOW() WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [message, user_id, mat_id])
+    cursor.execute("UPDATE user_reserves_mat SET status='returned', message=%s, return_date=NOW() WHERE user_id=%s AND mat_id=%s AND status='borrowed';", [message, user_id, mat_id])
     oldbal = db_get_user_balance(user_id)
     cursor.execute("UPDATE user_mainuser SET balance=%s WHERE user_id=%s;", [oldbal + overdue_amount, user_id])
 
