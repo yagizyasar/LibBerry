@@ -227,7 +227,7 @@ def db_send_hold_request(user_id, mat_id, message=""):
 
 def db_cancel_hold_request(user_id, mat_id):
     cursor = connection.cursor()
-    cursor.execute("UPDATE user_reserves_mat SET status='canceled', ret_date=NOW() WHERE user_id=%s, mat_id=%s;", [user_id, mat_id])
+    cursor.execute("UPDATE user_reserves_mat SET status='cancelled', ret_date=NOW() WHERE user_id=%s, mat_id=%s;", [user_id, mat_id])
 
 def db_conclude_hold_request(user_id, mat_id, librarian_id, accepted, message="", due=""):
     cursor = connection.cursor()
