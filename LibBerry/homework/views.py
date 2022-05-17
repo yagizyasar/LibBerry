@@ -53,7 +53,8 @@ def register_course(request):
 
 def register_student_or_course_root(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "librarian":
-       return render(request,'courseregistration.html')
+       courses = db_get_all_courses()
+       return render(request,'courseregistration.html',{"courses":courses})
     else:
         return redirect(request.META.get('HTTP_REFERER'))
 

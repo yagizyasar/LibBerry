@@ -112,3 +112,9 @@ def db_get_all_students_of_instructor(user_id):
     cursor.execute("SELECT * FROM course_section NATURAL JOIN student_takes_course WHERE instructor_id=%s;",[user_id])
     res = to_dict(cursor)
     return res
+
+def db_get_all_courses():
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM course_section")
+    res = to_dict(cursor)
+    return res
