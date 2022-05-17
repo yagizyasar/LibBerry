@@ -7,44 +7,54 @@
     <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
 </head>
 <body>
-<div class="warning-list">
-    <h5>Over Due Warnings</h5>
-    <table>
-        <tr>
-            <th>Material Id</th>
-            <th>Text</th>
-            <th>Warning Date</th>
-            <th>Debt</th>
-        </tr>
-        <!--current user's warnings-->
-        {% for warn in user_overdue_warnings %}
-        <tr>
-            <!--variablelar modellere göre yapıldı değişebilir-->
-            <td>{{ warn.mat_id }}</td>
-            <td>{{ warn.message }}</td>
-            <td>{{ warn.warn_date }}
-            <td>{{ warn.debt }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h5>Near Due Warnings</h5>
-    <table>
-        <tr>
-            <th>Material Id</th>
-            <th>Message</th>
-            <th>Warning Date</th>
-            <th>Remaining Days</th>
-        </tr>
-        <!--current user's warnings-->
-        {% for warn in user_near_due_warnings %}
-        <tr>
-            <!--variablelar modellere göre yapıldı değişebilir-->
-            <td>{{ warn.mat_id }}</td>
-            <td>{{ warn.message }}</td>
-            <td>{{ warn.warn_date }}
-            <td>{{ warn.remaining_days }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="columnStyle">
+            <h5>Overdue Warnings</h5>
+            <table>
+                <tr>
+                    <th>Material Id</th>
+                    <th>Text</th>
+                    <th>Warning Date</th>
+                    <th>Debt</th>
+                </tr>
+                <!--current user's warnings-->
+                {% for warn in user_overdue_warnings %}
+                <tr>
+                    <!--variablelar modellere göre yapıldı değişebilir-->
+                    <td>{{ warn.mat_id }}</td>
+                    <td>{{ warn.message }}</td>
+                    <td>{{ warn.warn_date }}
+                    <td>{{ warn.debt }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        </div>
+            <div class="col-sm">
+                <div class="columnStyle">
+                <h5>Nearly Due Warnings</h5>
+                <table>
+                    <tr>
+                        <th>Material Id</th>
+                        <th>Message</th>
+                        <th>Warning Date</th>
+                        <th>Remaining Days</th>
+                    </tr>
+                    <!--current user's warnings-->
+                    {% for warn in user_near_due_warnings %}
+                    <tr>
+                        <!--variablelar modellere göre yapıldı değişebilir-->
+                        <td>{{ warn.mat_id }}</td>
+                        <td>{{ warn.message }}</td>
+                        <td>{{ warn.warn_date }}</td>
+                        <td>{{ warn.remaining_days }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
