@@ -339,9 +339,9 @@ def return_mat(request):
     if request.session["user_type"] != "librarian":
         return redirect('home')
 
-    user_id = request.POST["user_id_return"]
-    mat_id = request.POST["mat_id_return"]
-    overdue_amount = request.POST["overdue_amount"]
+    user_id = request.POST.get("user_id_return", False)
+    mat_id = request.POST.get("mat_id_return", False)
+    overdue_amount = request.POST.get("overdue_amount", False)
     if overdue_amount == None:
         overdue_amount = 0
     db_return_book(user_id, mat_id, overdue_amount=overdue_amount)
