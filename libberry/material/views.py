@@ -302,8 +302,6 @@ def display_all_hold_requests_init_view(request):
     if request.session["user_type"] != "librarian":
         return redirect('home')
     context = db_get_all_reservation_requests()
-    print("Context is")
-    print(context)
     return render(request,'librarian_request.html',{"requests":context})
 
 def conclude_hold_request(request):
@@ -315,7 +313,7 @@ def conclude_hold_request(request):
     message = request.POST["message"]
     mat_id = request.POST["mat_id"]
     user_id = request.POST["user_id"]
-    answer = request.POST["conclude_button"]
+    answer = request.POST["answer"]
     due_date = request.POST["due_date"]
     if(answer == "true"):
         answer = True
