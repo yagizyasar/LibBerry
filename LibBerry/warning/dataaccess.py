@@ -27,6 +27,14 @@ def db_get_due_date(user_id, mat_id):
     res = to_dict(cursor)
     return res
 
-def db_get_user_warnings(user_id):
+def db_get_user_near_due_warnings(user_id):
     cursor = connection.cursor()
-    cursor.execute()
+    cursor.execute("SELECT * FROM warning NATURAL JOIN near_due_warning WHERE user_id=%s;", [user_id])
+    res = to_dict(cursor)
+    return res
+
+def db_get_user_overdue_warnings(user_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM warning NATURAL JOIN overdue_warning WHERE user_id=%s;", [user_id])
+    res = to_dict(cursor)
+    return res

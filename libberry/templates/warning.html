@@ -8,23 +8,40 @@
 </head>
 <body>
 <div class="warning-list">
-    <h5>Warnings</h5>
+    <h5>Over Due Warnings</h5>
     <table>
         <tr>
-            <th>Warning ID</th>
-            <th>Material Titlee</th>
+            <th>Material Id</th>
             <th>Text</th>
-            <th>Sent Date Time</th>
+            <th>Warning Date</th>
+            <th>Debt</th>
+        </tr>
+        <!--current user's warnings-->
+        {% for warn in user_overdue_warnings %}
+        <tr>
+            <!--variablelar modellere göre yapıldı değişebilir-->
+            <td>{{ warn.mat_id }}</td>
+            <td>{{ warn.message }}</td>
+            <td>{{ warn.warn_date }}
+            <td>{{ warn.debt }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h5>Near Due Warnings</h5>
+    <table>
+        <tr>
+            <th>Material Id</th>
+            <th>Message</th>
+            <th>Warning Date</th>
             <th>Remaining Days</th>
         </tr>
         <!--current user's warnings-->
-        {% for warn in users_warnings %}
+        {% for warn in user_near_due_warnings %}
         <tr>
             <!--variablelar modellere göre yapıldı değişebilir-->
-            <td>{{ warn.warn_id }}</td>
-            <td>{{ warn.mat_title }}</td>
-            <td>{{ warn.text }}</td>
-            <td>{{ warn.sent_datetime }}
+            <td>{{ warn.mat_id }}</td>
+            <td>{{ warn.message }}</td>
+            <td>{{ warn.warn_date }}
             <td>{{ warn.remaining_days }}</td>
         </tr>
         {% endfor %}

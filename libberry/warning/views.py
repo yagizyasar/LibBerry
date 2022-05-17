@@ -34,3 +34,14 @@ def create_neardue_warning(request):
         return redirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect('home')
+
+def get_all_warnings_user(request):
+    if not request.user.is_authenticated:
+        print("User not authenticated")
+        return redirect('home')
+
+    user_id = request.user.username
+
+    overdue = db_get_user_overdue_warnings(user_id)
+    near_due = db_get_user_near_due_warnings(user_id)
+    return render(request,'warning.html',{"user_overdue_warnings":overdue, "user_near_due_warnings":near_due})

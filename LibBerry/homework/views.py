@@ -44,6 +44,8 @@ def add_homework_to_student(request):
         return redirect('init_homework')
     if not request.user.is_authenticated:
         return redirect('user_login')
+
+
     
 
 

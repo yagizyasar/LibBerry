@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.init_warning_list_view, name='warning_creation_root'),
     path('warningoverduecreation/', views.create_overdue_warning, name='create_overdue_warning'),
-    path('warningnearduecreation/',views.create_neardue_warning,name='create_nearlydue_warning')
+    path('warningnearduecreation/',views.create_neardue_warning,name='create_nearlydue_warning'),
+    path('displayallwarnings/', views.get_all_warnings_user, name='get_all_warnings_user')
 ]
