@@ -19,6 +19,7 @@ def init_homework_view(request):
 def init_homework_2(request):
     if request.user.is_authenticated and request.method == "GET" and request.session["user_type"] == "instructor":
         hws = db_get_all_homeworks_instructor(request.user.username)
+        print(hws)
         courses = db_get_all_courses_instructor(request.user.username)
         material_sets = db_get_all_materialsets_instructor(request.user.username)
         students = db_get_all_students_of_instructor(request.user.username)
@@ -51,7 +52,7 @@ def add_homework_to_student(request):
         hw_id = request.POST["hw_id"]
         student_ids = request.POST["student_ids"].split()
         db_give_homework_to_student(student_ids,hw_id)
-        return redirect('init_homework')
+        return redirect('init_homework_2')
     if not request.user.is_authenticated:
         return redirect('user_login')
 
