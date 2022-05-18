@@ -7,11 +7,12 @@
         <div class="centered">
             <label for="instructors_hws">Given Homeworks</label>
             <div name="instructor_hws" id="instructor_hws">
-            {% for hw in homeworks%}
-                <a class="instructor_hw_item" href="#" id="{{ hw.hw_id }}">{{ hw.hw_id }}</a> 
+            {% for hw in homeworks %}
+                <text id="{{ hw.hw_id }}">{{ hw.hw_id }}</text> 
                 <form  action = "{% url 'student_homework' %}"  method = "post" name = "homework-form" id = "homework-form" class = "homework-form">
+                    {% csrf_token %}
                     <input type="text" name="student_ids">
-                    <input type="hidden" value="{{ hw.hw_id }}">
+                    <input type="hidden" name="hw_id" value="{{ hw.hw_id }}">
                     <input type="submit" value="Add Student">
                 </form>
             {% endfor %}
